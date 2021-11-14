@@ -1,0 +1,19 @@
+{
+  "name": "magus-monorepo-root",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "sites/*"
+  ],
+  "scripts": {
+    "-> install and link all dependencies": "",
+    "bootstrap": "lerna bootstrap",
+    "-> runs test script in all packages": "",
+    "test": "lerna run test --stream",
+    "-> starts publish flow for all changed packages": "",
+    "publish:all": "lerna publish --canary --conventional-commits --conventional-prerelease —-no-push"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
