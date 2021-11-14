@@ -1,6 +1,6 @@
 {
   "name": "@magusn/components",
-  "version": "0.1.0",
+  "version": "0.1.1-alpha.1+f702c49",
   "description": "common components",
   "author": "magus",
   "license": "MIT",
@@ -44,5 +44,6 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "gitHead": "f702c490cf4ceb072d8a231b28a41956db76e526"
 }
