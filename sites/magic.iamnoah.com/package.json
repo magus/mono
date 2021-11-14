@@ -1,6 +1,6 @@
 {
   "name": "magic.iamnoah.com",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -8,7 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@magusn/components": "^0.0.1",
+    "@magusn/components": "^0.1.0",
     "next": "12.0.3",
     "next-transpile-modules": "^9.0.0",
     "react": "17.0.2",
