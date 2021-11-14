@@ -1,6 +1,7 @@
 {
   "name": "magic.iamnoah.com",
   "version": "0.1.1",
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
