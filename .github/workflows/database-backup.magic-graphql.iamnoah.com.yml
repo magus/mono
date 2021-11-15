@@ -1,0 +1,46 @@
+name: database-backup.magic-graphql.iamnoah.com
+
+on:
+  # run every day at 03:37 PST (10:37 UTC)
+  schedule:
+    - cron: '37 10 * * *'
+  # allow manual trigger via github workflow ui
+  workflow_dispatch:
+
+env:
+  HASURA_HOST: https://magic-graphql.iamnoah.com
+  BUCKET_NAME: magic-graphql.iamnoah.com
+  HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET_MAGIC_GRAPHQL }}
+  VERSION: 1
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Backup database to sql files
+        run: $GITHUB_WORKSPACE/.github/workflows/database-backup/scripts/backup.sh
+        env:
+          BUCKET_NAME: ${{ env.BUCKET_NAME }}
+          HASURA_ADMIN_SECRET: ${{ env.HASURA_ADMIN_SECRET }}
+
+      - name: Sync to S3 bucket
+        uses: jakejarvis/s3-sync-action@v0.5.1
+        with:
+          args: --delete
+        env:
+          # authentication
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # bucket location
+          AWS_REGION: 'us-west-1'
+          AWS_S3_BUCKET: ${{ env.BUCKET_NAME }}
+
+          # upload the env.BUCKET_NAME where we output the backup above
+          # optional: defaults to entire repository
+          SOURCE_DIR: '${{ env.BUCKET_NAME }}'
+          # directory (key) to upload to inside of s3 bucket
+          # remember s3 doesn't really have folders, this is just prepending to filename key
+          # e.g. path/to/file is really just `path-to-file`
+          DEST_DIR: 'v${{ env.VERSION }}'
