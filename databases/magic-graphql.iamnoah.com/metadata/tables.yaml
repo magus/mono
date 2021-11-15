@@ -1,0 +1,146 @@
+- table:
+    schema: public
+    name: loginToken
+  object_relationships:
+  - name: refreshToken
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: refreshToken
+        column_mapping:
+          id: loginTokenId
+  - name: user
+    using:
+      foreign_key_constraint_on: userId
+  select_permissions:
+  - role: login
+    permission:
+      columns:
+      - approved
+      - id
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      limit: 1
+  - role: self
+    permission:
+      columns:
+      - approved
+      - created
+      - domain
+      - expires
+      - geo
+      - id
+      - ip
+      - userAgent
+      filter:
+        userId:
+          _eq: X-Hasura-User-Id
+  delete_permissions:
+  - role: self
+    permission:
+      filter:
+        userId:
+          _eq: X-Hasura-User-Id
+  event_triggers:
+  - name: loginSendEmail
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns:
+        - approved
+        - email
+        - secret
+        - created
+        - expires
+        - id
+        - userId
+    retry_conf:
+      num_retries: 5
+      interval_sec: 30
+      timeout_sec: 60
+    webhook: https://magicwords.vercel.app/api/events/loginSendEmail
+- table:
+    schema: public
+    name: refreshToken
+  object_relationships:
+  - name: loginToken
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: loginToken
+        column_mapping:
+          loginTokenId: id
+  - name: user
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: user
+        column_mapping:
+          userId: id
+  select_permissions:
+  - role: self
+    permission:
+      columns:
+      - created
+      - expires
+      - geo
+      - ip
+      - lastActive
+      - loginTokenId
+      - userAgent
+      filter:
+        userId:
+          _eq: X-Hasura-User-Id
+- table:
+    schema: public
+    name: role
+- table:
+    schema: public
+    name: user
+  array_relationships:
+  - name: roles
+    using:
+      foreign_key_constraint_on:
+        column: userId
+        table:
+          schema: public
+          name: user_role
+  select_permissions:
+  - role: self
+    permission:
+      columns:
+      - created
+      - email
+      - id
+      - updated
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      limit: 1
+  - role: user
+    permission:
+      columns:
+      - id
+      filter: {}
+      limit: 1
+- table:
+    schema: public
+    name: user_role
+  object_relationships:
+  - name: role
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: role
+        column_mapping:
+          roleId: id
+  - name: user
+    using:
+      foreign_key_constraint_on: userId

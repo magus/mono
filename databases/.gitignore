@@ -1,0 +1,2 @@
+# allow hasura sql files
+!**/*.sql
