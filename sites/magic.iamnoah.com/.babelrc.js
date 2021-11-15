@@ -1,4 +1,4 @@
-// Can eventually remove and replace once these plugins are supported
+// TODO Can eventually remove and replace once these plugins are supported
 // https://github.com/vercel/next.js/discussions/30174
 
 module.exports = {
