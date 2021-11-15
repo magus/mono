@@ -1,11 +1,15 @@
 {
   "name": "magus-monorepo-root",
   "private": true,
-  "workspaces": [
-    "packages/*",
-    "sites/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "sites/*"
+    ]
+  },
   "scripts": {
+    "-> print setup instructions for each package": "",
+    "setup": "lerna run lerna:setup --stream",
     "-> install and link all dependencies": "",
     "bootstrap": "lerna bootstrap",
     "-> runs test script in all packages": "",
