@@ -9,10 +9,9 @@
   },
   "scripts": {
     "=== mono repo scripts": "",
-    "-> git commit script with emoji ✨": "",
-    "commit": "yarn gitmoji -c",
+    "-> generate conventional commit for git log": "",
+    "commit": "yarn cz",
     "cm": "yarn commit",
-    "commit:config": "yarn gitmoji -g",
     "-> print setup instructions for each package": "",
     "setup": "lerna run lerna:setup --stream",
     "-> install and link all dependencies": "",
@@ -26,7 +25,13 @@
     "db:hasura": "./scripts/hasura.sh"
   },
   "devDependencies": {
-    "gitmoji-cli": "^4.7.0",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.2.0",
     "lerna": "^4.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
