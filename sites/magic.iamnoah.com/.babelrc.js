@@ -34,7 +34,6 @@ module.exports = {
     production: {
       plugins: [
         // production plugins
-        ['styled-components', { ssr: true, displayName: false }],
         ['transform-remove-console'],
       ],
     },
