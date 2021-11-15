@@ -8,6 +8,7 @@
     ]
   },
   "scripts": {
+    "=== mono repo scripts": "",
     "-> print setup instructions for each package": "",
     "setup": "lerna run lerna:setup --stream",
     "-> install and link all dependencies": "",
@@ -15,7 +16,11 @@
     "-> runs test script in all packages": "",
     "test": "lerna run test --stream",
     "-> starts publish flow for all changed packages": "",
-    "publish:all": "lerna publish --conventional-commits"
+    "publish:all": "lerna publish --conventional-commits",
+
+    "=== project scripts": "",
+    "-> access a hasura db console": "",
+    "db:hasura": "./scripts/hasura.sh"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
