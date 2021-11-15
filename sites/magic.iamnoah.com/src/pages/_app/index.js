@@ -1,30 +1,9 @@
 import * as React from 'react';
+import * as Sentry from '@sentry/nextjs';
 import NextApp from 'next/app';
-import Error from 'next/error';
 
+import { Error } from '@components/Error';
 import App from './App';
-
-let SentryConfig;
-
-if (process.browser) {
-  // Dynamically setup Sentry for client errors
-  import('src/config/sentry').then((SentryConfigModule) => {
-    SentryConfig = SentryConfigModule.default();
-
-    window.addEventListener('error', (event) => {
-      console.debug('[SentryConfig]', 'window.error', { event });
-      SentryConfig.captureException(event.error, { errorSource: 'browser.window.error' });
-      // prevent bubbling to the Sentry.Integration.TryCatch
-      // handler which wraps all `addEventListener` functions
-      event.stopPropagation();
-    });
-  });
-} else {
-  // Setup sentry for server side errors
-  const SentryConfigModule = require('src/config/sentry');
-  SentryConfig = SentryConfigModule();
-}
-
 export default class MyApp extends NextApp {
   static getDerivedStateFromProps(props, state) {
     // If there was an error generated within getInitialProps, and we haven't
@@ -51,45 +30,24 @@ export default class MyApp extends NextApp {
     };
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   const hasPropChange = ['hasError', 'errorEventId'].some((prop) => {
-  //     if (this.props[prop] !== nextProps[prop]) {
-  //       console.error('[_app]', 'sCU', prop);
-  //       return true;
-  //     }
-  //   });
-
-  //   const hasStateChange = ['hasError'].some((prop) => {
-  //     if (this.state[prop] !== nextState[prop]) {
-  //       console.error('[_app]', 'sCU', prop);
-  //       return true;
-  //     }
-  //   });
-
-  //   // console.debug('[_app]', { hasStateChange, hasPropChange });
-  //   return hasStateChange || hasPropChange;
-  // }
-
   componentDidCatch(error, errorInfo) {
-    console.debug('componentDidCatch');
+    console.debug('componentDidCatch', { error, errorInfo });
 
-    if (SentryConfig) {
-      const errorEventId = SentryConfig.captureException(error, {
-        errorInfo,
-        errorSource: 'componentDidCatch',
-      });
+    const errorEventId = Sentry.captureException(error, {
+      errorInfo,
+      errorSource: 'componentDidCatch',
+    });
 
-      // Store the event id at this point as we don't have access to it within
-      // `getDerivedStateFromError`.
-      // `SentryConfig.Sentry.showReportDialog` can be used to manually send errors
-      // e.g. SentryConfig.Sentry.showReportDialog({ eventId: this.state.errorEventId });
-      this._errorEventId = errorEventId;
-    }
+    // Store the event id at this point as we don't have access to it within
+    // `getDerivedStateFromError`.
+    // `SentryConfig.Sentry.showReportDialog` can be used to manually send errors
+    // e.g. SentryConfig.Sentry.showReportDialog({ eventId: this.state.errorEventId });
+    this._errorEventId = errorEventId;
   }
 
   render() {
     if (this.state.hasError) {
-      return <Error title="Something went wrong, please reload the page." />;
+      return <Error statusCode="Oops" title="Something went wrong, please reload the page." />;
     }
 
     return <App {...this.props} />;

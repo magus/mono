@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as Sentry from '@sentry/nextjs';
 import { useRouter } from 'next/router';
 
 import Page from 'src/components/Page';
@@ -10,16 +11,14 @@ import styles from 'styles/Login.module.css';
 LoginPage.title = 'Login';
 
 export default function LoginPage() {
-  const router = useRouter();
   const auth = useAuth();
-  const { email } = router.query;
 
   // console.debug('[LoginPage]', { auth });
 
   return (
     <Page className={styles.container}>
       <div className={styles.containerContent}>
-        {auth.isLoggedIn ? <Button onClick={auth.actions.logout}>Logout</Button> : <LoginForm {...{ email }} />}
+        {auth.isLoggedIn ? <Button onClick={auth.actions.logout}>Logout</Button> : <LoginForm />}
       </div>
     </Page>
   );
@@ -28,12 +27,13 @@ export default function LoginPage() {
 function LoginForm(props) {
   const auth = useAuth();
   const [email, set_email] = React.useState('');
+  const router = useRouter();
 
   React.useEffect(() => {
-    if (!email && props.email) {
-      set_email(props.email);
+    if (router.query.email) {
+      set_email(router.query.email);
     }
-  }, [props.email]);
+  }, [router.query.email]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -43,6 +43,12 @@ function LoginForm(props) {
 
     // make the login API call
     await auth.actions.login(email);
+  }
+
+  async function handleInputFocus(event) {
+    event.target.setAttribute('type', 'text');
+    event.target.setSelectionRange(0, event.target.value.length);
+    event.target.setAttribute('type', 'email');
   }
 
   async function handleEmailInput(event) {
@@ -61,6 +67,7 @@ function LoginForm(props) {
           type="email"
           placeholder="magic@gmail.com"
           value={email}
+          onFocus={handleInputFocus}
           onChange={handleEmailInput}
         />
         <label htmlFor="email" className={styles.loginLabel}>

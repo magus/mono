@@ -14,7 +14,6 @@
   width: 100%;
   max-width: 480px;
   min-width: 320px;
-  overflow-y: auto;
 }
 
 .loginForm {

@@ -1,5 +1,9 @@
 const EnvConfig = require('./src/config/env');
-const withSourceMaps = require('@zeit/next-source-maps');
+
+// https://nextjs.org/docs/api-reference/next.config.js/introduction
+// https://docs.sentry.io/platforms/javascript/guides/nextjs/
+const { withSentryConfig } = require('@sentry/nextjs');
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -67,13 +71,7 @@ const __CONFIG = {
 
   // https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config
   webpack: (config, { isServer, buildId }) => {
-    // config.plugins.push(
-    //   new webpack.DefinePlugin({
-    //     __DEV__: JSON.stringify(EnvConfig.DEV),
-    //     'process.env.SENTRY_RELEASE': JSON.stringify(buildId),
-    //   }),
-    // );
-
+    // find webpack DefinePlugin and add custom defines
     config.plugins.forEach((plugin) => {
       if (plugin.constructor.name === 'DefinePlugin') {
         plugin.definitions = {
@@ -84,12 +82,23 @@ const __CONFIG = {
       }
     });
 
-    if (!isServer) {
-      config.resolve.alias['@sentry/node'] = '@sentry/browser';
-    }
-
     return config;
   },
 };
 
-module.exports = withTM(withBundleAnalyzer(withSourceMaps(__CONFIG)));
+// see https://github.com/getsentry/sentry-webpack-plugin#options.
+const sentryWebpackPluginOptions = {
+  // Additional config options for the Sentry Webpack plugin. Keep in mind that
+  // the following options are set automatically, and overriding them is not
+  // recommended:
+  //   release, url, org, project, authToken, configFile, stripPrefix,
+  //   urlPrefix, include, ignore
+
+  // silent in local dev
+  silent: EnvConfig.DEV,
+};
+
+// Make sure adding Sentry options is the last code to run before exporting, to
+// ensure that your source maps include changes from all other Webpack plugins
+
+module.exports = withSentryConfig(withTM(withBundleAnalyzer(__CONFIG)), sentryWebpackPluginOptions);
