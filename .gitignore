@@ -191,6 +191,9 @@ Desktop.ini
 # === BELOW THIS LINE IS ADDITIONAL GITIGNORE / OVERRIDES
 # =========================================================
 
+# Sentry
+.sentryclirc
+
 # allow .com folders
 # e.g. magic.iamnoah.com
 !**/*.com
