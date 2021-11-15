@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/magus/mono/compare/dcss.now.sh@0.1.1...dcss.now.sh@0.2.0) (2021-11-15)
+
+
+### Features
+
+* .vercelignore ([e7451a2](https://github.com/magus/mono/commit/e7451a297f17c4f67e9e9e4206240887fc349301))
+
+
+
+
+
 ## [0.1.1](https://github.com/magus/mono/compare/dcss.now.sh@0.1.0...dcss.now.sh@0.1.1) (2021-11-14)
 
 
