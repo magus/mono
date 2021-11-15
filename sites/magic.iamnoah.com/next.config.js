@@ -48,6 +48,14 @@ const securityHeaders = [
 ];
 
 const __CONFIG = {
+  // withSentryConfig causes crash in serverless functions
+  // Error: Cannot find module '/var/task/node_modules/next/dist/server/next.js'. Please verify that the package.json has a valid "main" entry
+  // https://github.com/getsentry/sentry-javascript/issues/4103
+  // https://github.com/vercel/next.js/issues/30601
+  // TODO Remove this once the issues above are resolved
+  // https://nextjs.org/docs/advanced-features/output-file-tracing
+  outputFileTracing: false,
+
   // --------------------------------------------------
   // withSourceMaps: source maps + sentry configuration
   env: {
