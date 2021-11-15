@@ -15,7 +15,18 @@ module.exports = {
   ],
 
   plugins: [
-    // development plugins
+    // default plugins
+    [
+      'babel-plugin-module-resolver',
+      {
+        root: ['.'],
+        alias: {
+          '@components': './src/components',
+          '@hooks': './src/hooks',
+          '@pages': './src/pages',
+        },
+      },
+    ],
     ['styled-components', { ssr: true, displayName: true }],
   ],
 
