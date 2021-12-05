@@ -1,11 +1,14 @@
 {
   "name": "@magusn/eslint-config-magusn",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "mono repo eslint config",
   "author": "magus",
   "license": "MIT",
+  "repository": "magus/@magusn/eslint-config-magusn",
+  "main": "src/index.js",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint": "7"
-  }
+  },
+  "gitHead": "e71ca709c7f2633a7863e79c61cfd82fc08d4016"
 }

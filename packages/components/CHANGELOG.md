@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](/compare/@magusn/components@0.2.1...@magusn/components@0.2.2) (2021-12-05)
+
+**Note:** Version bump only for package @magusn/components
+
+
+
+
+
 ## [0.2.1](/compare/@magusn/components@0.2.0...@magusn/components@0.2.1) (2021-11-14)
 
 
