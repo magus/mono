@@ -1,3 +1,4 @@
+const path = require('path');
 const EnvConfig = require('./src/config/env');
 
 // https://nextjs.org/docs/api-reference/next.config.js/introduction
@@ -78,14 +79,21 @@ const __CONFIG = {
   },
 
   // https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config
-  webpack: (config, { isServer, buildId }) => {
+  webpack: (config, options) => {
+    // reach out to monorepo root and ensure same version of react
+    // see https://www.npmjs.com/package/next-transpile-modules#i-have-trouble-with-duplicated-dependencies-or-the-invalid-hook-call-error-in-react
+    if (options.isServer) {
+      config.externals = ['react', ...config.externals];
+    }
+    config.resolve.alias['react'] = path.resolve(__dirname, '../../', 'node_modules', 'react');
+
     // find webpack DefinePlugin and add custom defines
     config.plugins.forEach((plugin) => {
       if (plugin.constructor.name === 'DefinePlugin') {
         plugin.definitions = {
           ...plugin.definitions,
           __DEV__: JSON.stringify(EnvConfig.DEV),
-          'process.env.SENTRY_RELEASE': JSON.stringify(buildId),
+          'process.env.SENTRY_RELEASE': JSON.stringify(options.buildId),
         };
       }
     });
