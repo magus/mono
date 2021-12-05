@@ -2,64 +2,28 @@ module.exports = {
   parser: 'babel-eslint',
   extends: [
     // force line breaks
-    '@magusn/magusn',
+    '@magusn/eslint-config-magusn',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
   ],
   rules: {
     'react/prop-types': 0,
   },
+  settings: {
+    react: {
+      version: 'detect', // React version. "detect" automatically picks the version you have installed.
+      // You can also use `16.0`, `16.3`, etc, if you want to override the detected value.
+      // default to latest and warns if missing
+      // It will default to "detect" in the future
+    },
+    componentWrapperFunctions: [
+      // The name of any function used to wrap components, e.g. Mobx `observer` function.
+      // If this isn't set, components wrapped by these functions will be skipped.
+      { property: 'styled' }, // `object` is optional
+    ],
+    linkComponents: [
+      // Components used as alternatives to <a> for linking, eg. <Link to={ url } />
+      { name: 'Link', linkAttribute: 'to' },
+    ],
+  },
 };
-
-// module.exports = {
-//   parser: 'babel-eslint',
-//   extends: [
-//     // force line breaks
-//     'standard',
-//     'standard-react',
-//     'plugin:prettier/recommended',
-//     'prettier/standard',
-//     'prettier/react',
-//   ],
-//   env: {
-//     node: true,
-//   },
-//   overrides: [
-//     {
-//       files: ['**/*.test.js'],
-//       env: {
-//         jest: true, // now **/*.test.js files' env has both es6 *and* jest
-//       },
-//       // Can't extend in overrides: https://github.com/eslint/eslint/issues/8813
-//       // "extends": ["plugin:jest/recommended"]
-//       plugins: ['jest'],
-//       rules: {
-//         'jest/no-disabled-tests': 'warn',
-//         'jest/no-focused-tests': 'error',
-//         'jest/no-identical-title': 'error',
-//         'jest/prefer-to-have-length': 'warn',
-//         'jest/valid-expect': 'error',
-//       },
-//     },
-//   ],
-//   parserOptions: {
-//     ecmaVersion: 2020,
-//     ecmaFeatures: {
-//       legacyDecorators: true,
-//       jsx: true,
-//     },
-//   },
-//   settings: {
-//     react: {
-//       version: '16',
-//     },
-//   },
-//   rules: {
-//     'space-before-function-paren': 0,
-//     'react/prop-types': 0,
-//     'react/jsx-handler-names': 0,
-//     'react/jsx-fragments': 0,
-//     'react/no-unused-prop-types': 0,
-//     'import/export': 0,
-//   },
-// };
