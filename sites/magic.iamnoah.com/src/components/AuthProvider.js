@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { useModal } from 'src/components/Modal';
-import usePageVisibility from 'src/hooks/usePageVisibility';
+import { usePageVisibility } from '@magusn/components';
 import CheckEmailModal from 'src/components/CheckEmailModal';
 
 const DefaultAuthContext = null;
@@ -47,9 +47,7 @@ export function AuthProvider({ children }) {
   usePageVisibility(async (isVisible) => {
     if (isVisible) {
       const timeUntilThreshold = timeUntilExpireThresholdMs();
-      // console.debug('[AuthProvider]', 'usePageVisibility', {
-      //   timeUntilThreshold,
-      // });
+      // console.debug('[AuthProvider]', 'usePageVisibility', { timeUntilThreshold });
       if (typeof timeUntilThreshold === 'number' && timeUntilThreshold <= 0) {
         // refresh needed
         await refreshTokens();
