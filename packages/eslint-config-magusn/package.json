@@ -1,0 +1,11 @@
+{
+  "name": "@magusn/eslint-config-magusn",
+  "version": "0.0.1",
+  "description": "mono repo eslint config",
+  "author": "magus",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "7"
+  }
+}
