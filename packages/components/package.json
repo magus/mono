@@ -1,10 +1,13 @@
 {
   "name": "@magusn/components",
   "version": "0.2.3",
-  "gitHead": "e71ca709c7f2633a7863e79c61cfd82fc08d4016",
+  "gitHead": "47bd21f5d85c6aba674a55c2535aee6ba37b4218",
   "description": "common components",
   "author": "magus",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": "magus/@magusn/components",
   "main": "src/index.js",
   "files": [

@@ -4,11 +4,14 @@
   "description": "mono repo eslint config",
   "author": "magus",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": "magus/@magusn/eslint-config-magusn",
   "main": "src/index.js",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint": "7"
   },
-  "gitHead": "e71ca709c7f2633a7863e79c61cfd82fc08d4016"
+  "gitHead": "47bd21f5d85c6aba674a55c2535aee6ba37b4218"
 }
