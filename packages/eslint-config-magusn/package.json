@@ -9,9 +9,14 @@
   },
   "repository": "magus/@magusn/eslint-config-magusn",
   "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint ."
+  },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "7"
+    "eslint": "7",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.27.1"
   },
   "gitHead": "47bd21f5d85c6aba674a55c2535aee6ba37b4218"
 }
