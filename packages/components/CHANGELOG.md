@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](/compare/@magusn/components@0.2.3...@magusn/components@0.3.0) (2021-12-05)
+
+
+### Features
+
+* **hooks:** ✨usePageVisibility 2ece866
+
+
+
+
+
 ## [0.2.3](/compare/@magusn/components@0.2.1...@magusn/components@0.2.3) (2021-12-05)
 
 **Note:** Version bump only for package @magusn/components

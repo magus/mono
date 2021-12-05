@@ -1,6 +1,6 @@
 {
   "name": "@magusn/components",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "gitHead": "47bd21f5d85c6aba674a55c2535aee6ba37b4218",
   "description": "common components",
   "author": "magus",
@@ -28,9 +28,9 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "eslint": "7",
-    "@magusn/eslint-config-magusn": "^0.2.0",
+    "@magusn/eslint-config-magusn": "^0.2.1",
     "cross-env": "^7.0.2",
+    "eslint": "7",
     "eslint-plugin-react-hooks": "^4.3.0",
     "microbundle-crl": "^0.13.10",
     "npm-run-all": "^4.1.5",

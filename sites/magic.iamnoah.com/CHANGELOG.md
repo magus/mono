@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/magus/mono/compare/magic.iamnoah.com@0.2.2...magic.iamnoah.com@0.3.0) (2021-12-05)
+
+
+### Bug Fixes
+
+* **magic.iamnoah.com:** 🐛shared react dep warning ([cac7c7d](https://github.com/magus/mono/commit/cac7c7dc549f6f0da06222e1ff3244761b7a546f))
+
+
+### Features
+
+* **magic.iamnoah.com:** ✨usePageVisibility ([e177082](https://github.com/magus/mono/commit/e177082a809ca71f4c0443ca727b0cb3323862c8))
+
+
+
+
+
 ## [0.2.2](https://github.com/magus/mono/compare/magic.iamnoah.com@0.2.0...magic.iamnoah.com@0.2.2) (2021-12-05)
 
 **Note:** Version bump only for package magic.iamnoah.com

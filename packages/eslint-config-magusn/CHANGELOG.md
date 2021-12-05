@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](/compare/@magusn/eslint-config-magusn@0.2.0...@magusn/eslint-config-magusn@0.2.1) (2021-12-05)
+
+
+### Bug Fixes
+
+* **eslint-config-magusn:** 🐛src/index.js bc674e9
+
+
+
+
+
 # 0.2.0 (2021-12-05)
 
 

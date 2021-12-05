@@ -1,6 +1,6 @@
 {
   "name": "magic.iamnoah.com",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "-> before yarn install load environmental variables for geo-from-ip": "",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",
-    "@magusn/components": "^0.2.3",
+    "@magusn/components": "^0.3.0",
     "@sendgrid/mail": "^7.4.0",
     "@sentry/browser": "^5.29.2",
     "@sentry/integrations": "^5.29.2",
