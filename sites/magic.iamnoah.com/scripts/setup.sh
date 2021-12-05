@@ -7,5 +7,11 @@ echo "  ❗️ Dependency geo-from-ip requires MAXMIND_LICENSE_KEY environmental
 echo "  💻 Ensure .env.local has the right values then run the commands below"
 echo " "
 echo "       rm -rf node_modules"
-echo "       source $(pwd)/.env.local"
+
+
+cat $(pwd)/.env.local | while read line
+do
+  echo "       export $line"
+done
+
 echo " "
