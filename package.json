@@ -16,6 +16,8 @@
     "bootstrap": "lerna bootstrap",
     "-> runs test script in all packages": "",
     "test": "lerna run test --stream",
+    "-> runs lint in all packages": "",
+    "lint": "eslint .",
     "-> starts publish flow for all changed packages": "",
     "publish:all": "lerna publish --conventional-commits",
     "=== project scripts": "",
@@ -23,6 +25,8 @@
     "db:hasura": "./scripts/hasura.sh"
   },
   "devDependencies": {
+    "eslint": "7",
+    "@magusn/eslint-config-magusn": "^0.2.0",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.2.0",
     "lerna": "^4.0.0"

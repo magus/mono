@@ -1,5 +1,4 @@
 module.exports = {
-  parser: 'babel-eslint',
   extends: [
     // force line breaks
     '@magusn/eslint-config-magusn',
