@@ -1,12 +1,10 @@
 {
   "name": "magus-monorepo-root",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "sites/*"
-    ]
-  },
+  "workspaces": [
+    "packages/*",
+    "sites/*"
+  ],
   "scripts": {
     "=== mono repo scripts": "",
     "-> generate conventional commit for git log": "",

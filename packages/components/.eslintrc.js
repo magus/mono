@@ -2,6 +2,7 @@ module.exports = {
   parser: 'babel-eslint',
   extends: [
     // force line breaks
+    '@magusn/magusn',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
   ],
