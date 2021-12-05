@@ -12,9 +12,11 @@
   "scripts": {
     "lint": "eslint ."
   },
-  "devDependencies": {
+  "peerDependencies": {
+    "eslint": "7"
+  },
+  "dependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "7",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.27.1"
   },

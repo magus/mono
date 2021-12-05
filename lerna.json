@@ -2,6 +2,10 @@
   "version": "independent",
   "npmClient": "yarn",
   "useWorkspaces": true,
+  "packages": [
+    "packages/*",
+    "sites/*"
+  ],
   "command": {
     "version": {
       "message": "🔖 (release): publish"
