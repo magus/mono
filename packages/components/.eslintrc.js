@@ -1,7 +1,6 @@
 module.exports = {
   extends: [
     // force line breaks
-    '@magusn/eslint-config-magusn',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
   ],

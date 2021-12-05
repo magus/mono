@@ -9,6 +9,14 @@ module.exports = {
     browser: true,
     node: true,
   },
+  rules: {
+    // easily verify rules are hooked up by uncommenting this
+    // will allow unused var errors by ignoring them
+    // for example, the line below would NOT throw an error
+    //    let unused = 0;
+    //
+    // 'no-unused-vars': 0,
+  },
 };
 
 // example test config

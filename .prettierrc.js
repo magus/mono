@@ -1,5 +1,3 @@
-let hi = 'blah';
-
 module.exports = {
   bracketSpacing: true,
   singleQuote: true,
