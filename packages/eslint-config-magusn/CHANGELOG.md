@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.2.0 (2021-12-05)
+
+
+### Features
+
+* **eslint-config-magusn:** ✨publish init 7813e61
+
+
+
+
+
 # 0.1.0 (2021-12-05)
 
 
