@@ -11,7 +11,9 @@
   },
   "repository": "magus/mono",
   "peerDependencies": {
-    "eslint": "^7.32.0"
+    "eslint": "^7.32.0",
+    "jest": "^27.4.3",
+    "prettier": "^2.5.1"
   },
   "dependencies": {
     "eslint-config-prettier": "^8.3.0",
