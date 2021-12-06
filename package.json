@@ -6,21 +6,37 @@
     "sites/*"
   ],
   "scripts": {
-    "=== mono repo scripts": "",
+    "=== install ===": "",
+
+    "-> print setup instructions for each package": "",
+    "setup": "lerna run lerna:setup --stream",
+
+    "-> install and link all dependencies": "",
+    "bootstrap": "lerna bootstrap",
+
+    "=== tests ===": "",
+
+    "-> runs test script in all packages": "",
+    "test": "lerna run test --stream",
+
+    "-> runs lint in all packages": "",
+    "lint": "eslint .",
+
+    "-> check dependency versions for consistency": "",
+    "lint:deps": "syncpack list-mismatches",
+    "lint:deps:fix": "syncpack fix-mismatches",
+
+    "=== versions and publishing ===": "",
+
     "-> generate conventional commit for git log": "",
     "commit": "yarn cz",
     "cm": "yarn commit",
-    "-> print setup instructions for each package": "",
-    "setup": "lerna run lerna:setup --stream",
-    "-> install and link all dependencies": "",
-    "bootstrap": "lerna bootstrap",
-    "-> runs test script in all packages": "",
-    "test": "lerna run test --stream",
-    "-> runs lint in all packages": "",
-    "lint": "eslint .",
+
     "-> starts publish flow for all changed packages": "",
     "publish:all": "lerna publish --conventional-commits",
-    "=== project scripts": "",
+
+    "=== databases ===": "",
+
     "-> access a hasura db console": "",
     "db:hasura": "./scripts/hasura.sh"
   },
@@ -28,10 +44,11 @@
     "@magusn/eslint-config-magusn": "^0.2.2",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.2.0",
-    "eslint": "8",
+    "eslint": "^7.32.0",
     "jest": "^27.4.3",
     "lerna": "^4.0.0",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "syncpack": "^5.8.15"
   },
   "config": {
     "commitizen": {
