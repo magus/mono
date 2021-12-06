@@ -1,0 +1,11 @@
+{
+  "name": "@magusn/mono",
+  "description": "workspace to catch root monorepo changes",
+  "version": "0.1.0",
+  "author": "magus",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/magus/mono"
+  }
+}

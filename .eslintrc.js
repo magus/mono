@@ -6,5 +6,6 @@ module.exports = {
   ignorePatterns: [
     // force line breaks
     '!.prettierrc.js',
+    '!.commitlintrc.js',
   ],
 };
