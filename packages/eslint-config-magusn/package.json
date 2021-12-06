@@ -1,6 +1,7 @@
 {
   "name": "@magusn/eslint-config-magusn",
   "version": "0.2.2",
+  "gitHead": "47bd21f5d85c6aba674a55c2535aee6ba37b4218",
   "description": "mono repo eslint config",
   "author": "magus",
   "license": "MIT",
@@ -21,6 +22,5 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0"
-  },
-  "gitHead": "47bd21f5d85c6aba674a55c2535aee6ba37b4218"
+  }
 }

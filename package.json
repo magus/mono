@@ -25,11 +25,13 @@
     "db:hasura": "./scripts/hasura.sh"
   },
   "devDependencies": {
-    "eslint": "8",
-    "@magusn/eslint-config-magusn": "^0.2.0",
+    "@magusn/eslint-config-magusn": "^0.2.2",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.2.0",
-    "lerna": "^4.0.0"
+    "eslint": "8",
+    "jest": "^27.4.3",
+    "lerna": "^4.0.0",
+    "prettier": "^2.5.1"
   },
   "config": {
     "commitizen": {
