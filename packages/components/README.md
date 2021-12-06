@@ -13,13 +13,13 @@ npm install --save @magusn/components
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import MyComponent from '@magusn/components';
+import { Button } from '@magusn/components';
 import '@magusn/components/dist/index.css';
 
 function Example(props) {
-  return <MyComponent />;
+  return <Button />;
 }
 ```
 
