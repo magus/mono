@@ -14,7 +14,7 @@
   },
   "repository": "magus/mono",
   "scripts": {
-    "test": "run-s test:unit test:lint",
+    "test": "run-s test:*",
     "test:lint": "eslint .",
     "test:unit": "jest"
   },
