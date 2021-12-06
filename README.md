@@ -32,6 +32,8 @@ yarn changeset version
 # finally create a commit with the changes and publish to npm
 git commit -am "🔖 (release): publish"
 yarn changeset publish
+# push the git tags to github
+git push --follow-tags
 ```
 
 NOTE: `changeset publish` assumes that last commit is the release commit. You should not commit any changes between

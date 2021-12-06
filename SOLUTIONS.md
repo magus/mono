@@ -23,3 +23,10 @@ rm -rf node_modules
 # this will print setup instructions for all packages
 yarn setup
 ```
+
+## Cleaning up remote git tags
+
+```
+git push origin --delete $(git tag -l)
+# Pushing once should be faster than multiple times
+```
