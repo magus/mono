@@ -6,19 +6,15 @@
     "sites/*"
   ],
   "scripts": {
-    "=== install ===": "",
     "setup": "lerna run lerna:setup --stream",
     "bootstrap": "lerna bootstrap",
-    "=== tests ===": "",
     "test": "lerna run test --stream",
-    "lint": "eslint .",
-    "lint:deps": "syncpack list-mismatches",
-    "lint:deps:fix": "syncpack fix-mismatches && syncpack fix-mismatches",
-    "=== versions and publishing ===": "",
+    "test:lint": "eslint .",
+    "test:deps": "syncpack list-mismatches",
+    "test:deps:fix": "syncpack fix-mismatches && syncpack fix-mismatches",
     "commit": "yarn cz",
     "cm": "yarn commit",
-    "publish:all": "lerna publish --conventional-commits",
-    "=== databases ===": "",
+    "publish:all": "lerna publish from-package -y --no-verify-access",
     "db:hasura": "./scripts/hasura.sh"
   },
   "devDependencies": {

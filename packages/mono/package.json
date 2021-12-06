@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "author": "magus",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/magus/mono"

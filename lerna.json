@@ -5,10 +5,5 @@
   "packages": [
     "packages/*",
     "sites/*"
-  ],
-  "command": {
-    "version": {
-      "message": "🔖 (release): publish"
-    }
-  }
+  ]
 }

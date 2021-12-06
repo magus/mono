@@ -1,6 +1,6 @@
 {
   "name": "magic.iamnoah.com",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "gitHead": "f702c490cf4ceb072d8a231b28a41956db76e526",
   "private": true,
   "scripts": {
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",
-    "@magusn/react": "^0.3.1",
+    "@magusn/react": "^0.4.0",
     "@sendgrid/mail": "^7.4.0",
     "@sentry/browser": "^5.29.2",
     "@sentry/integrations": "^5.29.2",
