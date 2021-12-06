@@ -1,3 +1,2 @@
-export { Button } from './Button';
-export { ExampleComponent } from './ExampleComponent';
-export { usePageVisibility } from './usePageVisibility';
+export { Button } from './components/Button/Button';
+export { usePageVisibility } from './hooks/usePageVisibility';

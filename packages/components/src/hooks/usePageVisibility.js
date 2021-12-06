@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-let hi = 'blah';
-
 export function usePageVisibility(onVisibilityChange) {
   // init with a page visiblity listener
   React.useEffect(() => {
@@ -27,7 +25,7 @@ export function usePageVisibility(onVisibilityChange) {
       // console.debug('usePageVisibility', 'cleanup');
       document.removeEventListener(eventName, handleVisibilityChange, false);
     };
-  }, []);
+  }, [onVisibilityChange]);
 }
 
 const eventName = 'visibilitychange';
