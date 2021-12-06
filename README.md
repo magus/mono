@@ -30,7 +30,7 @@ yarn changeset
 # when ready bump version of package.json and generate CHANGELOD.md
 yarn changeset version
 # finally create a commit with the changes and publish to npm
-git commit -am "🔖 (release): publish"
+git commit -am "release(...): 🔖 publish"
 yarn changeset publish
 # push the git tags to github
 git push --follow-tags
