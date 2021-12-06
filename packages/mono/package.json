@@ -1,7 +1,7 @@
 {
   "name": "@magusn/mono",
   "description": "workspace to catch root monorepo changes",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "magus",
   "license": "MIT",
   "publishConfig": {

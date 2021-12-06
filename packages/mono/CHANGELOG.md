@@ -1,9 +1,18 @@
 # @magusn/mono
 
+## 0.1.1
+
+### Patch Changes
+
+- build(syncpack): format scripts
+
+* docs: publish tags
+
+- build(commitlint): +release type
+
 ## 0.1.0
+
 ### Minor Changes
-
-
 
 - setup `@magusn/mono` to catch mono repo changes in changelog
 - remove `commitizen` + `cz-conventional-changelog`
