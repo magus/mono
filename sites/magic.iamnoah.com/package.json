@@ -47,6 +47,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@magusn/eslint-config-magusn": "^0.3.1",
     "@next/bundle-analyzer": "^10.0.5",
     "@zeit/next-source-maps": "^0.0.3",
     "babel-plugin-module-resolver": "^4.1.0",
