@@ -8,13 +8,13 @@ module.exports = {
   prod: true,
   semverRange: '',
   sortAz: [
+    // sort contents of these fields
     'contributors',
     'dependencies',
     'devDependencies',
     'keywords',
     'peerDependencies',
-    // disable sorting scripts because we have comments in root package.json scripts
-    // 'scripts',
+    'scripts',
   ],
   sortFirst: [
     'name',

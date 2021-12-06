@@ -6,16 +6,16 @@
     "sites/*"
   ],
   "scripts": {
-    "setup": "lerna run lerna:setup --stream",
     "bootstrap": "lerna bootstrap",
-    "test": "lerna run test --stream",
-    "test:lint": "eslint .",
-    "test:deps": "syncpack list-mismatches",
-    "test:deps:fix": "syncpack fix-mismatches && syncpack fix-mismatches",
-    "commit": "yarn cz",
     "cm": "yarn commit",
+    "commit": "yarn cz",
+    "db:hasura": "./scripts/hasura.sh",
     "publish:all": "lerna publish from-package -y --no-verify-access",
-    "db:hasura": "./scripts/hasura.sh"
+    "setup": "lerna run lerna:setup --stream",
+    "test": "lerna run test --stream",
+    "test:deps": "syncpack list-mismatches",
+    "test:deps:fix": "syncpack fix-mismatches && syncpack format",
+    "test:lint": "eslint ."
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.2",
