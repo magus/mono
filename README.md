@@ -1,6 +1,6 @@
 # 📦 mono
 
-- @magusn/components
+- @magusn/react
 - @magusn/eslint-config-magusn
 - magic.iamnoah.com
 - dcss.now.sh
@@ -19,6 +19,6 @@ Run a script for a package
 ```
 yarn workspace <workspace> <script>
 yarn workspace magic.iamnoah.com dev
-yarn workspace @magusn/components test:lint
+yarn workspace @magusn/react test:lint
 ```
 

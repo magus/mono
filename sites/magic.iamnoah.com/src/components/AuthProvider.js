@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { useModal } from 'src/components/Modal';
-import { usePageVisibility } from '@magusn/components';
+import { usePageVisibility } from '@magusn/react';
 import CheckEmailModal from 'src/components/CheckEmailModal';
 
 const DefaultAuthContext = null;

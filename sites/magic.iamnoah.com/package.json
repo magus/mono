@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",
-    "@magusn/components": "^0.3.1",
+    "@magusn/react": "^0.3.1",
     "@sendgrid/mail": "^7.4.0",
     "@sentry/browser": "^5.29.2",
     "@sentry/integrations": "^5.29.2",

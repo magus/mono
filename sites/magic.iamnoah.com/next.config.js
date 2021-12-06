@@ -8,7 +8,7 @@ const { withSentryConfig } = require('@sentry/nextjs');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
-const packages = ['@magusn/components'];
+const packages = ['@magusn/react'];
 const withTM = require('next-transpile-modules')(packages);
 
 const securityHeaders = [

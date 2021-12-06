@@ -1,11 +1,11 @@
-# @magusn/components
+# @magusn/react
 
 > common components
 
 ## Install
 
 ```bash
-npm install --save @magusn/components
+npm install --save @magusn/react
 ```
 
 ## Usage
@@ -13,8 +13,7 @@ npm install --save @magusn/components
 ```jsx
 import React, { Component } from 'react';
 
-import { Button } from '@magusn/components';
-import '@magusn/components/dist/index.css';
+import { Button } from '@magusn/react';
 
 function Example(props) {
   return <Button />;
