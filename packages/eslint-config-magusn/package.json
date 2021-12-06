@@ -4,22 +4,24 @@
   "description": "mono repo eslint config",
   "author": "magus",
   "license": "MIT",
+  "main": "index.js",
   "publishConfig": {
     "access": "public"
   },
-  "repository": "magus/@magusn/eslint-config-magusn",
-  "main": "src/index.js",
-  "scripts": {
-    "lint": "eslint ."
+  "repository": {
+    "url": "magus/mono",
+    "directory": "packages/eslint-config-magusn"
   },
   "peerDependencies": {
-    "eslint": "7"
+    "eslint": "8"
   },
   "dependencies": {
     "babel-eslint": "^10.1.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jest": "^25.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.27.1"
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0"
   },
   "gitHead": "47bd21f5d85c6aba674a55c2535aee6ba37b4218"
 }
