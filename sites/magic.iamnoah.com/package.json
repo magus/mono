@@ -1,21 +1,22 @@
 {
   "name": "magic.iamnoah.com",
   "version": "0.3.2",
+  "gitHead": "f702c490cf4ceb072d8a231b28a41956db76e526",
   "private": true,
   "scripts": {
     "-> before yarn install load environmental variables for geo-from-ip": "",
-    "lerna:setup": "./scripts/setup.sh",
-    "dev": "next dev",
+    "analyze": "cross-env ANALYZE=true next build",
+    "analyze:client": "cross-env BUNDLE_ANALYZE=browser next build",
+    "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
     "build": "NODE_ENV=production next build",
-    "start": "NODE_ENV=production next start",
-    "prod": "yarn build && yarn start",
     "deploy": "now",
     "deploy:prod": "now --prod",
     "deploy:purge": "now rm magic --safe",
-    "analyze": "cross-env ANALYZE=true next build",
-    "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
-    "analyze:client": "cross-env BUNDLE_ANALYZE=browser next build",
-    "lint": "next lint"
+    "dev": "next dev",
+    "lerna:setup": "./scripts/setup.sh",
+    "lint": "next lint",
+    "prod": "yarn build && yarn start",
+    "start": "NODE_ENV=production next start"
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",
@@ -37,8 +38,8 @@
     "luxon": "^1.25.0",
     "next": "12.0.3",
     "next-transpile-modules": "^9.0.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-intl": "^5.10.9",
     "styled-components": "^5.3.3",
     "subscriptions-transport-ws": "^0.9.18",
@@ -52,8 +53,6 @@
     "babel-plugin-styled-components": "^1.13.3",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "cross-env": "^7.0.3",
-    "eslint": "<8.0.0",
     "eslint-config-next": "12.0.3"
-  },
-  "gitHead": "f702c490cf4ceb072d8a231b28a41956db76e526"
+  }
 }

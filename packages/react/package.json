@@ -1,25 +1,22 @@
 {
   "name": "@magusn/react",
+  "description": "common react components, hooks, etc.",
   "version": "0.3.2",
   "gitHead": "47bd21f5d85c6aba674a55c2535aee6ba37b4218",
-  "description": "common react components, hooks, etc.",
   "author": "magus",
   "license": "MIT",
   "main": "src/index.js",
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "url": "magus/mono",
-    "directory": "packages/react"
-  },
   "files": [
     "src"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "magus/mono",
   "scripts": {
-    "test:unit": "jest",
+    "test": "run-s test:unit test:lint",
     "test:lint": "eslint .",
-    "test": "run-s test:unit test:lint"
+    "test:unit": "jest"
   },
   "peerDependencies": {
     "react": "^17.0.2",

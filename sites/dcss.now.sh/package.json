@@ -1,13 +1,13 @@
 {
   "name": "dcss.now.sh",
   "version": "0.2.0",
+  "gitHead": "aec834edeb765842a69d4957b69167a71134dc1a",
   "private": true,
-  "main": "index.js",
   "license": "MIT",
+  "main": "index.js",
   "dependencies": {
     "next": "12.0.3",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
-  },
-  "gitHead": "aec834edeb765842a69d4957b69167a71134dc1a"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
 }

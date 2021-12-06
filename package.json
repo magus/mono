@@ -7,37 +7,18 @@
   ],
   "scripts": {
     "=== install ===": "",
-
-    "-> print setup instructions for each package": "",
     "setup": "lerna run lerna:setup --stream",
-
-    "-> install and link all dependencies": "",
     "bootstrap": "lerna bootstrap",
-
     "=== tests ===": "",
-
-    "-> runs test script in all packages": "",
     "test": "lerna run test --stream",
-
-    "-> runs lint in all packages": "",
     "lint": "eslint .",
-
-    "-> check dependency versions for consistency": "",
     "lint:deps": "syncpack list-mismatches",
-    "lint:deps:fix": "syncpack fix-mismatches",
-
+    "lint:deps:fix": "syncpack fix-mismatches && syncpack fix-mismatches",
     "=== versions and publishing ===": "",
-
-    "-> generate conventional commit for git log": "",
     "commit": "yarn cz",
     "cm": "yarn commit",
-
-    "-> starts publish flow for all changed packages": "",
     "publish:all": "lerna publish --conventional-commits",
-
     "=== databases ===": "",
-
-    "-> access a hasura db console": "",
     "db:hasura": "./scripts/hasura.sh"
   },
   "devDependencies": {
