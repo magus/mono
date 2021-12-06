@@ -4,7 +4,6 @@
   "gitHead": "f702c490cf4ceb072d8a231b28a41956db76e526",
   "private": true,
   "scripts": {
-    "-> before yarn install load environmental variables for geo-from-ip": "",
     "analyze": "cross-env ANALYZE=true next build",
     "analyze:client": "cross-env BUNDLE_ANALYZE=browser next build",
     "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
@@ -14,9 +13,9 @@
     "deploy:purge": "now rm magic --safe",
     "dev": "next dev",
     "lerna:setup": "./scripts/setup.sh",
-    "lint": "next lint",
     "prod": "yarn build && yarn start",
-    "start": "NODE_ENV=production next start"
+    "start": "NODE_ENV=production next start",
+    "test:lint": "next lint"
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",
