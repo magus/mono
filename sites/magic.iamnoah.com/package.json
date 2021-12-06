@@ -1,6 +1,6 @@
 {
   "name": "magic.iamnoah.com",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "private": true,
   "scripts": {
     "-> before yarn install load environmental variables for geo-from-ip": "",
