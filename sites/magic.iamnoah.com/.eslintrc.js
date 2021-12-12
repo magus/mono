@@ -8,4 +8,8 @@ module.exports = {
   globals: {
     __DEV__: 'readonly',
   },
+  rules: {
+    // allow console because we strip it out in .babelrc.js anyway
+    'no-console': [0],
+  },
 };
