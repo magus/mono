@@ -56,6 +56,12 @@ calling `version` and `publish`. The commands are separate to allow you to valid
 
 
 # todo
+- use `MagicAuth` on a test site
+  - can we hit `magic.iamnoah.com/auth` routes?
+  - configure as needed etc.
+  - styles? how can we define and share theme values
+  - can put style constants under `@magusn/react` for now?
+
 - migrate to yarn v2 (has nice stuff like yarn dlx)
   - yarn dlx npm-check-updates
   - https://yarnpkg.com/getting-started/migration
