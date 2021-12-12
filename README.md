@@ -27,7 +27,7 @@ Manage a changeset
 ```
 yarn changeset
 # make changes to changeset md file
-# when ready bump version of package.json and generate CHANGELOD.md
+# when ready bump version of package.json and generate CHANGELOG.md
 yarn changeset version
 # finally create a commit with the changes and publish to npm
 git commit -am "release(...): 🔖 publish"
