@@ -1,5 +1,11 @@
 # @magusn/mono
 
+## 0.1.4
+
+### Patch Changes
+
+- ec85183: docs for changeset flow
+
 ## 0.1.3
 
 ### Patch Changes
