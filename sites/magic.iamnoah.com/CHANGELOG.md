@@ -1,5 +1,13 @@
 # magic.iamnoah.com
 
+## 0.4.4
+
+### Patch Changes
+
+- use magusn/react eslint
+- disable no-console eslint
+- resolve eslint errors to run build
+
 ## 0.4.3
 
 ### Patch Changes

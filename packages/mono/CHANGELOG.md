@@ -1,5 +1,20 @@
 # @magusn/mono
 
+## 0.1.3
+
+### Patch Changes
+
+- release command
+
+## 0.1.2
+
+### Patch Changes
+
+- make mono private, just for internal tracking
+- changelog-git to avoid github token error when `yarn changeset version`
+- commitlint allow any subject casing
+- 8ab6e33: commitlint docs
+
 ## 0.1.1
 
 ### Patch Changes
