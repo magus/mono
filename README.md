@@ -24,15 +24,28 @@ yarn workspace @magusn/react test:lint
 
 ## Manage changesets for CHANGELOG and good history
 
-The overall flow is, make changes locally, commit them and also run `yarn changeset` to generate an incremental changeset describing the changes. Eventually we may want to combine `yarn changeset` and `git commit` (see [changesets cli documentation](https://github.com/changesets/changesets/blob/main/docs/command-line-options.md))
+see [changesets cli documentation](https://github.com/changesets/changesets/blob/main/docs/command-line-options.md)
+
+The overall flow is, make changes locally, commit them and also run `yarn changeset` to generate an incremental changeset describing the changes. Eventually we may want to combine `yarn changeset` and `git commit`. Maybe a script that collects commit *message* first then copies to clipboard (`pbcopy`) then runs `yarn changeset` ... *paste* ... `git commit -m [message]`.
+
+After committing all changes, in order to consume the incremental changeset files you can run `yarn changeset version`. This will calculate the correct semantic version bump, update all `package.json` references and generate `CHANGELOG.md` entries based on the changeset files.
+
+To publish changes, particularly to public modules such as `@magusn/react` or `@magusn/eslint-config-magusn` you should follow up with `yarn publish` which will tag and publish the releases to npm. This is required for deploys through CI.
 
 ```
 yarn changeset
-# make changes to changeset md file
+# select relevant packages and semantic version bumps
+# input commit message or description of changes as summary
+# commit the changes to git
+git commit
+
+# repeat above as many times as needed
+
 # when ready bump version of package.json and generate CHANGELOG.md
 yarn changeset version
-# finally create a commit with the changes and publish to npm
-git commit -am "release(...): 🔖 publish"
+# verify things look okay (package.json, CHANGELOG.md, etc.) then commit the changes
+yarn release
+# finally publish the changes to npm
 yarn changeset publish
 # push the git tags to github
 git push --follow-tags
