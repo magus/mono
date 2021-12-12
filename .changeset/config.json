@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@1.6.3/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "magus/mono" }],
+  "changelog": "@changesets/changelog-git",
   "commit": false,
   "linked": [],
   "access": "restricted",
