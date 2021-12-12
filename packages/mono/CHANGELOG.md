@@ -1,5 +1,11 @@
 # @magusn/mono
 
+## 0.1.5
+
+### Patch Changes
+
+- docs(changeset): full flow for publishing
+
 ## 0.1.4
 
 ### Patch Changes
