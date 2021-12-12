@@ -14,7 +14,7 @@ yarn bootstrap
 
 # commands
 
-Run a script for a package
+## Run a script for a package
 
 ```
 yarn workspace <workspace> <script>
@@ -22,7 +22,9 @@ yarn workspace magic.iamnoah.com dev
 yarn workspace @magusn/react test:lint
 ```
 
-Manage a changeset
+## Manage changesets for CHANGELOG and good history
+
+The overall flow is, make changes locally, commit them and also run `yarn changeset` to generate an incremental changeset describing the changes. Eventually we may want to combine `yarn changeset` and `git commit` (see [changesets cli documentation](https://github.com/changesets/changesets/blob/main/docs/command-line-options.md))
 
 ```
 yarn changeset
