@@ -10,6 +10,7 @@
     "cm": "yarn commit",
     "commit": "yarn cz",
     "db:hasura": "./scripts/hasura.sh",
+    "release": "git commit -am \"release(...): 🔖 publish\"",
     "setup": "lerna run lerna:setup --stream",
     "test": "lerna run test --stream",
     "test:deps": "syncpack list-mismatches",
