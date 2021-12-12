@@ -9,7 +9,7 @@ const AuthenticatedApp = dynamic(() => import('@pages/_app/AuthenticatedApp'), {
 });
 
 export default function App(props) {
-  const { Component, pageProps } = props;
+  const { Component } = props;
   // console.debug({ Component, pageProps });
 
   if (Component.disableAuth) {

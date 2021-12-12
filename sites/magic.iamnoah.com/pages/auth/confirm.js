@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 import Page from 'src/components/Page';
-import Button from 'src/components/Button';
 
 import styles from 'styles/auth-confirm.module.css';
 

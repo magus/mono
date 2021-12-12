@@ -1,8 +1,6 @@
 import gql from 'graphql-tag';
 
-import config from 'src/server/config';
 import graphql from 'src/server/graphql';
-import auth from 'src/server/auth';
 
 const loginConfirmUrl = `${process.env.PROTOCOL}://${process.env.HOSTNAME}/auth/confirm`;
 

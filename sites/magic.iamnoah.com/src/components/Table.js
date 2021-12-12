@@ -50,7 +50,7 @@ Table.IconColumn = function TableIconColumn({ children }) {
   return <td className={styles.tableIconColumn}>{children}</td>;
 };
 
-Table.LoadingColumn = function TableLoadingColumn({ children, width }) {
+Table.LoadingColumn = function TableLoadingColumn({ width }) {
   return (
     <td className={styles['loading-td']}>
       <div style={{ width }} />

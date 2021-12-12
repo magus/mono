@@ -58,7 +58,7 @@ export default function LoginRequests({ loading, loginRequests }) {
                       if (timeAgoData.isPast) {
                         return (
                           <TimeAgo simpledate date={lr.expires}>
-                            {(formattedDate, timeAgoData) => {
+                            {(formattedDate) => {
                               return `❌  Expired (${formattedDate})`;
                             }}
                           </TimeAgo>
@@ -66,7 +66,7 @@ export default function LoginRequests({ loading, loginRequests }) {
                       } else if (lr.approved) {
                         return (
                           <TimeAgo date={lr.created}>
-                            {(formattedDate, timeAgoData) => {
+                            {() => {
                               return '✅  Approved';
                             }}
                           </TimeAgo>

@@ -43,7 +43,7 @@ export default async function login(req, res) {
       },
     });
 
-    const [{ id: loginTokenId, userId }] = upsertLoginTokenWithUserResult.insert_loginToken.returning;
+    const [{ id: loginTokenId }] = upsertLoginTokenWithUserResult.insert_loginToken.returning;
 
     // store loginToken id in cookie
     // returns a jwtToken for requesting the single loginToken request

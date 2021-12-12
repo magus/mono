@@ -1,5 +1,3 @@
-import gql from 'graphql-tag';
-
 import config from 'src/server/config';
 import serverEmail from 'src/server/email';
 import loginConfirmEmail from 'src/server/emailTemplates/loginConfirmEmail';
@@ -47,8 +45,7 @@ export default async function loginSendEmail(req, res) {
   try {
     // hasura event webhook payload
     const {
-      event: { op, data },
-      table: { name },
+      event: { data },
     } = req.body;
 
     const { id, secret, email, approved } = data.new;
@@ -84,7 +81,7 @@ export default async function loginSendEmail(req, res) {
       expiresIn,
     });
 
-    const emailResponse = await serverEmail.send(email, {
+    await serverEmail.send(email, {
       subject: `Magic login confirmation (${phrase})`,
       html: emailHtml,
     });

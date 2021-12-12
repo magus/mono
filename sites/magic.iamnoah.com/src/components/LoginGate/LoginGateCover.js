@@ -3,7 +3,7 @@ import Page from 'src/components/Page';
 
 import styles from 'styles/LoginGate.module.css';
 
-export default function LoginGateCover({ message, onAnimationEnd }) {
+export default function LoginGateCover({ onAnimationEnd }) {
   function handleAnimationEnd() {
     console.debug('[LoginGateCover]', 'handleAnimationEnd');
     if (typeof onAnimationEnd === 'function') {
