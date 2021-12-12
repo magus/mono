@@ -10,7 +10,6 @@
     "cm": "yarn commit",
     "commit": "yarn cz",
     "db:hasura": "./scripts/hasura.sh",
-    "publish:all": "lerna publish from-package -y --no-verify-access",
     "setup": "lerna run lerna:setup --stream",
     "test": "lerna run test --stream",
     "test:deps": "syncpack list-mismatches",
