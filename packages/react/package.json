@@ -1,7 +1,7 @@
 {
   "name": "@magusn/react",
   "description": "common react components, hooks, etc.",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "gitHead": "47bd21f5d85c6aba674a55c2535aee6ba37b4218",
   "author": "magus",
   "license": "MIT",

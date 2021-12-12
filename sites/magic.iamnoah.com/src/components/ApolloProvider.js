@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ApolloProvider } from '@apollo/client';
 
-import { useAuth } from 'src/components/AuthProvider';
+import { useMagicAuth } from '@magusn/react';
 import { buildApolloClient } from 'src/client/graphql/client';
 
 export default function ApolloProviderWrapper({ children }) {
@@ -10,7 +10,7 @@ export default function ApolloProviderWrapper({ children }) {
     cleanup: () => {},
   });
 
-  const auth = useAuth();
+  const auth = useMagicAuth();
 
   // console.debug('[ApolloProvider]', 'auth change', { auth });
 

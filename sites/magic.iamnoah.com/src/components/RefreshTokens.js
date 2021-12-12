@@ -1,16 +1,14 @@
 import * as React from 'react';
 import Image from 'next/image';
 
-import { useAuth } from 'src/components/AuthProvider';
+import { useMagicAuth } from '@magusn/react';
 import DeleteSession from 'src/components/DeleteSession';
 import Location from 'src/components/Location';
 import Table from 'src/components/Table';
 import TimeAgo from 'src/components/TimeAgo';
 
-import styles from 'styles/RefreshTokens.module.css';
-
 export default function RefreshTokens({ loading, refreshTokens }) {
-  const auth = useAuth();
+  const auth = useMagicAuth();
   const [deletingSessions, set_deletingSessions] = React.useState({});
 
   const header = `Active sessions${loading ? '' : ` (${refreshTokens.length})`}`;
@@ -79,19 +77,6 @@ export default function RefreshTokens({ loading, refreshTokens }) {
           );
         })}
       </Table>
-
-      {/* <div className={styles.legend}>
-        <div className={styles.legendImageSpacer}>
-          <Image
-            layout="fixed"
-            src="/wand.png"
-            alt="magic wand"
-            width={32}
-            height={32}
-          />
-        </div>
-        <span>indicates the current session</span>
-      </div> */}
     </React.Fragment>
   );
 }

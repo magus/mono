@@ -3,15 +3,14 @@ import * as React from 'react';
 import Page from 'src/components/Page';
 import Button from 'src/components/Button';
 import LoginActivity from 'src/components/LoginActivity';
-import { useAuth } from 'src/components/AuthProvider';
-import graphql from 'src/client/graphql/queries';
+import { useMagicAuth } from '@magusn/react';
 
 import styles from 'styles/Home.module.css';
 
 HomePage.title = null;
 
-export default function HomePage(props) {
-  const auth = useAuth();
+export default function HomePage() {
+  const auth = useMagicAuth();
 
   // console.debug('[Home]', { auth });
 

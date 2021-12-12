@@ -1,76 +1,50 @@
 import * as React from 'react';
 
-import { useModal } from 'src/components/Modal';
-import { usePageVisibility } from '@magusn/react';
-import CheckEmailModal from 'src/components/CheckEmailModal';
+import { Context } from './Context';
+import { usePageVisibility } from '../hooks/usePageVisibility';
 
-const DefaultAuthContext = null;
-const AuthContext = React.createContext(DefaultAuthContext);
+const LOGGED_OUT_STATE = { jwt: null, user: null };
+const EXPIRE_TIMER_FREQUENCY_MS = 5 * 1000;
+const EXPIRE_DURATION_THRESHOLD = 0.25;
 
-export function useAuth() {
-  const auth = React.useContext(AuthContext);
-
-  if (auth === DefaultAuthContext) {
-    throw new Error('AuthProvider must be setup in React tree');
-  }
-
-  return auth;
-}
-
-const LoggedOutState = {
-  jwt: null,
-  user: null,
-};
-
-const ExpireTimerFrequencyMs = 5 * 1000;
-const ExpireDurationThreshold = 0.25;
-
-export function AuthProvider({ children }) {
+export function MagicAuthProvider(props) {
   const instance = React.useRef({
     pendingRefresh: null,
-    timerFrequencyMs: ExpireTimerFrequencyMs,
+    timerFrequencyMs: EXPIRE_TIMER_FREQUENCY_MS,
   });
 
-  const modal = useModal();
-  const [state, set_state] = React.useState(LoggedOutState);
+  const [state, set_state] = React.useState(LOGGED_OUT_STATE);
   const [init, set_init] = React.useState(false);
 
-  // console.debug('[AuthProvider]', { init, state });
+  // console.debug('[MagicAuthProvider]', { init, state });
 
   // init with a refresh
-  React.useEffect(async () => {
-    const success = await refreshTokens();
-    set_init(true);
+  React.useEffect(() => {
+    async function asyncEffect() {
+      await instance.current.refreshTokens();
+      set_init(true);
+    }
+
+    asyncEffect();
   }, []);
 
   // init with a page visiblity listener
   usePageVisibility(async (isVisible) => {
     if (isVisible) {
-      const timeUntilThreshold = timeUntilExpireThresholdMs();
-      // console.debug('[AuthProvider]', 'usePageVisibility', { timeUntilThreshold });
+      const timeUntilThreshold = timeUntilExpireThresholdMs(state.expires, state.expireThreshold);
+      // console.debug('[MagicAuthProvider]', 'usePageVisibility', { timeUntilThreshold });
       if (typeof timeUntilThreshold === 'number' && timeUntilThreshold <= 0) {
         // refresh needed
-        await refreshTokens();
+        await instance.current.refreshTokens();
       }
     }
   });
-
-  function timeUntilExpireThresholdMs() {
-    if (state.expires instanceof Date) {
-      const timeLeftMs = state.expires.getTime() - Date.now();
-      // calculate time in ms until threshold
-      const timeUntilThreshold = timeLeftMs - state.expireThreshold;
-      return timeUntilThreshold;
-    }
-
-    return null;
-  }
 
   // track expires time to refresh jwt as needed
   React.useEffect(() => {
     // do nothing if expires is not a date
     if (!(state.expires instanceof Date)) {
-      // console.debug('[AuthProvider]', 'checkExpires', 'skip');
+      // console.debug('[MagicAuthProvider]', 'checkExpires', 'skip');
       return;
     }
 
@@ -78,19 +52,17 @@ export function AuthProvider({ children }) {
 
     async function checkExpires() {
       // calculate time in ms until threshold
-      const timeUntilThreshold = timeUntilExpireThresholdMs();
+      const timeUntilThreshold = timeUntilExpireThresholdMs(state.expires, state.expireThreshold);
 
       // refresh token if within expireThreshold
       if (timeUntilThreshold <= 0) {
-        await refreshTokens();
+        await instance.current.refreshTokens();
       }
       // wait until threshold or ping at default frequency
       const nextTimeoutMs = timeUntilThreshold > 0 ? timeUntilThreshold : instance.current.timerFrequencyMs;
 
-      console.debug('[AuthProvider]', 'checkExpires', {
-        timeUntilThreshold,
-        nextTimeoutMs,
-      });
+      // eslint-disable-next-line no-console
+      console.debug('[MagicAuthProvider]', 'checkExpires', { timeUntilThreshold, nextTimeoutMs });
 
       // call again near expire threshold
       timeoutId = setTimeout(checkExpires, nextTimeoutMs);
@@ -103,13 +75,13 @@ export function AuthProvider({ children }) {
       // console.debug('checkExpires', 'cleanup');
       clearTimeout(timeoutId);
     };
-  }, [state.expires]);
+  }, [state.expires, state.expireThreshold]);
 
   async function setAuthentication(json) {
     const { jwtToken, loginRequestId, user } = json;
     const jwt = jwtToken.encoded;
     const expires = new Date(jwtToken.expires);
-    const expireThreshold = ExpireDurationThreshold * (expires - Date.now());
+    const expireThreshold = EXPIRE_DURATION_THRESHOLD * (expires - Date.now());
 
     set_state({
       ...state,
@@ -123,7 +95,7 @@ export function AuthProvider({ children }) {
   }
 
   async function logout() {
-    set_state(LoggedOutState);
+    set_state(LOGGED_OUT_STATE);
     await fetch('/api/auth/logout', { method: 'POST' });
     // window.location = '/';
   }
@@ -137,10 +109,7 @@ export function AuthProvider({ children }) {
     if (response.status === 200) {
       const json = await response.json();
       if (json) {
-        modal.open(CheckEmailModal, {
-          props: json,
-          disableBackgroundDismiss: true,
-        });
+        props.onLoginRequest(json);
       }
     }
   }
@@ -157,7 +126,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  async function refreshTokens() {
+  instance.current.refreshTokens = async function refreshTokens() {
     // skip on server
     if (!process.browser) return;
 
@@ -179,10 +148,7 @@ export function AuthProvider({ children }) {
           await completeLogin();
           return true;
         } else if (json.loginRequest) {
-          modal.open(CheckEmailModal, {
-            props: json.loginRequest,
-            disableBackgroundDismiss: true,
-          });
+          props.onLoginRequest(json.loginRequest);
           return true;
         } else if (json.jwtToken) {
           await setAuthentication(json);
@@ -192,9 +158,11 @@ export function AuthProvider({ children }) {
           return true;
         }
 
-        console.error('[AuthProvider]', 'handleRefreshTokens', { response, json });
+        // eslint-disable-next-line no-console
+        console.error('[MagicAuthProvider]', 'handleRefreshTokens', { response, json });
       } catch (error) {
-        console.error('[AuthProvider]', 'handleRefreshTokens', { error });
+        // eslint-disable-next-line no-console
+        console.error('[MagicAuthProvider]', 'handleRefreshTokens', { error });
       }
 
       return false;
@@ -209,19 +177,21 @@ export function AuthProvider({ children }) {
     // handle backoff for retrying
     if (!result) {
       // unable to handle response, increase latency for next request
-      console.debug('[AuthProvider]', 'exponential backoff timerFrequencyMs');
+      // eslint-disable-next-line no-console
+      console.debug('[MagicAuthProvider]', 'exponential backoff timerFrequencyMs');
       instance.current.timerFrequencyMs *= 2;
     } else {
       // reset timer frequency
-      console.debug('[AuthProvider]', 'restoring timerFrequencyMs');
-      instance.current.timerFrequencyMs = ExpireTimerFrequencyMs;
+      // eslint-disable-next-line no-console
+      console.debug('[MagicAuthProvider]', 'restoring timerFrequencyMs');
+      instance.current.timerFrequencyMs = EXPIRE_TIMER_FREQUENCY_MS;
     }
 
     // reset pendingRefresh back to null
     instance.current.pendingRefresh = null;
 
     return result;
-  }
+  };
 
   const isLoggedIn = !!state.jwt;
 
@@ -233,41 +203,20 @@ export function AuthProvider({ children }) {
       logout,
       login,
       completeLogin,
-      refreshTokens,
+      refreshTokens: instance.current.refreshTokens,
     },
   };
 
-  return <AuthContext.Provider {...{ value }}>{children}</AuthContext.Provider>;
+  return <Context.Provider {...{ value }}>{props.children}</Context.Provider>;
 }
 
-// usage (in a pages component)
-//   export const getServerSideProps = requirePageAuth;
-// should return an object with props et al.
-// see https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
-export function requirePageAuth(handleAuth) {
-  return async (context) => {
-    let session;
+function timeUntilExpireThresholdMs(expires, threshold) {
+  if (expires instanceof Date) {
+    const timeLeftMs = expires.getTime() - Date.now();
+    // calculate time in ms until threshold
+    const timeUntilThreshold = timeLeftMs - threshold;
+    return timeUntilThreshold;
+  }
 
-    // use context.req to setup auth session
-    // const session = await getSession(context.req);
-    // console.debug('requirePageAuth', context.req);
-
-    if (!session) {
-      return {
-        props: {},
-        redirect: {
-          destination: '/',
-          permanent: false,
-        },
-      };
-    }
-
-    if (typeof handleAuth === 'function') {
-      return handleAuth(context, session);
-    }
-
-    return {
-      props: { session },
-    };
-  };
+  return null;
 }

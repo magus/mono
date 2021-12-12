@@ -1,9 +1,7 @@
 import * as React from 'react';
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 
-import { useAuth } from 'src/components/AuthProvider';
-import Page from 'src/components/Page';
+import { useMagicAuth } from '@magusn/react';
 import LoginPage from 'pages/auth/login';
 
 import LoginGateCover from '@components/LoginGate/LoginGateCover';
@@ -22,7 +20,7 @@ export default function LoginGate(props) {
 }
 
 function LoginGateContent({ children }) {
-  const auth = useAuth();
+  const auth = useMagicAuth();
 
   if (!auth.isLoggedIn) {
     return <LoginPage />;

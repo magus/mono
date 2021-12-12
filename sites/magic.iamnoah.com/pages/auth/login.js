@@ -1,17 +1,16 @@
 import * as React from 'react';
-import * as Sentry from '@sentry/nextjs';
 import { useRouter } from 'next/router';
 
 import Page from 'src/components/Page';
 import Button from 'src/components/Button';
-import { useAuth } from 'src/components/AuthProvider';
+import { useMagicAuth } from '@magusn/react';
 
 import styles from 'styles/Login.module.css';
 
 LoginPage.title = 'Login';
 
 export default function LoginPage() {
-  const auth = useAuth();
+  const auth = useMagicAuth();
 
   // console.debug('[LoginPage]', { auth });
 
@@ -24,8 +23,8 @@ export default function LoginPage() {
   );
 }
 
-function LoginForm(props) {
-  const auth = useAuth();
+function LoginForm() {
+  const auth = useMagicAuth();
   const [email, set_email] = React.useState('');
   const router = useRouter();
 

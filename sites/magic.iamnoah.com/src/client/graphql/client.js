@@ -1,11 +1,8 @@
-import * as React from 'react';
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, Observable, split } from '@apollo/client';
-import { getMainDefinition } from '@apollo/client/utilities';
 import { onError } from '@apollo/client/link/error';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 
-import { useAuth } from 'src/components/AuthProvider';
 import roles from 'src/shared/roles';
 import headers from 'src/shared/headers';
 import { JWT_VERIFY_FAIL_REGEX } from 'src/client/graphql/constants';
