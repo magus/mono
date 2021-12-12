@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ApolloProvider } from '@apollo/client';
 
-import { useMagicAuth } from '@magusn/react';
-import { buildApolloClient } from 'src/client/graphql/client';
+import { useMagicAuth } from '../useMagicAuth';
+import { buildApolloClient } from './client';
 
 export default function ApolloProviderWrapper({ children }) {
   const instance = React.useRef({

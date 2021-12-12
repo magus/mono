@@ -1,11 +1,10 @@
-import * as React from 'react';
 import gql from 'graphql-tag';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 
-import useAdhocSubscription from 'src/hooks/useAdhocSubscription';
+import { useAdhocSubscription } from './useAdhocSubscription';
 
-import headers from 'src/shared/headers';
-import roles from 'src/shared/roles';
+import { HEADERS } from './Headers';
+import { ROLES } from './Roles';
 
 const gqls = {
   watchLoginRequest: gql`
@@ -80,7 +79,7 @@ export default {
 
   watchLoginRequest: (jwtToken) => {
     const result = useAdhocSubscription(gqls.watchLoginRequest, {
-      role: roles.login,
+      role: ROLES.login,
       jwt: jwtToken.encoded,
     });
 
@@ -99,7 +98,7 @@ export default {
 
   watchLoginToken: (loginTokenId) => {
     const result = useAdhocSubscription(gqls.watchLoginToken, {
-      role: roles.self,
+      role: ROLES.self,
       variables: { loginTokenId },
     });
 
@@ -116,7 +115,7 @@ export default {
     const [get, result] = useLazyQuery(gqls.me, {
       fetchPolicy: 'cache-and-network',
       context: {
-        role: roles.self,
+        role: ROLES.self,
         websocket,
       },
     });
@@ -133,7 +132,7 @@ export default {
 
   watchLoginRequests: () => {
     const result = useAdhocSubscription(gqls.watchLoginRequests, {
-      role: roles.self,
+      role: ROLES.self,
     });
 
     let loginRequests = [];
@@ -148,7 +147,7 @@ export default {
 
   watchRefreshTokens: () => {
     const result = useAdhocSubscription(gqls.watchRefreshTokens, {
-      role: roles.self,
+      role: ROLES.self,
     });
 
     let refreshTokens = [];
@@ -162,14 +161,16 @@ export default {
   },
 };
 
-async function query(client, query, { headers, variables, role = roles.user } = {}) {
+async function query(client, query, options = {}) {
+  const role = options.role || ROLES.user;
+
   const queryResult = await client.query({
     query,
-    variables,
+    variables: options.variables,
     context: {
       headers: {
-        [headers.role]: role,
-        ...headers,
+        [HEADERS.role]: role,
+        ...options.headers,
       },
     },
   });

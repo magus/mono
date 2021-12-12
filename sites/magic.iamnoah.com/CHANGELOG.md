@@ -1,5 +1,18 @@
 # magic.iamnoah.com
 
+## 0.4.3
+
+### Patch Changes
+
+- magic-auth Modal
+
+* Button
+
+- Cleanup MagicAuth API
+
+- Updated dependencies []:
+  - @magusn/react@0.4.3
+
 ## 0.4.2
 
 ### Patch Changes

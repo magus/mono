@@ -1,5 +1,15 @@
 # @magusn/react
 
+## 0.4.3
+
+### Patch Changes
+
+- magic-auth Modal
+
+* Button
+
+- Cleanup MagicAuth API
+
 ## 0.4.2
 
 ### Patch Changes

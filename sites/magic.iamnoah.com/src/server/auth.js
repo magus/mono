@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
 import jwt from 'jsonwebtoken';
-import { v4 as uuidv4 } from 'uuid';
 
 import config from './config';
 import cookie from './cookie';
@@ -9,8 +8,7 @@ import random from './random';
 import request from './request';
 import words from './words';
 
-import roles from 'src/shared/roles';
-import { Token } from 'graphql';
+import { MagicAuth } from '@magusn/react';
 
 const JwtFields = {
   HasuraNamespace: 'https://hasura.io/jwt/claims',
@@ -23,7 +21,7 @@ const JwtFields = {
 };
 
 const JwtDefaults = {
-  AllowedRoles: [roles.user, roles.self],
+  AllowedRoles: [MagicAuth.ROLES.user, MagicAuth.ROLES.self],
 };
 
 const TokenKinds = {
@@ -84,8 +82,8 @@ function setupLoginRequest(req, res, loginTokenId, loginTokenSecret) {
   // generate a jwt to access the specific loginToken
   const jwtToken = encodeJwtToken(TokenKinds.login, config.LOGIN_TOKEN_EXPIRES, {
     hasuraData: {
-      [JwtFields.HasuraAllowedRoles]: [roles.login],
-      [JwtFields.HasuraDefaultRole]: roles.login,
+      [JwtFields.HasuraAllowedRoles]: [MagicAuth.ROLES.login],
+      [JwtFields.HasuraDefaultRole]: MagicAuth.ROLES.login,
       // hijack hasura user id header and send loginToken id instead
       [JwtFields.HasuraUserId]: loginTokenId,
     },
@@ -104,8 +102,8 @@ function setupLoginRequest(req, res, loginTokenId, loginTokenSecret) {
 function generateRefreshToken(loginTokenId, user) {
   const refreshToken = encodeJwtToken(TokenKinds.refresh, config.JWT_REFRESH_TOKEN_EXPIRES, {
     hasuraData: {
-      [JwtFields.HasuraAllowedRoles]: [roles.self],
-      [JwtFields.HasuraDefaultRole]: roles.self,
+      [JwtFields.HasuraAllowedRoles]: [MagicAuth.ROLES.self],
+      [JwtFields.HasuraDefaultRole]: MagicAuth.ROLES.self,
       [JwtFields.HasuraUserId]: user.id,
     },
     magicData: {

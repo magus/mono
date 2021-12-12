@@ -1,5 +1,8 @@
 import * as React from 'react';
 
+import * as Modal from './Modal';
+import ApolloProvider from './graphql/ApolloProvider';
+import { AuthWatchLoginToken } from './AuthWatchLoginToken';
 import { Context } from './Context';
 import { usePageVisibility } from '../hooks/usePageVisibility';
 
@@ -8,6 +11,17 @@ const EXPIRE_TIMER_FREQUENCY_MS = 5 * 1000;
 const EXPIRE_DURATION_THRESHOLD = 0.25;
 
 export function MagicAuthProvider(props) {
+  return (
+    <Modal.Provider>
+      <MagicAuthProviderInternal>
+        {props.children}
+        <Modal.Portal />
+      </MagicAuthProviderInternal>
+    </Modal.Provider>
+  );
+}
+
+function MagicAuthProviderInternal(props) {
   const instance = React.useRef({
     pendingRefresh: null,
     timerFrequencyMs: EXPIRE_TIMER_FREQUENCY_MS,
@@ -15,6 +29,15 @@ export function MagicAuthProvider(props) {
 
   const [state, set_state] = React.useState(LOGGED_OUT_STATE);
   const [init, set_init] = React.useState(false);
+
+  const modal = Modal.useModal();
+
+  function onLoginRequest(json) {
+    modal.open(Modal.Modals.CheckEmailModal, {
+      props: json,
+      disableBackgroundDismiss: true,
+    });
+  }
 
   // console.debug('[MagicAuthProvider]', { init, state });
 
@@ -109,7 +132,7 @@ export function MagicAuthProvider(props) {
     if (response.status === 200) {
       const json = await response.json();
       if (json) {
-        props.onLoginRequest(json);
+        onLoginRequest(json);
       }
     }
   }
@@ -148,7 +171,7 @@ export function MagicAuthProvider(props) {
           await completeLogin();
           return true;
         } else if (json.loginRequest) {
-          props.onLoginRequest(json.loginRequest);
+          onLoginRequest(json.loginRequest);
           return true;
         } else if (json.jwtToken) {
           await setAuthentication(json);
@@ -207,7 +230,14 @@ export function MagicAuthProvider(props) {
     },
   };
 
-  return <Context.Provider {...{ value }}>{props.children}</Context.Provider>;
+  return (
+    <Context.Provider {...{ value }}>
+      <ApolloProvider>
+        <AuthWatchLoginToken />
+        {props.children}
+      </ApolloProvider>
+    </Context.Provider>
+  );
 }
 
 function timeUntilExpireThresholdMs(expires, threshold) {

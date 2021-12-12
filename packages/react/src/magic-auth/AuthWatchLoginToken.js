@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { useMagicAuth } from '@magusn/react';
-import graphql from 'src/client/graphql/queries';
+import { useMagicAuth } from './useMagicAuth';
+import graphql from './graphql/queries';
 
 function WatchLoginToken({ loginTokenId, handleLogout }) {
   const { loginToken, ...result } = graphql.watchLoginToken(loginTokenId);
@@ -21,7 +21,7 @@ function WatchLoginToken({ loginTokenId, handleLogout }) {
   return null;
 }
 
-export default function AuthWatchLoginToken() {
+export function AuthWatchLoginToken() {
   const auth = useMagicAuth();
 
   if (auth.isLoggedIn) {

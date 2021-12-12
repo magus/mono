@@ -1,4 +1,4 @@
-export default {
+export const ROLES = {
   // custom for login requests (can only access a single loginToken)
   login: 'login',
 

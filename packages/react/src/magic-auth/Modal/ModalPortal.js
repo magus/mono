@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { useModal } from '@components/Modal';
+import { useModal } from './useModal';
 
 import styles from 'styles/modal.module.css';
 
-export default function ModalContainer() {
+export function ModalPortal() {
   const modal = useModal();
 
   return (

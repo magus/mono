@@ -1,7 +1,7 @@
 {
   "name": "@magusn/react",
   "description": "common react components, hooks, etc.",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "gitHead": "47bd21f5d85c6aba674a55c2535aee6ba37b4218",
   "author": "magus",
   "license": "MIT",
@@ -21,6 +21,14 @@
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.3.6",
+    "framer-motion": "^3.1.1",
+    "graphql-tag": "^2.11.0",
+    "next": "12.0.3",
+    "styled-components": "^5.3.3",
+    "subscriptions-transport-ws": "^0.9.18"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",

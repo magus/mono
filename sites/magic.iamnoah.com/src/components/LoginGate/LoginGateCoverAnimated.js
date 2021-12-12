@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { useMagicAuth } from '@magusn/react';
+import { MagicAuth } from '@magusn/react';
 import LoginGateCover from '@components/LoginGate/LoginGateCover';
 
 import styles from 'styles/LoginGate.module.css';
@@ -9,7 +9,7 @@ import styles from 'styles/LoginGate.module.css';
 const ANIMATION_TIMEOUT_MS = 3 * 1000;
 
 export default function LoginGateCoverAnimated() {
-  const auth = useMagicAuth();
+  const auth = MagicAuth.useAuth();
   const [loading, set_loading] = React.useState(!auth.init);
 
   React.useEffect(() => {

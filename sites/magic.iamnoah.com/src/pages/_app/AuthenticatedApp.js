@@ -1,10 +1,6 @@
 import * as React from 'react';
 
-import { useModal } from '@components/Modal';
-import CheckEmailModal from '@components/CheckEmailModal';
-import { MagicAuthProvider } from '@magusn/react';
-import AuthWatchLoginToken from '@components/AuthWatchLoginToken';
-import ApolloProvider from '@components/ApolloProvider';
+import { MagicAuth } from '@magusn/react';
 import LoginGate from '@components/LoginGate';
 
 import AppShell from './AppShell';
@@ -17,33 +13,13 @@ export default function AuthenticatedApp(props) {
 
   return (
     <Providers>
-      <AuthProviderGroup>
+      <MagicAuth.Provider>
         <AppShell {...props}>
           <LoginGate>
             <Component {...pageProps} />
           </LoginGate>
         </AppShell>
-      </AuthProviderGroup>
+      </MagicAuth.Provider>
     </Providers>
-  );
-}
-
-function AuthProviderGroup({ children }) {
-  const modal = useModal();
-
-  function onLoginRequest(json) {
-    modal.open(CheckEmailModal, {
-      props: json,
-      disableBackgroundDismiss: true,
-    });
-  }
-
-  return (
-    <MagicAuthProvider onLoginRequest={onLoginRequest}>
-      <ApolloProvider>
-        <AuthWatchLoginToken />
-        {children}
-      </ApolloProvider>
-    </MagicAuthProvider>
   );
 }

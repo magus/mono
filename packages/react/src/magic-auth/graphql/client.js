@@ -3,9 +3,9 @@ import { onError } from '@apollo/client/link/error';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 
-import roles from 'src/shared/roles';
-import headers from 'src/shared/headers';
-import { JWT_VERIFY_FAIL_REGEX } from 'src/client/graphql/constants';
+import { HEADERS } from './Headers';
+import { ROLES } from './Roles';
+import { JWT_VERIFY_FAIL_REGEX } from './Constants';
 
 const graphqlHost = 'magic-graphql.iamnoah.com/v1/graphql';
 const SharedCache = new InMemoryCache();
@@ -16,7 +16,7 @@ function getAuthHeaders(jwtToken) {
   }
 
   return {
-    [headers.authorization]: `Bearer ${jwtToken}`,
+    [HEADERS.authorization]: `Bearer ${jwtToken}`,
   };
 }
 
@@ -105,7 +105,7 @@ function buildRoleWebsocketLinks(auth) {
 
   _wsLinkRefs.default = defaultLink;
 
-  const wsLinks = Object.keys(roles).reduce((nextLink, role) => {
+  const wsLinks = Object.keys(ROLES).reduce((nextLink, role) => {
     const roleLink = buildWebsocketLink(authHeaders, role);
 
     // store ref to link for closing websocket when client refreshes
@@ -136,7 +136,7 @@ function buildWebsocketLink(authHeaders, role) {
     connectionParams: {
       headers: {
         ...authHeaders,
-        [headers.role]: role,
+        [HEADERS.role]: role,
       },
     },
   });
@@ -161,9 +161,7 @@ function buildErrorLink(auth) {
           needsRefresh = true;
         } else {
           // unhandled error, log it
-          if (__DEV__) {
-            console.error('[ApolloClient]', 'gqlError', gqlError);
-          }
+          console.error('[ApolloClient]', 'gqlError', gqlError);
         }
       });
 
@@ -211,12 +209,12 @@ function buildAuthenticatedHttpLink(auth) {
     // add the authorization to the headers
     // use prevContext to ensure we add to existing context
     operation.setContext((prevContext) => {
-      const role = prevContext.role || roles.user;
+      const role = prevContext.role || ROLES.user;
 
       const newContext = {
         ...prevContext,
         headers: {
-          [headers.role]: role,
+          [HEADERS.role]: role,
           ...prevContext.headers,
           ...authHeaders,
         },

@@ -1,16 +1,15 @@
 import * as React from 'react';
 
 import Page from 'src/components/Page';
-import Button from 'src/components/Button';
 import LoginActivity from 'src/components/LoginActivity';
-import { useMagicAuth } from '@magusn/react';
+import { Button, MagicAuth } from '@magusn/react';
 
 import styles from 'styles/Home.module.css';
 
 HomePage.title = null;
 
 export default function HomePage() {
-  const auth = useMagicAuth();
+  const auth = MagicAuth.useAuth();
 
   // console.debug('[Home]', { auth });
 

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { getMainDefinition } from '@apollo/client/utilities';
 
-import { useMagicAuth } from '@magusn/react';
-import { buildApolloWebsocketClient } from 'src/client/graphql/client';
+import { useMagicAuth } from '../useMagicAuth';
+import { buildApolloWebsocketClient } from './client';
 
 // adhoc useSubscription to prevent opening web socket in client setup
 // also allows us to handle errors on the socket and reset client
@@ -68,7 +68,7 @@ function cleanupWebsocketClient(options) {
   }
 }
 
-export default function useAdhocSubscription(query, { variables, ...options }) {
+export function useAdhocSubscription(query, { variables, ...options }) {
   const auth = useMagicAuth();
   const [result, set_result] = React.useState({
     error: null,

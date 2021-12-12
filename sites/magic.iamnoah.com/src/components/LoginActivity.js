@@ -2,11 +2,11 @@ import * as React from 'react';
 
 import LoginRequests from 'src/components/LoginRequests';
 import RefreshTokens from 'src/components/RefreshTokens';
-import graphql from 'src/client/graphql/queries';
+import { MagicAuth } from '@magusn/react';
 
 export default function LoginActivity() {
-  const watchLoginRequests = graphql.watchLoginRequests();
-  const watchRefreshTokens = graphql.watchRefreshTokens();
+  const watchLoginRequests = MagicAuth.graphql.watchLoginRequests();
+  const watchRefreshTokens = MagicAuth.graphql.watchRefreshTokens();
 
   // // test auth graphql http request
   // const [getMe, me] = graphql.me(/* websocket */);

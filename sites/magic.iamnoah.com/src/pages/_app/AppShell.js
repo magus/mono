@@ -1,14 +1,11 @@
 import * as React from 'react';
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { IntlProvider } from 'react-intl';
-
-const DynamicModalContainer = dynamic(() => import('@components/Modal/ModalContainer'));
 
 const TITLE = 'Magic';
 const DESCRIPTION = 'magic authentication with just your email, no third parties required';
 
-export default function AppShell({ children, Component, pageProps }) {
+export default function AppShell({ children, Component }) {
   const title = Component && Component.title ? `${TITLE} - ${Component.title}` : TITLE;
   const description = Component && Component.description ? Component.description : DESCRIPTION;
 
@@ -42,8 +39,6 @@ export default function AppShell({ children, Component, pageProps }) {
       </Head>
 
       {children}
-
-      <DynamicModalContainer />
     </IntlProvider>
   );
 }

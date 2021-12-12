@@ -2,17 +2,14 @@ import * as React from 'react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 
-import Button from 'src/components/Button';
-
-import headers from 'src/shared/headers';
-import roles from 'src/shared/roles';
+import { Button, MagicAuth } from '@magusn/react';
 
 export default function DeleteSession({ id, onDelete, onError, buttonTitle, buttonTitleDeleting }) {
-  const [deleteSession, { data, called, error }] = useMutation(deleteLoginToken, {
+  const [deleteSession, { called, error }] = useMutation(deleteLoginToken, {
     variables: { id },
     context: {
       headers: {
-        [headers.role]: roles.self,
+        [MagicAuth.HEADERS.role]: MagicAuth.ROLES.self,
       },
     },
   });

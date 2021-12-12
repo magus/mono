@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { expiresMinutesDuration } from 'src/server/time';
 
-import Button from 'src/components/Button';
+import { Button } from '@magusn/react';
 
 import styles from 'styles/email.module.css';
 

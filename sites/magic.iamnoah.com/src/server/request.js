@@ -33,7 +33,7 @@ function getDomain(req) {
 }
 
 function getRealIP(req) {
-  return req.headers['x-real-ip'] || req.connection.remoteAddress;
+  return req.headers['x-real-ip'] || req.connection.remoteAddress || 'Unknown';
 }
 
 function getGeoFromIP(ip) {

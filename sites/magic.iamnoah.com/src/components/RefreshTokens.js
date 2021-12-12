@@ -1,14 +1,14 @@
 import * as React from 'react';
 import Image from 'next/image';
 
-import { useMagicAuth } from '@magusn/react';
+import { MagicAuth } from '@magusn/react';
 import DeleteSession from 'src/components/DeleteSession';
 import Location from 'src/components/Location';
 import Table from 'src/components/Table';
 import TimeAgo from 'src/components/TimeAgo';
 
 export default function RefreshTokens({ loading, refreshTokens }) {
-  const auth = useMagicAuth();
+  const auth = MagicAuth.useAuth();
   const [deletingSessions, set_deletingSessions] = React.useState({});
 
   const header = `Active sessions${loading ? '' : ` (${refreshTokens.length})`}`;
