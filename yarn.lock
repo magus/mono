@@ -2379,22 +2379,6 @@
     npmlog "^4.1.2"
     write-file-atomic "^3.0.3"
 
-"@magusn/eslint-config-magusn@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@magusn/eslint-config-magusn/-/eslint-config-magusn-0.3.1.tgz#40c7ab4118df75063ef0087028416ad015ac4446"
-  integrity sha512-X5xyZ2eQnt7d/QIGtagWjEHn68r9jl+QcgrrqpGJyrvJGIGrDkG7xLyAUptkjxjpNwa0vBTXCMB4T/kVXmuWyw==
-  dependencies:
-    eslint-config-prettier "^8.3.0"
-    eslint-plugin-jest "^25.3.0"
-    eslint-plugin-prettier "^4.0.0"
-    eslint-plugin-react "^7.27.1"
-    eslint-plugin-react-hooks "^4.3.0"
-
-"@magusn/react@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@magusn/react/-/react-0.4.1.tgz#e8ac1f9f86991c99e5194f8f5b4ee5b8e9a6e987"
-  integrity sha512-yPTO2EMB9aiaz0MFzkikFxfTYvA3Ac83Xut+A/6VovnQKZA4URv2yg+8Cre/BdJJmgOfKKGwzLPM/39ZtARteQ==
-
 "@manypkg/find-root@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@manypkg/find-root/-/find-root-1.1.0.tgz#a62d8ed1cd7e7d4c11d9d52a8397460b5d4ad29f"
