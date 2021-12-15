@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { MagicAuth } from '@magusn/react';
+import { MagicAuthProvider } from '@magusn/react';
 import LoginGate from '@components/LoginGate';
 
 import AppShell from './AppShell';
@@ -13,13 +13,13 @@ export default function AuthenticatedApp(props) {
 
   return (
     <Providers>
-      <MagicAuth.Provider>
+      <MagicAuthProvider>
         <AppShell {...props}>
           <LoginGate>
             <Component {...pageProps} />
           </LoginGate>
         </AppShell>
-      </MagicAuth.Provider>
+      </MagicAuthProvider>
     </Providers>
   );
 }

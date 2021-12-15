@@ -1,10 +1,12 @@
 import * as React from 'react';
+import dynamic from 'next/dynamic';
 
 import Page from 'src/components/Page';
-import LoginActivity from 'src/components/LoginActivity';
 import { Button, MagicAuth } from '@magusn/react';
 
 import styles from 'styles/Home.module.css';
+
+const LoginActivity = dynamic(() => import('src/components/LoginActivity'));
 
 HomePage.title = null;
 

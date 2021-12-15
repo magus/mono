@@ -1,12 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { MagicAuth } from '../';
+import graphql from '../graphql/queries';
+import { useMagicAuth } from '../useMagicAuth';
 import { Button } from '../../components/Button';
 
 export function CheckEmailModal({ dismiss, jwtToken, phrase }) {
-  const auth = MagicAuth.useAuth();
-  const approved = MagicAuth.graphql.watchLoginRequest(jwtToken);
+  const auth = useMagicAuth();
+  const approved = graphql.watchLoginRequest(jwtToken);
 
   React.useEffect(async () => {
     if (approved) {
