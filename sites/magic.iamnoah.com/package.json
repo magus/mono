@@ -4,7 +4,7 @@
   "gitHead": "f702c490cf4ceb072d8a231b28a41956db76e526",
   "private": true,
   "scripts": {
-    "analyze": "cross-env ANALYZE=true next build",
+    "analyze": "cross-env NODE_ENV=production ANALYZE=true next build",
     "build": "NODE_ENV=production next build",
     "deploy": "now",
     "deploy:prod": "now --prod",
