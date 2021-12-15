@@ -6,9 +6,17 @@ import LoginPage from 'pages/auth/login';
 
 import LoginGateCover from '@components/LoginGate/LoginGateCover';
 
-const LoginGateCoverAnimated = dynamic(() => import('@components/LoginGate/LoginGateCoverAnimated'), {
-  loading: LoginGateCover,
-});
+const LoginGateCoverAnimated = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "LoginGateCoverAnimated" */
+      /* webpackPrefetch: true */
+      '@components/LoginGate/LoginGateCoverAnimated'
+    ),
+  {
+    loading: LoginGateCover,
+  },
+);
 
 export default function LoginGate(props) {
   return (

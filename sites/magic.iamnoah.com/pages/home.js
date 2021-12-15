@@ -6,7 +6,13 @@ import { Button, MagicAuth } from '@magusn/react';
 
 import styles from 'styles/Home.module.css';
 
-const LoginActivity = dynamic(() => import('src/components/LoginActivity'));
+const LoginActivity = dynamic(() =>
+  import(
+    /* webpackChunkName: "LoginActivity" */
+    /* webpackPrefetch: true */
+    'src/components/LoginActivity'
+  ),
+);
 
 HomePage.title = null;
 
