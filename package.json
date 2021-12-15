@@ -18,7 +18,7 @@
     "test:lint": "eslint ."
   },
   "devDependencies": {
-    "@changesets/changelog-git": "^0.4.2",
+    "@changesets/changelog-git": "^0.1.9",
     "@changesets/cli": "^2.18.1",
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
