@@ -25,6 +25,8 @@ module.exports = {
     'private',
     'license',
     'main',
+    'module',
+    'sideEffects',
     'workspaces',
     'files',
     'publishConfig',
