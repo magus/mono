@@ -5,5 +5,20 @@
   "author": "magus",
   "private": true,
   "license": "MIT",
-  "repository": "magus/mono"
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "mono": "./src/index.js"
+  },
+  "repository": "magus/mono",
+  "scripts": {
+    "lerna:setup": "./scripts/setup.sh"
+  },
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "yargs": "^17.3.0"
+  },
+  "devDependencies": {
+    "@magusn/eslint-config-magusn": "0.3.2"
+  }
 }

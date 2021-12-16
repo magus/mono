@@ -1,5 +1,5 @@
 {
-  "name": "magus-monorepo-root",
+  "name": "mono-root",
   "private": true,
   "workspaces": [
     "packages/*",

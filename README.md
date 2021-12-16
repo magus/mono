@@ -1,7 +1,8 @@
 # 📦 mono
 
-- @magusn/react
 - @magusn/eslint-config-magusn
+- @magusn/mono
+- @magusn/react
 - magic.iamnoah.com
 - dcss.now.sh
 
@@ -13,6 +14,15 @@ yarn bootstrap
 ```
 
 # commands
+
+## Run mono repo script from anywhere
+
+See [packages/mono](packages/mono)
+
+```sh
+mono changeset
+mono test:deps:fix
+```
 
 ## Run a script for a package
 
