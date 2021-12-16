@@ -1,10 +1,11 @@
 # @magusn/react
 
-> common components
+> common react components, hooks, etc.
 
 ## Install
 
 ```bash
+yarn add @magusn/react
 npm install --save @magusn/react
 ```
 
