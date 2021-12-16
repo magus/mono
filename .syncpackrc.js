@@ -26,6 +26,7 @@ module.exports = {
     'license',
     'main',
     'module',
+    'bin',
     'sideEffects',
     'workspaces',
     'files',
