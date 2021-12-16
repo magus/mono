@@ -24,6 +24,7 @@ module.exports = {
     'author',
     'private',
     'license',
+    'type',
     'main',
     'module',
     'bin',
