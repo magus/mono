@@ -1,0 +1,58 @@
+# documentation for actions
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#inputs
+
+name: 'hasura-database-backup'
+description: 'Backup a Hasura database'
+
+inputs:
+  AWS_S3_BUCKET_NAME:
+    description: 'upload destination, e.g. magic.iamnoah.com'
+    required: true
+  AWS_S3_BUCKET_DIR:
+    description: 'directory within bucket, e.g. hasura-database-backup'
+    required: false
+    default: 'hasura-database-backup'
+  HASURA_HOST:
+    description: 'full graphql hostname, e.g. https://magic-graphql.iamnoah.com'
+    required: true
+
+
+  # secrets defined in github settings
+  HASURA_ADMIN_SECRET:
+    required: true
+  AWS_ACCESS_KEY_ID:
+    required: true
+  AWS_SECRET_ACCESS_KEY:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Backup database to sql files
+      run: ${{ github.action_path }}/backup.sh
+      shell: bash
+      env:
+        AWS_S3_BUCKET_DIR: ${{ inputs.AWS_S3_BUCKET_DIR }}
+        HASURA_HOST: ${{ inputs.HASURA_HOST }}
+        HASURA_ADMIN_SECRET: ${{ inputs.HASURA_ADMIN_SECRET }}
+
+    - name: Sync to S3 bucket
+      uses: jakejarvis/s3-sync-action@v0.5.1
+      with:
+        args: --delete
+      env:
+        # authentication
+        AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        # bucket location
+        AWS_REGION: 'us-west-1'
+        AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET_NAME }}
+
+        # upload the env.AWS_S3_BUCKET_NAME where we output the backup above
+        # optional: defaults to entire repository
+        SOURCE_DIR: '${{ inputs.AWS_S3_BUCKET_DIR }}'
+
+        # directory (key) to upload to inside of s3 bucket
+        # remember s3 doesn't really have folders, this is just prepending to filename key
+        # e.g. path/to/file is really just `path-to-file`
+        DEST_DIR: '${{ inputs.AWS_S3_BUCKET_DIR }}'

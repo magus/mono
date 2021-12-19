@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-if [ -z $HASURA_HOST ]; then
-   echo "HASURA_HOST required in env"
+if [ -z $AWS_S3_BUCKET_DIR ]; then
+   echo "AWS_S3_BUCKET_DIR required in env"
    exit 1
 fi
 
-if [ -z $BUCKET_NAME ]; then
-   echo "BUCKET_NAME required in env"
+if [ -z $HASURA_HOST ]; then
+   echo "HASURA_HOST required in env"
    exit 1
 fi
 
@@ -16,7 +16,7 @@ if [ -z $HASURA_ADMIN_SECRET ]; then
    exit 1
 fi
 
-mkdir -p $BUCKET_NAME
+mkdir -p $AWS_S3_BUCKET_DIR
 
 # schema
 curl \
@@ -25,7 +25,7 @@ curl \
 -d '{"opts": ["--no-owner", "--no-acl", "--schema-only", "--schema", "public"], "clean_output": true}' \
 -H "x-hasura-admin-secret: $HASURA_ADMIN_SECRET" \
 $HASURA_HOST/v1alpha1/pg_dump \
-> $BUCKET_NAME/schema.sql
+> $AWS_S3_BUCKET_DIR/schema.sql
 
 # hasura metadata
 # e.g. roles, permissions, relationships, event triggers, etc.
@@ -44,7 +44,7 @@ curl $HASURA_HOST/v1/query \
   -H 'accept-language: en-US,en;q=0.9' \
   --data-binary '{"type":"export_metadata","args":{}}' \
   --compressed \
-  --output $BUCKET_NAME/metadata.json
+  --output $AWS_S3_BUCKET_DIR/metadata.json
 
 # raw data
 curl \
@@ -53,4 +53,4 @@ curl \
 -d '{"opts": ["--no-owner", "--no-acl", "--data-only", "--schema", "public"], "clean_output": true}' \
 -H "x-hasura-admin-secret: $HASURA_ADMIN_SECRET" \
 $HASURA_HOST/v1alpha1/pg_dump \
-> $BUCKET_NAME/data.sql
+> $AWS_S3_BUCKET_DIR/data.sql
