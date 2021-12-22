@@ -18,6 +18,7 @@ module.exports = {
   ],
   sortFirst: [
     'name',
+    'alias',
     'description',
     'version',
     'gitHead',
