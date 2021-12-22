@@ -1,5 +1,15 @@
 import { Duration } from 'luxon';
 
+export async function time(callback) {
+  const start = process.hrtime();
+
+  const result = await callback();
+
+  const time = convertHRTime(process.hrtime(start));
+
+  return { result, time };
+}
+
 export function convertHRTime(hrtime) {
   const nanoseconds = hrtime[0] * 1e9 + hrtime[1];
   const milliseconds = nanoseconds / 1e6;

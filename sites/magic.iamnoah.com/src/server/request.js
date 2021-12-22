@@ -1,13 +1,6 @@
 import geoip from 'geo-from-ip';
 import uaParser from 'ua-parser-js';
 
-export default {
-  getDomain,
-  getRealIP,
-  getUserAgent,
-  parse,
-};
-
 function getDeviceDescription(device) {
   if (device.model) {
     return `${device.model}`;
@@ -60,6 +53,14 @@ function getGeoFromIP(ip) {
   return geo;
 }
 
+function geoFromVercel(req) {
+  const country = decodeURIComponent(req.headers['x-vercel-ip-country']);
+  const region = decodeURIComponent(req.headers['x-vercel-ip-country-region']);
+  const city = decodeURIComponent(req.headers['x-vercel-ip-city']);
+
+  return { country, region, city };
+}
+
 function getUserAgent(req) {
   const userAgentRaw = req.headers['user-agent'];
   const parsedUserAgent = uaParser(userAgentRaw);
@@ -79,7 +80,19 @@ function parse(req) {
 
   return {
     ip,
-    geo: getGeoFromIP(ip),
+    geo: {
+      ...getGeoFromIP(ip),
+      vercel: geoFromVercel(req),
+    },
     ...getUserAgent(req),
   };
 }
+
+const requestAPI = {
+  getDomain,
+  getRealIP,
+  getUserAgent,
+  parse,
+};
+
+export default requestAPI;
