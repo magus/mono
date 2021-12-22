@@ -47,7 +47,6 @@
   "devDependencies": {
     "@magusn/eslint-config-magusn": "0.3.3",
     "@next/bundle-analyzer": "^10.0.5",
-    "@zeit/next-source-maps": "^0.0.3",
     "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-styled-components": "^1.13.3",
     "babel-plugin-transform-remove-console": "^6.9.4",
