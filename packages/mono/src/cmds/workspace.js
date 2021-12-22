@@ -1,5 +1,5 @@
 import { rest } from '../common/rest.js';
-import { mono_exec, exec } from '../common/exec.js';
+import { mono_exec } from '../common/exec.js';
 import { getWorkspaces } from '../common/workspaces.js';
 
 export const command = 'workspace <workspace>';
@@ -28,6 +28,5 @@ export function handler(argv) {
   const workspace = workspaces.map.get(argv.workspace);
 
   // console.debug('[workspace:handler]', { cmd, argv, workspace });
-
-  exec(mono_exec(`yarn ${cmd}`, workspace), workspace);
+  mono_exec(cmd, workspace);
 }

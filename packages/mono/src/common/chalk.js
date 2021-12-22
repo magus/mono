@@ -1,11 +1,14 @@
-import chalkModule from 'chalk';
+import { Chalk } from 'chalk';
 
-export const chalk = chalkModule;
+export const chalk = new Chalk({ level: 2 });
 
-export function bracket(text) {
-  return chalk.yellow(`[${chalk.blue.bold(text)}]`);
+export function bracket(text, options = {}) {
+  const color_text = options.text || 'blueBright';
+  const color_brackets = options.brackets || 'yellowBright';
+
+  return chalk[color_brackets](`[${chalk[color_text].bold(text)}]`);
 }
 
 export function mono(say) {
-  console.log(`🤖 ${chalk.yellow.bold('Mono')}: ${say} ${chalk.dim.gray('<bleep> <bloop>')}`);
+  return `🤖 ${chalk.dim.blackBright.bold('Mono: ')}${say} ${chalk.dim.gray('<bleep> <bloop>')}`;
 }
