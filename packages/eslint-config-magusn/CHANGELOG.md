@@ -1,5 +1,11 @@
 # @magusn/eslint-config-magusn
 
+## 0.3.3
+
+### Patch Changes
+
+- 05505cd: yarn test:deps:fix + syncpack order
+
 ## 0.3.2
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @magusn/react
 
+## 0.4.4
+
+### Patch Changes
+
+- 722891a: build: sideEffects: false to allow tree shaking
+- 2a5441e: build(deps): move magusn/react deps to peerDeps
+- af388bd: build(deps): rearrange MagicAuth for bundle size
+- 05505cd: yarn test:deps:fix + syncpack order
+- e79b000: docs: README install and description
+
 ## 0.4.3
 
 ### Patch Changes

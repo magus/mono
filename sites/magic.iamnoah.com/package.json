@@ -1,7 +1,7 @@
 {
   "name": "magic.iamnoah.com",
   "alias": "magic",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "gitHead": "f702c490cf4ceb072d8a231b28a41956db76e526",
   "private": true,
   "scripts": {
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",
-    "@magusn/react": "0.4.3",
+    "@magusn/react": "0.4.4",
     "@sendgrid/mail": "^7.4.0",
     "@sentry/browser": "^5.29.2",
     "@sentry/integrations": "^5.29.2",
@@ -45,7 +45,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@magusn/eslint-config-magusn": "0.3.2",
+    "@magusn/eslint-config-magusn": "0.3.3",
     "@next/bundle-analyzer": "^10.0.5",
     "@zeit/next-source-maps": "^0.0.3",
     "babel-plugin-module-resolver": "^4.1.0",

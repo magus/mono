@@ -1,5 +1,19 @@
 # @magusn/mono
 
+## 0.2.0
+
+### Minor Changes
+
+- a41bf8d: mono cli for root commands
+
+### Patch Changes
+
+- 918c1f3: build(changeset): changelog-git version
+- d715d4e: add bin to syncpack sort list
+- 05505cd: yarn test:deps:fix + syncpack order
+- bbe1dab: mono ws for ws commands
+- 5846ddc: eslint and prettier ignore files
+
 ## 0.1.5
 
 ### Patch Changes
