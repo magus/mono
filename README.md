@@ -42,22 +42,32 @@ After committing all changes, in order to consume the incremental changeset file
 
 To publish changes, particularly to public modules such as `@magusn/react` or `@magusn/eslint-config-magusn` you should follow up with `yarn publish` which will tag and publish the releases to npm. This is required for deploys through CI.
 
+```sh
+mono changeset
 ```
-yarn changeset
-# select relevant packages and semantic version bumps
-# input commit message or description of changes as summary
-# commit the changes to git
+
+Select relevant packages and semantic version bumps. Input a commit message or description of changes as summary which will be included in `CHANGELOG.md`. Then commit the changes along with the `.changeset` file.
+
+```sh
 git commit
+```
 
-# repeat above as many times as needed
+Repeat above as many times as needed for any number of changes. The command below will consume `.changeset` entries to properly increment semantic versions and bump version of all `package.json` files and generate `CHANGELOG.md` entries.
 
-# when ready bump version of package.json and generate CHANGELOG.md
-yarn changeset version
-# verify things look okay (package.json, CHANGELOG.md, etc.) then commit the changes
-yarn release
-# finally publish the changes to npm
-yarn changeset publish
-# push the git tags to github
+```sh
+mono changeset version
+```
+
+Verify things look okay (package.json, CHANGELOG.md, etc.) and commit changes with command below
+
+```sh
+mono release
+```
+
+Finally publish the changes to npm and push the git tags to github
+
+```sh
+mono changeset publish
 git push --follow-tags
 ```
 
