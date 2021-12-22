@@ -1,4 +1,3 @@
-import path from 'path';
 import { rest } from '../common/rest.js';
 import { mono_exec, exec } from '../common/exec.js';
 import { getWorkspaces } from '../common/workspaces.js';
@@ -30,6 +29,5 @@ export function handler(argv) {
 
   // console.debug('[workspace:handler]', { cmd, argv, workspace });
 
-  process.chdir(path.resolve(workspace.path));
-  exec(mono_exec(`yarn ${cmd}`));
+  exec(mono_exec(`yarn ${cmd}`, workspace), workspace);
 }
