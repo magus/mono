@@ -9,6 +9,19 @@ export function bracket(text, options = {}) {
   return chalk[color_brackets](`[${chalk[color_text].bold(text)}]`);
 }
 
+export function mono_error(type, message) {
+  if (type) {
+    return error(`🤖 ❌ ${bracket(type)} ${message}`);
+  }
+
+  return error(`🤖 ❌ ${message}`);
+}
+
+export function error(text) {
+  // chalk.hex('#ef4444')(text)
+  return chalk.dim.red(text);
+}
+
 export function mono(say) {
   return `🤖 ${chalk.dim.blackBright.bold('Mono: ')}${say} ${chalk.dim.gray('<bleep> <bloop>')}`;
 }

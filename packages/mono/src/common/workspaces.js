@@ -35,8 +35,10 @@ export function getWorkspaces() {
 export function repoRoot() {
   const pwd = exec_result('pwd');
   const currentDir = [pwd];
+
   let foundRepoRoot = false;
-  for (let i = 0; i < 10; i++) {
+
+  while (!foundRepoRoot) {
     const dir = path.resolve(...currentDir);
 
     // exit when we find repo root

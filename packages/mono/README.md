@@ -4,9 +4,10 @@
 
 ## Install
 
-From witin the `packages/mono` directory run the command below
+Run the commands below to install the `mono` CLI utility from within the `packages/mono` directory
 
 ```sh
+cd packages/mono
 yarn global add link:$PWD
 ```
 
@@ -16,6 +17,8 @@ yarn global add link:$PWD
 mono
 mono changeset
 mono test:deps:fix
+mono ws magic dev
+mono ws magic build -- -v --cli-flag=true
 ```
 
 ## License

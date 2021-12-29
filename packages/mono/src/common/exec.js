@@ -1,6 +1,6 @@
 import path from 'path';
 import { execSync } from 'child_process';
-import { chalk, bracket, mono } from './chalk.js';
+import * as chalk from './chalk.js';
 
 export function mono_exec(cmd, workspace) {
   const match = cmd.match(/^yarn (.*)/);
@@ -18,8 +18,8 @@ export function mono_cmd(cmd, workspace) {
     wsContext = workspace.pkg.name;
   }
 
-  const ws = bracket(chalk.cyan(wsContext));
-  console.log(mono(`Running ${ws}${bracket(cmd)}`));
+  const ws = chalk.bracket(chalk.chalk.cyan(wsContext));
+  console.log(chalk.mono(`Running ${ws}${chalk.bracket(cmd)}`));
 
   return cmd;
 }
@@ -29,12 +29,7 @@ export function exec(cmd, workspace) {
     process.chdir(path.resolve(workspace.path));
   }
 
-  try {
-    execSync(cmd, { stdio: 'inherit' });
-  } catch (err) {
-    const name = bracket(exec_result('whoami'));
-    console.error(chalk.dim.red(mono(`Sorry ${name}, I cannot do that.`)));
-  }
+  execSync(cmd, { stdio: 'inherit' });
 }
 
 export function exec_result(cmd) {

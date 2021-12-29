@@ -6,9 +6,9 @@
   "private": true,
   "license": "MIT",
   "type": "module",
-  "main": "src/index.js",
+  "main": "src/mono.js",
   "bin": {
-    "mono": "./src/index.js"
+    "mono": "./src/mono.js"
   },
   "repository": "magus/mono",
   "scripts": {

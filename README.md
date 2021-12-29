@@ -27,9 +27,10 @@ mono test:deps:fix
 ## Run a script for a package
 
 ```
-yarn workspace <workspace> <script>
-yarn workspace magic.iamnoah.com dev
-yarn workspace @magusn/react test:lint
+mono ws <workspace> <script>
+mono ws magic dev
+mono ws @magusn/react test:lint
+mono ws magic build -- -v --cli-flag=true
 ```
 
 ## Manage changesets for CHANGELOG and good history
