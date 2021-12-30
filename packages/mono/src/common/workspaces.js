@@ -3,14 +3,29 @@ import path from 'path';
 import glob from 'glob';
 
 import { MonoError } from '../common/MonoError.js';
-import { exec_result } from '../common/exec.js';
+
+const __dirname = new URL(import.meta.url).pathname;
+
+export const ROOT = {};
+
+try {
+  ROOT.dir = path.resolve(__dirname, '../../../../../');
+  ROOT.pkgPath = path.resolve(ROOT.dir, 'package.json');
+
+  if (!fs.existsSync(ROOT.pkgPath)) {
+    throw new MonoError('Could not find repo root package.json');
+  }
+
+  ROOT.pkg = JSON.parse(fs.readFileSync(ROOT.pkgPath));
+} catch (err) {
+  throw new MonoError(err);
+}
 
 export function getWorkspaces() {
-  const cwd = repoRoot();
-  const rootPkg = JSON.parse(fs.readFileSync(path.resolve(cwd, 'package.json')));
+  const cwd = ROOT.dir;
 
   const workspaceDirList = [];
-  for (const wsPattern of rootPkg.workspaces) {
+  for (const wsPattern of ROOT.pkg.workspaces) {
     workspaceDirList.push(...glob.sync(wsPattern, { cwd }));
   }
 
@@ -30,54 +45,4 @@ export function getWorkspaces() {
     map: workspaceMap,
     list: workspaceList,
   };
-}
-
-export function repoRoot() {
-  const pwd = exec_result('pwd');
-  const currentDir = [pwd];
-
-  let foundRepoRoot = false;
-
-  while (!foundRepoRoot) {
-    const dir = path.resolve(...currentDir);
-
-    // exit when we find repo root
-    if (isRepoRoot(dir)) {
-      foundRepoRoot = true;
-      break;
-    }
-
-    // exit if we hit root of filesystem
-    if (dir === '/') {
-      break;
-    }
-
-    // go up a directory and retry
-    currentDir.push('..');
-  }
-
-  if (!foundRepoRoot) {
-    throw new MonoError('Unable to locate repo root');
-  }
-
-  return path.resolve(...currentDir);
-}
-
-function isRepoRoot(dir) {
-  // console.debug('isRepoRoot', { dir });
-  const pkgPath = path.resolve(dir, 'package.json');
-
-  if (!fs.existsSync(pkgPath)) {
-    return false;
-  }
-
-  const pkgRawContent = fs.readFileSync(pkgPath).toString();
-
-  try {
-    const pkg = JSON.parse(pkgRawContent);
-    // console.debug({ pkgPath, pkg });
-    return pkg.name === 'mono-root';
-  } catch (err) {
-    throw new MonoError('Invalid package.json', { err, pkgPath, pkgRawContent });
-  }
 }

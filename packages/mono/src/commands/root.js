@@ -1,6 +1,6 @@
 import { rest } from '../common/rest.js';
 import { mono_exec } from '../common/exec.js';
-import { repoRoot } from '../common/workspaces.js';
+import { ROOT } from '../common/workspaces.js';
 
 export const command = 'root';
 export const desc = 'Run yarn command from monorepo root';
@@ -15,6 +15,6 @@ export function builder(yargs) {
 
 export function handler(argv) {
   // console.debug('[root]', { argv });
-  process.chdir(repoRoot());
+  process.chdir(ROOT.dir);
   mono_exec(argv.cmd);
 }
