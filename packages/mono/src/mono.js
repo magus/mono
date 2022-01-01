@@ -14,7 +14,7 @@ try {
     .command({
       ...commands.lookup.root,
       command: '$0',
-      desc: `${commands.lookup.root.desc} (fallback command handler)`,
+      desc: 'Fallback command handler (see `mono root`)',
     })
     .check((argv) => {
       if (!isMonoRepo(argv)) {
