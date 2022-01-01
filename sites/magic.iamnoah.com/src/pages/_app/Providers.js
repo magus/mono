@@ -1,4 +1,6 @@
 import { ThemeProvider } from 'styled-components';
+import { MagicAuthProvider } from '@magusn/react';
+
 import { GlobalStyle } from './GlobalStyle';
 
 const theme = {
@@ -12,7 +14,9 @@ export default function Providers(props) {
   return (
     <>
       <GlobalStyle />
-      <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <MagicAuthProvider>{props.children}</MagicAuthProvider>
+      </ThemeProvider>
     </>
   );
 }

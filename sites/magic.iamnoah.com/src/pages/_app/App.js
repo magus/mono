@@ -1,28 +1,31 @@
 import * as React from 'react';
-import dynamic from 'next/dynamic';
 
-import LoggedOutApp from './LoggedOutApp';
-import LoadingApp from './LoadingApp';
+import AppShell from './AppShell';
+import Providers from './Providers';
 
-const AuthenticatedApp = dynamic(
-  () =>
-    import(
-      /* webpackChunkName: "AuthenticatedApp" */
-      /* webpackPrefetch: true */
-      '@pages/_app/AuthenticatedApp'
-    ),
-  {
-    loading: LoadingApp,
-  },
-);
+import LoginGate from '@components/LoginGate';
 
 export default function App(props) {
-  const { Component } = props;
+  return (
+    <Providers>
+      <AppShell {...props}>
+        <AuthApp {...props} />
+      </AppShell>
+    </Providers>
+  );
+}
+
+function AuthApp(props) {
+  const { Component, pageProps } = props;
   // console.debug({ Component, pageProps });
 
   if (Component.disableAuth) {
-    return <LoggedOutApp {...props} />;
+    return <Component {...pageProps} />;
   }
 
-  return <AuthenticatedApp {...props} />;
+  return (
+    <LoginGate>
+      <Component {...pageProps} />
+    </LoginGate>
+  );
 }

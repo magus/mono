@@ -1,9 +1,23 @@
 import * as React from 'react';
 import * as Sentry from '@sentry/nextjs';
 import NextApp from 'next/app';
+import dynamic from 'next/dynamic';
 
 import { Error } from '@components/Error';
-import App from './App';
+import LoginGateCover from '@components/LoginGate/LoginGateCover';
+
+const DynamicApp = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "DynamicApp" */
+      /* webpackPrefetch: true */
+      './App'
+    ),
+  {
+    loading: LoginGateCover,
+  },
+);
+
 export default class MyApp extends NextApp {
   static getDerivedStateFromProps(props, state) {
     // If there was an error generated within getInitialProps, and we haven't
@@ -50,6 +64,6 @@ export default class MyApp extends NextApp {
       return <Error statusCode="Oops" title="Something went wrong, please reload the page." />;
     }
 
-    return <App {...this.props} />;
+    return <DynamicApp {...this.props} />;
   }
 }
