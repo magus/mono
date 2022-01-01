@@ -57,6 +57,13 @@ const __CONFIG = {
   // https://nextjs.org/docs/advanced-features/output-file-tracing
   outputFileTracing: false,
 
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    // > FORCE=true mono ws magic build
+    ignoreDuringBuilds: process.env.FORCE === 'true',
+  },
+
   // --------------------------------------------------
   // withSourceMaps: source maps + sentry configuration
   env: {
