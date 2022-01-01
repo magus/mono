@@ -37,11 +37,7 @@ mono ws magic build -- -v --cli-flag=true
 
 see [changesets cli documentation](https://github.com/changesets/changesets/blob/main/docs/command-line-options.md)
 
-The overall flow is, make changes locally, commit them and also run `yarn changeset` to generate an incremental changeset describing the changes. Eventually we may want to combine `yarn changeset` and `git commit`. Maybe a script that collects commit *message* first then copies to clipboard (`pbcopy`) then runs `yarn changeset` ... *paste* ... `git commit -m [message]`.
-
-After committing all changes, in order to consume the incremental changeset files you can run `yarn changeset version`. This will calculate the correct semantic version bump, update all `package.json` references and generate `CHANGELOG.md` entries based on the changeset files.
-
-To publish changes, particularly to public modules such as `@magusn/react` or `@magusn/eslint-config-magusn` you should follow up with `yarn publish` which will tag and publish the releases to npm. This is required for deploys through CI.
+The overall flow is, make changes locally, commit them and also run `mono changeset` to generate an incremental changeset describing the changes. Eventually we may want to combine `mono changeset` and `git commit`. Maybe a script that collects commit *message* first then copies to clipboard (`pbcopy`) then runs `mono changeset` ... *paste* ... `git commit -m [message]`.
 
 ```sh
 mono changeset
@@ -65,7 +61,7 @@ Verify things look okay (package.json, CHANGELOG.md, etc.) and commit changes wi
 mono release
 ```
 
-Finally publish the changes to npm and push the git tags to github
+Finally to publish changes, particularly to public modules such as `@magusn/react` or `@magusn/eslint-config-magusn` you should follow up with `mono changeset publish` which will tag and publish the releases to npm. This is required for deploys since they require pulling public dependencies from public NPM repository.
 
 ```sh
 mono changeset publish
