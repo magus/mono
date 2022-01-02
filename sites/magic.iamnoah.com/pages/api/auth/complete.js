@@ -3,8 +3,14 @@ import gql from 'graphql-tag';
 import graphql from 'src/server/graphql';
 import auth from 'src/server/auth';
 
+import * as ServerHandler from '../../../src/server/handler';
+
+const checkMethod = ServerHandler.method(['POST']);
+
 export default async function loginComplete(req, res) {
   try {
+    checkMethod(req);
+
     const loginRequestId = auth.getLoginRequest(req);
 
     if (!loginRequestId) {

@@ -5,6 +5,10 @@ import graphql from 'src/server/graphql';
 import auth from 'src/server/auth';
 import request from 'src/server/request';
 
+import * as ServerHandler from '../../../src/server/handler';
+
+const checkMethod = ServerHandler.method(['POST']);
+
 // schema for validating username and password
 const schema = Joi.object({
   email: Joi.string().email().required(),
@@ -12,6 +16,8 @@ const schema = Joi.object({
 
 export default async function login(req, res) {
   try {
+    checkMethod(req);
+
     const form = typeof req.body === 'string' ? JSON.parse(req.body) : {};
     const { error, value } = schema.validate(form);
 

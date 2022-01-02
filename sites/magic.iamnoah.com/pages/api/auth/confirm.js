@@ -1,11 +1,16 @@
 import gql from 'graphql-tag';
 
 import graphql from 'src/server/graphql';
+import * as ServerHandler from '../../../src/server/handler';
+
+const checkMethod = ServerHandler.method(['POST']);
 
 const loginConfirmUrl = `${process.env.PROTOCOL}://${process.env.HOSTNAME}/auth/confirm`;
 
 export default async function loginConfirm(req, res) {
   try {
+    checkMethod(req);
+
     const { id, token } = req.query;
 
     // set loginToken to approved
