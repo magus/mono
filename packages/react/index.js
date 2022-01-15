@@ -4,8 +4,10 @@
 // alternative would be to import specifically via package syntax
 // `import { MagicAuthProvider } from '@magusn/react/magic-auth/MagicAuthProvider'`
 
-export { Button } from './components/Button/Button';
-export { usePageVisibility } from './hooks/usePageVisibility';
-
-// export * because magic-auth/index.js controls exports
-export * from './magic-auth';
+// default export from @magusn/react is components
+// exporting specifics can be done via folders
+// e.g.
+//    import { MagicAuth } from '@magusn/react/magic-auth'
+//
+// export * lets components/index.js control exports
+export * from './components';

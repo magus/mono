@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 
-import { MagicAuth } from '@magusn/react';
+import { MagicAuth } from '@magusn/react/magic-auth';
 import DeleteSession from 'src/components/DeleteSession';
 import Location from 'src/components/Location';
 import Table from 'src/components/Table';

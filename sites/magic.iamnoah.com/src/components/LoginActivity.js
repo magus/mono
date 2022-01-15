@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import LoginRequests from 'src/components/LoginRequests';
 import RefreshTokens from 'src/components/RefreshTokens';
-import { MagicAuthGraphql } from '@magusn/react';
+import { MagicAuthGraphql } from '@magusn/react/magic-auth';
 
 export default function LoginActivity() {
   const watchLoginRequests = MagicAuthGraphql.watchLoginRequests();

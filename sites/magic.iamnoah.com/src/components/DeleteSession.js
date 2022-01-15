@@ -2,7 +2,8 @@ import * as React from 'react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 
-import { Button, MagicAuth } from '@magusn/react';
+import { Button } from '@magusn/react';
+import { MagicAuth } from '@magusn/react/magic-auth';
 
 export default function DeleteSession({ id, onDelete, onError, buttonTitle, buttonTitleDeleting }) {
   const [deleteSession, { called, error }] = useMutation(deleteLoginToken, {

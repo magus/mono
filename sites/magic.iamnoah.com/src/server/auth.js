@@ -8,7 +8,7 @@ import random from './random';
 import request from './request';
 import words from './words';
 
-import { MagicAuth } from '@magusn/react';
+import { MagicAuth } from '@magusn/react/magic-auth';
 
 const JwtFields = {
   HasuraNamespace: 'https://hasura.io/jwt/claims',

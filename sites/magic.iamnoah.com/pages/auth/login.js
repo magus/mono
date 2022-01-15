@@ -2,7 +2,8 @@ import * as React from 'react';
 import { useRouter } from 'next/router';
 
 import Page from 'src/components/Page';
-import { Button, MagicAuth } from '@magusn/react';
+import { Button } from '@magusn/react';
+import { MagicAuth } from '@magusn/react/magic-auth';
 
 import styles from 'styles/Login.module.css';
 

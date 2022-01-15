@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { MagicAuth } from '@magusn/react';
+import { MagicAuth } from '@magusn/react/magic-auth';
 import LoginGateCover from '@components/LoginGate/LoginGateCover';
 
 import styles from 'styles/LoginGate.module.css';

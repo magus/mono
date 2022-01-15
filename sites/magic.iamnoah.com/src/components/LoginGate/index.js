@@ -1,7 +1,7 @@
 import * as React from 'react';
 import dynamic from 'next/dynamic';
 
-import { MagicAuth } from '@magusn/react';
+import { MagicAuth } from '@magusn/react/magic-auth';
 import LoginPage from 'pages/auth/login';
 
 import LoginGateCover from '@components/LoginGate/LoginGateCover';
