@@ -5,8 +5,8 @@
   "gitHead": "47bd21f5d85c6aba674a55c2535aee6ba37b4218",
   "author": "magus",
   "license": "MIT",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "main": "index.js",
+  "module": "index.js",
   "sideEffects": false,
   "files": [
     "src"

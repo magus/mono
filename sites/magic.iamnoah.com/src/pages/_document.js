@@ -1,6 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { randomBytes } from 'crypto';
-import { ServerStyleSheet } from '@magusn/react/src/styles';
+import { ServerStyleSheet } from '@magusn/react/styles';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {

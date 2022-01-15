@@ -1,4 +1,4 @@
-import { createGlobalStyle } from '@magusn/react/src/styles';
+import { createGlobalStyle } from '@magusn/react/styles';
 
 export const GlobalStyle = createGlobalStyle`
   :root {
