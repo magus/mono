@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from '@magusn/react/src/styles';
 
 export const GlobalStyle = createGlobalStyle`
   :root {
