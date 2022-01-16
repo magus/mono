@@ -1,5 +1,12 @@
 # magic.iamnoah.com
 
+## 0.5.1
+
+### Patch Changes
+
+- Updated dependencies [abd2120]
+  - @magusn/react@0.6.0
+
 ## 0.5.0
 
 ### Minor Changes

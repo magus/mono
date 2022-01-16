@@ -1,5 +1,11 @@
 # @magusn/react
 
+## 0.6.0
+
+### Minor Changes
+
+- abd2120: include files for published npm package
+
 ## 0.5.0
 
 ### Minor Changes
