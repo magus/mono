@@ -1,5 +1,20 @@
 # @magusn/react
 
+## 0.5.0
+
+### Minor Changes
+
+- 5d7968c: @magusn/react/src/styles export for easy migration between css-in-js providers
+  - Easily switch between styled-components and @emotion for example
+- 7f94483: Use specific folder imports from @magusn/react, e.g. @magusn/react/magic-auth
+- 3f5079b: remove styled-jsx reducing bundle size by ~5kb
+
+### Patch Changes
+
+- f1eea8a: export babelrc function to mutate babel config for styles
+- 6341346: Spacer
+- c55e93b: remove src folder and move exports to top level
+
 ## 0.4.4
 
 ### Patch Changes

@@ -1,5 +1,29 @@
 # magic.iamnoah.com
 
+## 0.5.0
+
+### Minor Changes
+
+- 195cdb7: server/handler for method check (force POST only)
+- 6dbe9b3: rearrange dynamic loading for bundle size
+- 5d7968c: @magusn/react/src/styles export for easy migration between css-in-js providers
+  - Easily switch between styled-components and @emotion for example
+- 7f94483: Use specific folder imports from @magusn/react, e.g. @magusn/react/magic-auth
+- 3f5079b: remove styled-jsx reducing bundle size by ~5kb
+
+### Patch Changes
+
+- 75bc5c1: FORCE=true for ignoring eslint in build
+- f1eea8a: export babelrc function to mutate babel config for styles
+- fd83f3a: vercel geo from headers
+- Updated dependencies [f1eea8a]
+- Updated dependencies [5d7968c]
+- Updated dependencies [7f94483]
+- Updated dependencies [3f5079b]
+- Updated dependencies [6341346]
+- Updated dependencies [c55e93b]
+  - @magusn/react@0.5.0
+
 ## 0.4.5
 
 ### Patch Changes

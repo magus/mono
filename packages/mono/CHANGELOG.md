@@ -1,5 +1,17 @@
 # @magusn/mono
 
+## 0.3.0
+
+### Minor Changes
+
+- 3720723: workspaces ROOT
+- 6061582: run only within mono repo
+
+### Patch Changes
+
+- 9c7270d: error handling and chalk
+- 3c435bf: cleaner error handling for cli --verbose for more information
+
 ## 0.2.0
 
 ### Minor Changes

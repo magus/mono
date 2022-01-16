@@ -1,5 +1,11 @@
 # @magusn/eslint-config-magusn
 
+## 0.4.0
+
+### Minor Changes
+
+- e4bfe86: eslint 2020 for import.meta
+
 ## 0.3.3
 
 ### Patch Changes

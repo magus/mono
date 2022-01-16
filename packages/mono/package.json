@@ -1,7 +1,7 @@
 {
   "name": "@magusn/mono",
   "description": "workspace to catch root monorepo changes",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "magus",
   "private": true,
   "license": "MIT",
@@ -19,7 +19,7 @@
     "yargs": "^17.3.0"
   },
   "devDependencies": {
-    "@magusn/eslint-config-magusn": "0.3.3",
+    "@magusn/eslint-config-magusn": "0.4.0",
     "glob": "^7.2.0"
   }
 }
