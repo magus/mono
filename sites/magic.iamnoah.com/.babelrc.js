@@ -1,7 +1,8 @@
-// TODO Can eventually remove and replace once these plugins are supported
-// https://github.com/vercel/next.js/discussions/30174
+// TODO
+// We can eventually remove .babelrc entirely once all plugins are supported by swc
+// See https://github.com/vercel/next.js/discussions/30174
 
-module.exports = {
+const config = {
   presets: [
     [
       'next/babel',
@@ -27,7 +28,6 @@ module.exports = {
         },
       },
     ],
-    ['styled-components', { ssr: true, displayName: true }],
   ],
 
   env: {
@@ -39,3 +39,9 @@ module.exports = {
     },
   },
 };
+
+// mutates babel config for styles related stuff
+const Styles = require('@magusn/react/styles/cjs');
+Styles.babelrc(config);
+
+module.exports = config;
