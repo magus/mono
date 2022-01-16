@@ -11,6 +11,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const packages = ['@magusn/react'];
 const withTM = require('next-transpile-modules')(packages);
 
+// https://securityheaders.com
 const securityHeaders = [
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
   {
@@ -71,7 +72,7 @@ const __CONFIG = {
     ...EnvConfig,
   },
 
-  // https://securityheaders.com
+  // https://nextjs.org/docs/api-reference/next.config.js/headers
   async headers() {
     return [
       {
