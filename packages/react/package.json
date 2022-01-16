@@ -10,7 +10,10 @@
   "module": "index.js",
   "sideEffects": false,
   "files": [
-    "src"
+    "components",
+    "hooks",
+    "magic-auth",
+    "styles"
   ],
   "publishConfig": {
     "access": "public"
