@@ -8,7 +8,7 @@ Run the commands below to install the `mono` CLI utility from within the `packag
 
 ```sh
 cd packages/mono
-yarn global add link:$PWD
+ln -s "$PWD/mono" "$(yarn global bin)/mono"
 ```
 
 ## Usage
