@@ -2,11 +2,6 @@
 // We can eventually remove .babelrc entirely once all plugins are supported by swc
 // See https://github.com/vercel/next.js/discussions/30174
 
-// babel-preset.js
-const preset = require('next/babel');
-
-console.debug(preset.plugins);
-
 const config = {
   presets: [
     [
@@ -46,7 +41,7 @@ const config = {
 };
 
 // mutates babel config for styles related stuff
-const Styles = require('@magusn/react/styles/cjs');
+const Styles = require('@magusn/react/styles/cjs.js');
 Styles.babelrc(config);
 
 module.exports = config;
