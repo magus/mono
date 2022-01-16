@@ -1,6 +1,9 @@
+// this babel config is required for `mono ws react test:unit` to run
 module.exports = {
   presets: [
+    // jest will fail to parse `import` without this
     ['@babel/preset-env', { targets: { node: 'current' } }],
+    // jest will fail to parse jsx without this
     [
       '@babel/preset-react',
       {
