@@ -17,8 +17,12 @@ yarn global add link:$PWD
 mono
 mono changeset
 mono test:deps:fix
+
 mono ws magic dev
 mono ws magic build -- -v --cli-flag=true
+
+mono ws @magusn/react test:lint
+mono ws react add emotion
 ```
 
 ## License
