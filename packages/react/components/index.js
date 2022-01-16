@@ -1,1 +1,2 @@
-export { Button } from './Button/Button.js';
+export { Button } from './Button/Button';
+export { Spacer } from './Spacer';

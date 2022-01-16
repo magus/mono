@@ -1,0 +1,5 @@
+---
+'@magusn/react': patch
+---
+
+Spacer
