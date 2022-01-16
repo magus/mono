@@ -34,16 +34,14 @@ export default function RefreshTokens({ loading, refreshTokens }) {
             <tr key={rt.id}>
               <Table.IconColumn>
                 {auth.loginRequestId === rt.id ? (
-                  <div className={Table.styles.flexCenter}>
-                    <Image
-                      layout="fixed"
-                      src="/wand.png"
-                      alt="magic wand"
-                      title="Current session"
-                      width={32}
-                      height={32}
-                    />
-                  </div>
+                  <Image
+                    layout="fixed"
+                    src="/wand.png"
+                    alt="magic wand"
+                    title="Current session"
+                    width={32}
+                    height={32}
+                  />
                 ) : (
                   <DeleteSession
                     id={rt.id}

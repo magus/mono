@@ -4,8 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MagicAuth } from '@magusn/react/magic-auth';
 import LoginGateCover from '@components/LoginGate/LoginGateCover';
 
-import styles from 'styles/LoginGate.module.css';
-
 const ANIMATION_TIMEOUT_MS = 3 * 1000;
 
 export default function LoginGateCoverAnimated() {
@@ -32,12 +30,7 @@ export default function LoginGateCoverAnimated() {
   return (
     <AnimatePresence>
       {hideLoginGate ? null : (
-        <motion.div
-          className={styles.loginGateCover}
-          initial={false}
-          animate={{ opacity: 1.0 }}
-          exit={{ opacity: 0.0 }}
-        >
+        <motion.div initial={false} animate={{ opacity: 1.0 }} exit={{ opacity: 0.0 }}>
           <LoginGateCover onAnimationEnd={handleAnimationEnd} />
         </motion.div>
       )}

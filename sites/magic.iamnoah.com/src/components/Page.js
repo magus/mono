@@ -1,10 +1,13 @@
 import * as React from 'react';
+import styled, { css } from 'styled-components';
+
 import useWindowHeight from 'src/hooks/useWindowHeight';
 
-import styles from 'styles/Page.module.css';
+export default function Page(props) {
+  const { children, className, innerRef, forceWindowHeight } = props;
 
-export default function Page({ children, className, innerRef, forceWindowHeight, ...restProps }) {
   const pageRef = React.useRef();
+
   // sync pageRef and innerRef
   React.useEffect(() => {
     if (innerRef) {
@@ -14,21 +17,35 @@ export default function Page({ children, className, innerRef, forceWindowHeight,
 
   const windowHeight = useWindowHeight();
 
-  const containerStyle = {};
-  const containerClassNames = [styles.container];
-
-  if (className) {
-    containerClassNames.push(className);
-  }
+  const style = {};
 
   if (forceWindowHeight) {
-    containerClassNames.push(styles.forceWindowHeight);
-    containerStyle.height = windowHeight;
+    style.height = windowHeight;
   }
 
   return (
-    <div className={containerClassNames.join(' ')} ref={pageRef} {...{ style: containerStyle }} {...restProps}>
+    <Container className={className} ref={pageRef} style={style} {...props}>
       {children}
-    </div>
+    </Container>
   );
 }
+
+const forceWindowHeight = (props) => {
+  return !props.forceWindowHeight
+    ? ''
+    : css`
+        position: absolute;
+        height: 100%;
+        width: 100%;
+      `;
+};
+
+const Container = styled.div`
+  padding: var(--spacer-3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  ${forceWindowHeight}
+`;

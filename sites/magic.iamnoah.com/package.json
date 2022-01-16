@@ -5,7 +5,7 @@
   "gitHead": "f702c490cf4ceb072d8a231b28a41956db76e526",
   "private": true,
   "scripts": {
-    "analyze": "cross-env NODE_ENV=production ANALYZE=true next build",
+    "analyze": "ANALYZE=true next build",
     "build": "NODE_ENV=production next build",
     "deploy": "now",
     "deploy:prod": "now --prod",
@@ -34,22 +34,22 @@
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "luxon": "^1.25.0",
-    "next": "12.0.3",
+    "next": "12.0.8",
     "next-transpile-modules": "^9.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-intl": "^5.10.9",
+    "styled-components": "^5.3.3",
     "subscriptions-transport-ws": "^0.9.18",
     "ua-parser-js": "^0.7.23",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@magusn/eslint-config-magusn": "0.3.3",
-    "@next/bundle-analyzer": "^10.0.5",
+    "@next/bundle-analyzer": "^12.0.8",
     "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-styled-components": "^1.13.3",
     "babel-plugin-transform-remove-console": "^6.9.4",
-    "cross-env": "^7.0.3",
-    "eslint-config-next": "12.0.3"
+    "eslint-config-next": "12.0.8"
   }
 }

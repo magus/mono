@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import styled from 'styled-components';
+import { Spacer } from '@magusn/react';
 
 import Page from 'src/components/Page';
-
-import styles from 'styles/auth-confirm.module.css';
 
 LoginConfirm.disableAuth = true;
 LoginConfirm.title = 'Login confirmed';
@@ -27,18 +27,43 @@ export default function LoginConfirm() {
   // }, []);
 
   return (
-    <Page innerRef={pageRef} className={styles.container}>
-      <div className={styles.header}>You are logged in</div>
+    <PageContainer innerRef={pageRef}>
+      <Header>You are now logged in on the original tab.</Header>
 
-      <div className={styles.instructions}>Go back to the original page.</div>
-      <div className={styles.instructions}>This window can be closed.</div>
+      <Instructions>This window can now be closed.</Instructions>
 
-      <Link href={!email ? '/' : `/?email=${email}`}>
-        <a className={styles.loginHereToo}>
-          Click here to login here too
-          {!email ? null : <span className={styles.email}> ({email})</span>}
-        </a>
-      </Link>
-    </Page>
+      <Spacer vertical size={2} />
+
+      {!email ? null : (
+        <Link href={`/?email=${email}`}>
+          <a>
+            Login as <Email>{email}</Email> in this tab.
+          </a>
+        </Link>
+      )}
+    </PageContainer>
   );
 }
+
+const PageContainer = styled(Page)`
+  height: 100%;
+  max-height: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+`;
+
+const Header = styled.div`
+  font-size: var(--font-jumbo);
+  font-weight: 600;
+  margin: 0 0 var(--spacer-3) 0;
+`;
+
+const Instructions = styled.div`
+  font-size: var(--font-large);
+  font-weight: 200;
+`;
+
+const Email = styled.span`
+  font-weight: 200;
+  text-transform: initial;
+`;

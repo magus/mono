@@ -1,4 +1,4 @@
-import { styled } from '@magusn/react/styles';
+import styled from 'styled-components';
 
 // we are matching the API of next/error
 // nextjs chose some weird prop names

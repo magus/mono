@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
+import { Spacer } from '@magusn/react';
 
 import Page from 'src/components/Page';
 import { Button } from '@magusn/react';
 import { MagicAuth } from '@magusn/react/magic-auth';
-
-import styles from 'styles/Login.module.css';
 
 LoginPage.title = 'Login';
 
@@ -15,10 +15,10 @@ export default function LoginPage() {
   // console.debug('[LoginPage]', { auth });
 
   return (
-    <Page className={styles.container}>
-      <div className={styles.containerContent}>
-        {auth.isLoggedIn ? <Button onClick={auth.actions.logout}>Logout</Button> : <LoginForm />}
-      </div>
+    <Page>
+      <Spacer vertical size={6} />
+
+      <Content>{auth.isLoggedIn ? <Button onClick={auth.actions.logout}>Logout</Button> : <LoginForm />}</Content>
     </Page>
   );
 }
@@ -54,14 +54,11 @@ function LoginForm() {
     set_email(event.target.value);
   }
 
-  const buttonStyles = email ? styles.loginButtonEnabled : styles.loginButton;
-
   return (
     <>
-      <form className={styles.loginForm} onSubmit={handleSubmit}>
-        <input
+      <StyledForm onSubmit={handleSubmit}>
+        <LoginInput
           id="email"
-          className={styles.loginInput}
           name="email"
           type="email"
           placeholder="magic@gmail.com"
@@ -69,12 +66,45 @@ function LoginForm() {
           onFocus={handleInputFocus}
           onChange={handleEmailInput}
         />
-        <label htmlFor="email" className={styles.loginLabel}>
-          Email
-        </label>
 
-        <Button className={buttonStyles}>Login</Button>
-      </form>
+        <Spacer vertical px={1} />
+
+        <EmailLabel htmlFor="email">Email</EmailLabel>
+
+        <Button disabled={!email}>Login</Button>
+      </StyledForm>
     </>
   );
 }
+
+const Content = styled.div`
+  height: 100%;
+  width: 100%;
+  max-width: 480px;
+  min-width: 320px;
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const EmailLabel = styled.label`
+  visibility: hidden;
+  align-self: flex-start;
+  font-size: var(--font-small);
+`;
+
+const LoginInput = styled.input`
+  width: 100%;
+  height: var(--button-height);
+  border: 1px solid rgba(var(--font-color), 0.4);
+  border-radius: var(--spacer);
+  padding: var(--spacer) var(--spacer-2);
+
+  &::placeholder {
+    color: rgba(var(--font-color), 0.25);
+  }
+`;

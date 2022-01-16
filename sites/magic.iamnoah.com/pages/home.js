@@ -1,11 +1,11 @@
 import * as React from 'react';
 import dynamic from 'next/dynamic';
+import styled from 'styled-components';
+import { Spacer } from '@magusn/react';
 
 import Page from 'src/components/Page';
 import { Button } from '@magusn/react';
 import { MagicAuth } from '@magusn/react/magic-auth';
-
-import styles from 'styles/Home.module.css';
 
 const LoginActivity = dynamic(() =>
   import(
@@ -23,14 +23,27 @@ export default function HomePage() {
   // console.debug('[Home]', { auth });
 
   return (
-    <Page className={styles.container}>
-      <div className={styles.containerContent}>
-        <h1 className={styles.email}>{!auth.user ? <span>&lrm;</span> : auth.user.email}</h1>
+    <Page>
+      <Spacer vertical size={6} />
+
+      <Content>
+        <Email>{!auth.user ? <span>&lrm;</span> : auth.user.email}</Email>
 
         <LoginActivity />
 
         <Button onClick={auth.actions.logout}>Logout</Button>
-      </div>
+      </Content>
     </Page>
   );
 }
+
+const Content = styled.div`
+  max-height: 100%;
+  max-width: 100%;
+  overflow-y: auto;
+`;
+
+const Email = styled.h1`
+  font-size: var(--spacer-3);
+  font-weight: 100;
+`;

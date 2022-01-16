@@ -1,4 +1,4 @@
-import { createGlobalStyle } from '@magusn/react/styles';
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -10,10 +10,6 @@ export const GlobalStyle = createGlobalStyle`
     --gray: 154, 158, 163;
     --green: 16, 185, 129;
 
-    --font-small: 14px;
-    --font-normal: 16px;
-    --font-large: 20px;
-
     --spacer: 8px;
     --spacer-1: var(--spacer);
     --spacer-2: calc(var(--spacer) * 2);
@@ -21,6 +17,13 @@ export const GlobalStyle = createGlobalStyle`
     --spacer-4: calc(var(--spacer) * 4);
     --spacer-5: calc(var(--spacer) * 5);
     --spacer-6: calc(var(--spacer) * 6);
+    --spacer-7: calc(var(--spacer) * 7);
+    --spacer-8: calc(var(--spacer) * 8);
+
+    --font-small: 14px;
+    --font-normal: 16px;
+    --font-large: 20px;
+    --font-jumbo: 64px;
 
     --background-color: var(--white);
     --font-color: var(--black);

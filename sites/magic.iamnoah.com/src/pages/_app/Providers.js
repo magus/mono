@@ -1,5 +1,5 @@
 import { MagicAuthProvider } from '@magusn/react/magic-auth';
-import { ThemeProvider } from '@magusn/react/styles';
+import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyle } from './GlobalStyle';
 

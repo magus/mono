@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
 
 import { expiresMinutesDuration } from 'src/server/time';
 
 import { Button } from '@magusn/react';
 
-import styles from 'styles/email.module.css';
+AuthEmail.disableAuth = true;
 
-Email.disableAuth = true;
-
-export default function Email() {
+export default function AuthEmail() {
   const router = useRouter();
   const {
     email = 'test@test.com',
@@ -22,15 +21,15 @@ export default function Email() {
   const expiresIn = expiresMinutesDuration(expireMinutes);
 
   return (
-    <table className={styles.container} cellPadding="0" cellSpacing="0" border="0">
+    <Table cellPadding="0" cellSpacing="0" border="0">
       <tbody>
         <tr>
           <td>
-            <span className={styles.paragraph}>
-              Click the magic words below to login as <strong className={styles.email}>{email}</strong>.
+            <Paragraph>
+              Click the magic words below to login as <Email>{email}</Email>.
               <br />
               The magic words will only work for the next {expiresIn}.
-            </span>
+            </Paragraph>
           </td>
         </tr>
 
@@ -42,10 +41,24 @@ export default function Email() {
 
         <tr>
           <td>
-            <span className={styles.paragraph}>Ensure the magic words match what you saw on the login page.</span>
+            <Paragraph>Ensure the magic words match what you saw on the login page.</Paragraph>
           </td>
         </tr>
       </tbody>
-    </table>
+    </Table>
   );
 }
+
+const Table = styled.table`
+  max-width: 450px;
+  text-align: left;
+`;
+
+const Email = styled.span`
+  font-weight: 700;
+`;
+
+const Paragraph = styled.span`
+  display: inline-block;
+  padding: var(--spacer-2) 0;
+`;

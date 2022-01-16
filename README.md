@@ -76,8 +76,6 @@ calling `version` and `publish`. The commands are separate to allow you to valid
 
 
 # todo
-- cleanup all usages of css modules (CMD+Shift+F for `.css'`)
-  - verify `yarn analyze` no longer shows `styled-jsx` in `static/chunks/main-[guid].js` bundle
 - remove indirection of `src/pages` and just push pages under `pages/`
 - consider removing absolute and special paths (e.g. `@components`) they break vscode cmd click
 - use `MagicAuth` on a test site

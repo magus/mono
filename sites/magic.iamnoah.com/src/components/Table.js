@@ -1,14 +1,81 @@
 import * as React from 'react';
-
-import styles from 'styles/Table.module.css';
+import styled from 'styled-components';
+import { Spacer } from '@magusn/react';
 
 const px = (pixels) => `${pixels}px`;
 
+const Container = styled.div`
+  --data-font-size: var(--font-small);
+  --data-line-height: var(--spacer-4);
+  --cell-height: var(--spacer-6);
+
+  margin: var(--spacer-4) 0 var(--spacer-2) 0;
+`;
+
+const Header = styled.div`
+  font-weight: 300;
+  font-size: var(--font-large);
+`;
+
+const TableContainer = styled.div`
+  min-width: 320px;
+  overflow-x: auto;
+  border: 1px solid rgba(var(--font-color), 0.1);
+
+  & table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  & table td {
+    font-size: var(--data-font-size);
+    padding: var(--spacer-1);
+    white-space: pre;
+  }
+
+  & table tbody td {
+    height: var(--cell-height);
+    font-weight: 200;
+    line-height: var(--spacer-4);
+  }
+
+  & table thead td {
+    font-weight: 300;
+  }
+
+  & table td.icon {
+    width: var(--spacer-6);
+    /* for emojis */
+    text-align: center;
+    /* for images */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & table td.loading div {
+    width: 80%;
+    height: var(--data-font-size);
+    background: rgba(var(--font-color), 0.15);
+  }
+
+  & table tr {
+    border-bottom: 1px solid rgba(var(--font-color), 0.1);
+  }
+
+  & table tbody tr:last-child {
+    border-bottom: none;
+  }
+`;
+
 export default function Table({ header, columns = [], children, loading, loadingRows = 4, loadingWidths = [] }) {
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>{header}</div>
-      <div className={styles.table}>
+    <Container>
+      <Spacer vertical size={6} />
+      <Header>{header}</Header>
+      <Spacer vertical size={3} />
+
+      <TableContainer>
         <table>
           <thead>
             <tr>
@@ -39,20 +106,18 @@ export default function Table({ header, columns = [], children, loading, loading
             <tbody>{children}</tbody>
           )}
         </table>
-      </div>
-    </div>
+      </TableContainer>
+    </Container>
   );
 }
 
-Table.styles = styles;
-
 Table.IconColumn = function TableIconColumn({ children }) {
-  return <td className={styles.tableIconColumn}>{children}</td>;
+  return <td className="icon">{children}</td>;
 };
 
 Table.LoadingColumn = function TableLoadingColumn({ width }) {
   return (
-    <td className={styles['loading-td']}>
+    <td className="loading">
       <div style={{ width }} />
     </td>
   );
