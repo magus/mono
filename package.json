@@ -22,7 +22,7 @@
     "@changesets/cli": "^2.18.1",
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "8.7.0",
     "husky": "^7.0.4",
     "jest": "^27.4.3",
     "lerna": "^4.0.0",
