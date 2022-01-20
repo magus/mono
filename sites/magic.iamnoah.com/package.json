@@ -14,7 +14,7 @@
     "lerna:setup": "./scripts/setup.sh",
     "prod": "yarn build && yarn start",
     "start": "NODE_ENV=production next start",
-    "test:lint": "next lint"
+    "test:lint": "eslint ."
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",
