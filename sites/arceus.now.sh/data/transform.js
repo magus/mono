@@ -1,3 +1,4 @@
+const util = require('util');
 const { PokedexByName } = require('./PokedexByName.js');
 const Moves = require('./Moves.js');
 
@@ -68,34 +69,6 @@ const Weather = {
   1: 'Rain',
 };
 
-const VerifiedEntries = {
-  // pikachu: 1,
-  // alakazam: 1,
-  // machamp: 1,
-  // gengar: 1,
-  // eevee: 1,
-  // snorlax: 1,
-  // pichu: 1,
-  // lilligant: 1,
-  // avalugg: 1,
-  // vulpix: 1,
-  // ninetales: 1,
-  // sneasel: 1,
-  // wormadam: 1,
-  // cherrim: 1,
-  // rotom: 1,
-  // dialga: 1,
-  // palkia: 1,
-  // giratina: 1,
-  // shaymin: 1,
-  // arceus: 1,
-  // tornadus: 1,
-  // thundurus: 1,
-  // landorus: 1,
-  // basculegion: 1,
-  // enamorus: 1,
-};
-
 // ArceusPokedex Tokenizer
 let line = 0;
 const clean = (s) => (typeof s === 'string' ? s.trim() : s);
@@ -115,8 +88,8 @@ try {
       pokemon = {
         evolutions: [],
         moves: {
-          tutor: [],
           learn: [],
+          tutor: [],
         },
       };
       ArceusPokedex.push(pokemon);
@@ -342,15 +315,6 @@ try {
       }
     }
 
-    pokemon.offenseTypes = {};
-    for (const moveName of [...pokemon.moves.tutor, ...pokemon.moves.learn.map((m) => m.name)]) {
-      const move = Moves.Lookup[moveName];
-      if (move.class !== Moves.Class.Status) {
-        pokemon.offenseTypes[move.type] = 1;
-      }
-    }
-    // console.debug(pokemon.pokedex.nameKey, pokemon.offenseTypes);
-
     // consume whitespace between entries
     while (!peek() && line <= ArceusPokedexTextLines.length) {
       // console.debug('skipping', line);
@@ -371,10 +335,11 @@ try {
 }
 
 // now with ArceusPokedex we need to map the correct forms
-// so first collect by name
+// so first collect by nameKey
 const ArceusPokedexByName = {};
+
 const ArceusPokedexList = [];
-const ArceusPokedexById = {};
+const ArceusPokedexByNumber = {};
 
 for (const pokemon of ArceusPokedex) {
   const name = pokemon.pokedex.nameKey;
@@ -390,23 +355,25 @@ for (const name of Object.keys(ArceusPokedexByName)) {
   const allEntries = ArceusPokedexByName[name];
   const [firstEntry, ...otherEntries] = allEntries;
 
+  console.debug(firstEntry.pokedex.forms[0].num, name);
+
   function capture(entry, form) {
-    ArceusPokedexList.push({ ...entry, pokedex: form });
+    const pokemon = { ...entry, pokedex: form };
+    ArceusPokedexList.push(pokemon);
+    if (!ArceusPokedexByNumber[form.num]) ArceusPokedexByNumber[form.num] = [];
+    ArceusPokedexByNumber[form.num].push(pokemon);
   }
 
   function verifyManually(scenario) {
-    // manually mark entries after verifying they look correct
-    if (!VerifiedEntries[name]) {
-      console.debug('allEntries', allEntries);
-      console.debug('forms', firstEntry.pokedex.forms);
-      console.debug('ArceusPokedexByName[name]', ArceusPokedexByName[name]);
-      allEntries.forEach((e) => console.log(e.moves));
-      throw new Error(scenario);
-    }
+    console.debug('allEntries', allEntries);
+    console.debug('forms', firstEntry.pokedex.forms);
+    console.debug('ArceusPokedexByName[name]', ArceusPokedexByName[name]);
+    allEntries.forEach((e) => console.log(e.moves));
+    throw new Error(scenario);
   }
 
   if (allEntries.length === 1 && firstEntry.pokedex.forms.length === 1) {
-    console.debug(name, 'simple single entry');
+    console.debug('simple single entry');
     const [firstForm] = firstEntry.pokedex.forms;
     capture(firstEntry, firstForm);
     continue;
@@ -420,11 +387,22 @@ for (const name of Object.keys(ArceusPokedexByName)) {
     if (!isEqual(firstEntry.moves.tutor, entry.moves.tutor)) match = false;
     if (!isEqual(firstEntry.moves.learn, entry.moves.learn)) match = false;
   }
-  if (match && firstEntry.pokedex.forms.length === 1) {
-    console.debug(name, 'simple single entry');
-    const [firstForm] = firstEntry.pokedex.forms;
-    capture(firstEntry, firstForm);
-    continue;
+
+  if (match) {
+    if (firstEntry.pokedex.forms.length === 1) {
+      console.debug('matching create single entry');
+      // console.debug(firstEntry.pokedex.forms);
+      const [firstForm] = firstEntry.pokedex.forms;
+      capture(firstEntry, firstForm);
+      continue;
+    } else {
+      const form = matchTypeForm(firstEntry);
+      if (form) {
+        console.debug('matching single type form entry');
+        capture(firstEntry, form);
+        continue;
+      }
+    }
   }
 
   // handle multiple entry forms manually
@@ -479,40 +457,161 @@ for (const name of Object.keys(ArceusPokedexByName)) {
   // ...otherwise find matching type entries
 
   for (const entry of allEntries) {
-    const typeMatches = [];
+    const form = matchTypeForm(entry);
 
-    for (const form of entry.pokedex.forms) {
-      if (isEqual(entry.types, form.types)) {
-        typeMatches.push(form);
-        // console.debug('matching form found!');
-        // console.error(entry.pokedex.nameKey, entry.pokedex.forms);
-        // console.debug(ArceusPokedexByName[name]);
-      }
-    }
-
-    if (typeMatches.length === 1) {
+    if (form) {
       // single type match, we can associate without checking
-      const [form] = typeMatches;
       capture(entry, form);
-      if (name === 'vulpix') {
-        console.debug(entry, form);
-        console.debug(ArceusPokedexList[ArceusPokedexList.length - 1]);
-      }
-      console.debug('type match', name, entry.types);
+      console.debug('multiple entries type match', name, entry.types);
       continue;
     }
 
     // either no type matches or multiple type matches
     // must manually associate above to avoid it falling here
-    verifyManually('type matching');
+    verifyManually('multiple entries type matching');
     continue;
   }
 }
 
-// generate final output array of pokemon
-for (const pokemon of ArceusPokedexList) {
-  pokemon.name = pokemon.pokedex.name;
+function matchTypeForm(entry) {
+  const typeMatches = [];
 
+  for (const form of entry.pokedex.forms) {
+    if (isEqual(entry.types, form.types)) {
+      typeMatches.push(form);
+      // console.debug('matching form found!');
+      // console.error(entry.pokedex.nameKey, entry.pokedex.forms);
+      // console.debug(ArceusPokedexByName[name]);
+    }
+  }
+
+  if (typeMatches.length === 1) {
+    // single type match, we can associate without checking
+    const [form] = typeMatches;
+    return form;
+  }
+
+  return null;
+}
+
+// ensure each evolution can be mapped correctly
+let formeEvos = [];
+const evoMapping = {};
+
+for (const number of Object.keys(ArceusPokedexByNumber)) {
+  const pokemon = ArceusPokedexByNumber[number];
+  const [firstForm, ...formList] = pokemon;
+
+  // ensure all forms can be mapped to same name
+  const name = firstForm.pokedex.baseSpecies || firstForm.pokedex.name;
+  for (const form of pokemon) {
+    const formName = form.pokedex.baseSpecies || form.pokedex.name;
+    if (formName !== name) {
+      // console.debug(pokemon);
+      throw new Error(`unexpected form naming [${JSON.stringify({ name, formName })}]`);
+    }
+
+    form.name = name;
+
+    // console.debug(form);
+
+    // ensure each evolution can be mapped correctly
+    for (const evolution of form.evolutions) {
+      // console.debug(evolution);
+      if (!evoMapping[form.pokedex.num]) evoMapping[form.pokedex.num] = [];
+      evoMapping[form.pokedex.num].push(evolution);
+
+      const evoPokemon = ArceusPokedexByNumber[evolution.pokemonId];
+      if (evoPokemon.length === 1) {
+        // console.debug('evo match single');
+        continue;
+      }
+
+      let match = false;
+      for (const evoForm of evoPokemon) {
+        if (form.pokedex.forme === evoForm.pokedex.forme) {
+          if (match) {
+            console.debug(evoForm);
+            throw new Error('cannot match this form we already matched');
+          }
+          match = true;
+          formeEvos.push([form, evoForm]);
+        } else {
+          // console.debug('skipping', evoForm);
+        }
+      }
+      if (!match) {
+        throw new Error('unable to find evo match');
+      }
+    }
+  }
+
+  console.debug(number, name);
+}
+
+// console.debug(formeEvos);
+// debugger;
+
+// generate final minimal output
+const FinalArceusPokedexByNumber = {};
+for (const number of Object.keys(ArceusPokedexByNumber)) {
+  const pokemon = ArceusPokedexByNumber[number];
+
+  FinalArceusPokedexByNumber[number] = {
+    name: '',
+    num: -1,
+    forms: [],
+    evolutions: {
+      prev: [],
+      next: [],
+    },
+  };
+
+  for (const form of pokemon) {
+    const { evolutions, moves, stats, types } = form;
+    FinalArceusPokedexByNumber[number].name = form.name;
+    FinalArceusPokedexByNumber[number].num = form.pokedex.num;
+
+    const name = form.pokedex.forme;
+    const offenseTypes = {};
+    for (const moveName of [...moves.tutor, ...moves.learn.map((m) => m.name)]) {
+      const move = Moves.Lookup[moveName];
+      if (move.class !== Moves.Class.Status) {
+        offenseTypes[move.type] = 1;
+      }
+    }
+
+    const images = getFormImages(form);
+
+    FinalArceusPokedexByNumber[number].forms.push({ name, types, stats, evolutions, moves, offenseTypes, images });
+  }
+}
+
+console.debug(pretty(evoMapping));
+
+// create links by number between pokedex entries for evolutions
+for (const num of Object.keys(evoMapping)) {
+  for (const evo of evoMapping[num]) {
+    const next = FinalArceusPokedexByNumber[num].evolutions.next;
+    const prev = FinalArceusPokedexByNumber[evo.pokemonId].evolutions.prev;
+
+    next.push(toNumber(evo.pokemonId));
+    prev.push(toNumber(num));
+
+    FinalArceusPokedexByNumber[num].evolutions.next = Array.from(new Set(next)).sort();
+    FinalArceusPokedexByNumber[evo.pokemonId].evolutions.prev = Array.from(new Set(prev)).sort();
+  }
+}
+
+const debugNum = 25;
+console.debug(pretty(ArceusPokedexByNumber[debugNum]));
+console.debug(pretty(FinalArceusPokedexByNumber[debugNum]));
+
+function pretty(obj) {
+  return util.inspect(obj, { showHidden: false, depth: null, colors: true });
+}
+
+function getFormImages(pokemon) {
   let imageId = zeroPad(pokemon.pokedex.num, 3);
   if (pokemon.pokedex.forme === 'Hisui') {
     imageId += '-h';
@@ -565,21 +664,11 @@ for (const pokemon of ArceusPokedexList) {
 
   imageId += '.png';
 
-  pokemon.images = {
+  return {
     sprite: `https://www.serebii.net/pokedex-swsh/icon/${imageId}`,
     small: `https://www.serebii.net/swordshield/pokemon/small/${imageId}`,
     icon: `https://www.serebii.net/legendsarceus/pokemon/icon/${imageId}`,
   };
-
-  // if (pokemon.name === 'Vulpix-Alola') {
-  //   console.debug(pokemon);
-  // }
-  // if (pokemon.pokedex.baseSpecies === 'Arceus') {
-  //   console.debug(pokemon);
-  // }
-  if (pokemon.pokedex.baseSpecies === 'Rotom') {
-    console.debug(pokemon);
-  }
 }
 
 function toNumber(v) {
