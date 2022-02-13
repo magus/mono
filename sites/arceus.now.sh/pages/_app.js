@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import Head from 'next/head';
 import { createGlobalStyle } from 'styled-components';
 
@@ -159,6 +160,15 @@ export default function MyApp({ Component, pageProps }) {
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </Head>
 
+      {/*
+        https://analytics.google.com/analytics/web/#/a220208968p303425978/admin/streams/table/3244475711
+        https://nextjs.org/docs/messages/next-script-for-ga
+      */}
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-W91B3WXL9M" strategy="afterInteractive" />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {GOOGLE_TAG_MANAGER}
+      </Script>
+
       <CSSReset />
       <GlobalStyle />
 
@@ -166,3 +176,11 @@ export default function MyApp({ Component, pageProps }) {
     </>
   );
 }
+
+const GOOGLE_TAG_MANAGER = `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-W91B3WXL9M');
+`;
