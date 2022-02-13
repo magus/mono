@@ -740,7 +740,7 @@ function getImageId(pokemon) {
   } else if (pokemon.pokedex.forme === 'Sky') {
     imageId += '-s';
   } else if (pokemon.pokedex.forme === 'Therian') {
-    imageId += '-t';
+    imageId += '-s';
   } else if (pokemon.pokedex.forme === 'White-Striped') {
     imageId += '-w';
   } else if (pokemon.pokedex.forme === 'F') {
