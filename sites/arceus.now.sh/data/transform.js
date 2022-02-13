@@ -1,10 +1,9 @@
+const fs = require('fs');
+const path = require('path');
 const util = require('util');
 const { PokedexByName } = require('./PokedexByName.js');
 const Moves = require('./Moves.js');
-
-const fs = require('fs');
-const path = require('path');
-const { verify } = require('crypto');
+const MovesById = require('./MovesById.js');
 
 // gather each numerical pokemon into an array (forms)
 // for example, 849 contains all the forms of Toxtricity
@@ -76,7 +75,6 @@ const peek = () => ArceusPokedexTextLines[line];
 const read = () => clean(ArceusPokedexTextLines[line++]);
 
 const ArceusPokedex = [];
-const TrackEvolutions = {};
 let pokemon;
 
 try {
@@ -307,10 +305,7 @@ try {
       read();
       while (peek() && !RE.PokemonHeader.test(peek())) {
         const match = read().match(/(?<name>.*?) @ (?<learn>\d+), mastered @ (?<master>\d+)/);
-        const move = { ...match.groups };
-        move.name = verifyMove(move.name);
-        move.learn = toNumber(move.learn);
-        move.master = toNumber(move.master);
+        const move = [verifyMove(match.groups.name), toNumber(match.groups.learn), toNumber(match.groups.master)];
         pokemon.moves.learn.push(move);
       }
     }
@@ -341,6 +336,13 @@ const ArceusPokedexByName = {};
 const ArceusPokedexList = [];
 const ArceusPokedexByNumber = {};
 
+function capture(entry, form) {
+  const pokemon = { ...entry, pokedex: form };
+  ArceusPokedexList.push(pokemon);
+  if (!ArceusPokedexByNumber[form.num]) ArceusPokedexByNumber[form.num] = [];
+  ArceusPokedexByNumber[form.num].push(pokemon);
+}
+
 for (const pokemon of ArceusPokedex) {
   const name = pokemon.pokedex.nameKey;
 
@@ -356,13 +358,6 @@ for (const name of Object.keys(ArceusPokedexByName)) {
   const [firstEntry, ...otherEntries] = allEntries;
 
   console.debug(firstEntry.pokedex.forms[0].num, name);
-
-  function capture(entry, form) {
-    const pokemon = { ...entry, pokedex: form };
-    ArceusPokedexList.push(pokemon);
-    if (!ArceusPokedexByNumber[form.num]) ArceusPokedexByNumber[form.num] = [];
-    ArceusPokedexByNumber[form.num].push(pokemon);
-  }
 
   function verifyManually(scenario) {
     console.debug('allEntries', allEntries);
@@ -500,7 +495,7 @@ const evoMapping = {};
 
 for (const number of Object.keys(ArceusPokedexByNumber)) {
   const pokemon = ArceusPokedexByNumber[number];
-  const [firstForm, ...formList] = pokemon;
+  const [firstForm] = pokemon;
 
   // ensure all forms can be mapped to same name
   const name = firstForm.pokedex.baseSpecies || firstForm.pokedex.name;
@@ -567,27 +562,43 @@ for (const number of Object.keys(ArceusPokedexByNumber)) {
     },
   };
 
+  const forms = {};
   for (const form of pokemon) {
     const { evolutions, moves, stats, types } = form;
     FinalArceusPokedexByNumber[number].name = form.name;
     FinalArceusPokedexByNumber[number].num = form.pokedex.num;
 
     const name = form.pokedex.forme;
+
+    // track forms and ensure no duplicates
+    if (forms[name]) {
+      console.debug(form.pokedex.num, form.pokedex.name, 'skipping duplicate form', `[${name}]`);
+      continue;
+    } else {
+      forms[name] = true;
+    }
+
     const offenseTypes = {};
-    for (const moveName of [...moves.tutor, ...moves.learn.map((m) => m.name)]) {
-      const move = Moves.Lookup[moveName];
+    for (const moveId of [...moves.tutor, ...moves.learn.map(([id]) => id)]) {
+      const move = MovesById.Lookup[moveId];
       if (move.class !== Moves.Class.Status) {
         offenseTypes[move.type] = 1;
       }
     }
 
-    const images = getFormImages(form);
+    // TODO replace move names with ids to reduce size
+    // moves.tutor.map((_, i) => (moves.tutor[i] = i));
+    // moves.learn.map((_, i) => (moves.learn[i][0] = i));
 
-    FinalArceusPokedexByNumber[number].forms.push({ name, types, stats, evolutions, moves, offenseTypes, images });
+    // const stats = [form.stats.hp, form.stats.atk, form.stats.def, form.stats.spa, form.stats.spd, form.stats.spe];
+
+    const imageId = getImageId(form);
+
+    FinalArceusPokedexByNumber[number].forms.push({ name, types, stats, evolutions, moves, offenseTypes, imageId });
   }
 }
 
-console.debug(pretty(evoMapping));
+// console.debug(pretty(evoMapping));
 
 // create links by number between pokedex entries for evolutions
 for (const num of Object.keys(evoMapping)) {
@@ -603,16 +614,100 @@ for (const num of Object.keys(evoMapping)) {
   }
 }
 
+(function parseArceusSizes() {
+  const ArceusSizesLines = fs.readFileSync(path.join(__dirname, 'arceus-sizes.txt')).toString('utf8').split('\n');
+
+  let line = 0;
+  const peek = () => ArceusSizesLines[line];
+  const read = () => ArceusSizesLines[line++];
+
+  const re = {
+    NumberLine: /#(\d+)/,
+    HeightLine: /(((?<ft>\d+)')?((?<in>\d+)")?)((?<m>\d+(\.\d+)?)m)/,
+    WeightLine: /((?<lbs>\d+(\.\d+)?)lbs)((?<kg>\d+(\.\d+)?)kg)/,
+  };
+
+  while (peek() !== undefined) {
+    if (re.NumberLine.test(peek())) {
+      const [, num] = read().match(re.NumberLine);
+      let sizeLine = '';
+      while (peek() !== undefined && !re.NumberLine.test(peek())) {
+        sizeLine += read();
+      }
+
+      const sizes = {
+        heights: [],
+        weights: [],
+      };
+
+      const sizeLineGroups = sizeLine.split('\t');
+
+      for (const sizeLine of sizeLineGroups) {
+        if (re.HeightLine.test(sizeLine)) {
+          const match = sizeLine.match(re.HeightLine);
+          if (!match.groups.ft || !match.groups.in || !match.groups.m) {
+            console.error({ sizeLine });
+            throw new Error('invalid height line');
+          } else {
+            sizes.heights.push(match);
+          }
+        } else if (re.WeightLine.test(sizeLine)) {
+          const match = sizeLine.match(re.WeightLine);
+          if (!match.groups.lbs || !match.groups.kg) {
+            console.error({ sizeLine });
+            throw new Error('invalid weight line');
+          } else {
+            sizes.weights.push(match);
+          }
+        } else {
+          console.debug(num, 'skipping line', { sizeLine });
+        }
+      }
+
+      // IMPORTANT: Phione is missing alpha sizes, so its length is 3
+      if (num === '489') {
+        if (sizes.heights.length !== 3 || sizes.weights.length !== 3) {
+          console.error(num, pretty(sizes));
+          throw new Error('missing sizes phione');
+        }
+      } else if (sizes.heights.length !== 4 || sizes.weights.length !== 4) {
+        console.error(num, pretty(sizes));
+        throw new Error('missing sizes');
+      }
+
+      // can now parse out sizes
+      sizes.heights = sizes.heights.map((m) => ({ ...m.groups }));
+      sizes.weights = sizes.weights.map((m) => ({ ...m.groups }));
+
+      function sizeToNumber(s) {
+        Object.keys(s).forEach((k) => {
+          s[k] = parseFloat(s[k]);
+        });
+      }
+
+      sizes.heights.forEach(sizeToNumber);
+      sizes.weights.forEach(sizeToNumber);
+
+      // set sizes on final dex
+      FinalArceusPokedexByNumber[toNumber(num)].sizes = sizes;
+    }
+  }
+})();
+
 const debugNum = 25;
 console.debug(pretty(ArceusPokedexByNumber[debugNum]));
 console.debug(pretty(FinalArceusPokedexByNumber[debugNum]));
+
+// write to output
+fs.writeFileSync(path.join(__dirname, 'ArceusPokedexByNumber.json'), JSON.stringify(FinalArceusPokedexByNumber));
 
 function pretty(obj) {
   return util.inspect(obj, { showHidden: false, depth: null, colors: true });
 }
 
-function getFormImages(pokemon) {
+function getImageId(pokemon) {
   let imageId = zeroPad(pokemon.pokedex.num, 3);
+
   if (pokemon.pokedex.forme === 'Hisui') {
     imageId += '-h';
   } else if (pokemon.pokedex.forme === 'Alola') {
@@ -662,13 +757,7 @@ function getFormImages(pokemon) {
     throw new Error('unhandled pokemon forme');
   }
 
-  imageId += '.png';
-
-  return {
-    sprite: `https://www.serebii.net/pokedex-swsh/icon/${imageId}`,
-    small: `https://www.serebii.net/swordshield/pokemon/small/${imageId}`,
-    icon: `https://www.serebii.net/legendsarceus/pokemon/icon/${imageId}`,
-  };
+  return imageId;
 }
 
 function toNumber(v) {
@@ -689,12 +778,14 @@ function isEqual(a, b) {
   }
 }
 
-function verifyMove(move) {
-  if (!Moves.Lookup[move] || !Moves.Lookup[move].type) {
-    throw new Error(`Unrecognized moves [${move}]`);
+function verifyMove(name) {
+  const move = Moves.Lookup[name];
+
+  if (!move || !move.type) {
+    throw new Error(`Unrecognized moves [${name}]`);
   }
 
-  return move;
+  return move.id;
 }
 
 function zeroPad(number, digits) {
