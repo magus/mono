@@ -1,17 +1,47 @@
+import * as React from 'react';
 import styled, { css } from 'styled-components';
-import MovesById from '../../../public/data/MovesById';
-import { Category } from '../../../components/Category';
-import { TypePill } from '../../../components/TypePill';
-import { PokemonImage } from '../../../components/PokemonImage';
-import React from 'react';
+import { useRouter } from 'next/router';
+import MovesById from '../../public/data/MovesById';
+import { Category } from '../Category';
+import { TypePill } from '../TypePill';
+import { PokemonImage } from '../PokemonImage';
+import { QueryParams } from '../../src/QueryParams';
 
 export function PokemonDetail(props) {
-  const [formIndex, set_formIndex] = React.useState(0);
+  const router = useRouter();
 
   const pokemon = props.pokedex[props.num];
+
+  const [formIndex, set_formIndex] = React.useState(0);
   const form = pokemon.forms[formIndex];
 
-  console.debug('[PokemonDetail]', { props, pokemon, form });
+  React.useEffect(() => {
+    if (!router.isReady) return;
+
+    const formParam = router.query[QueryParams.Form];
+
+    // default to first form
+    if (!formParam) return 0;
+
+    // ...find form matching formParam
+    for (let i = 0; i < pokemon.forms.length; i++) {
+      const form = pokemon.forms[i];
+      if (form.name === formParam) {
+        set_formIndex(i);
+      }
+    }
+  }, [router.isReady, props.num]);
+
+  React.useEffect(() => {
+    let query = { [QueryParams.Num]: props.num };
+
+    if (formIndex) {
+      const form = pokemon.forms[formIndex];
+      query[QueryParams.Form] = form.name;
+    }
+
+    router.replace({ query });
+  }, [formIndex]);
 
   return (
     <Container>
@@ -49,9 +79,11 @@ const SelectFormButton = styled.button`
   align-items: center;
 `;
 
-function PokemonForm(props) {
-  console.debug('[PokemonForm]', { props });
+const AlternateFormImage = styled.div`
+  width: 64px;
+`;
 
+function PokemonForm(props) {
   const [type_a, type_b] = props.form.types;
 
   return (
@@ -72,9 +104,9 @@ function PokemonForm(props) {
 
               return (
                 <SelectFormButton disabled={active} key={i} onClick={() => props.handleSelectForm(i)}>
-                  <div style={{ width: 64 }}>
+                  <AlternateFormImage>
                     <PokemonImage form={form} pokemon={props.pokemon} type="small" />
-                  </div>
+                  </AlternateFormImage>
                   <div>{form.name || props.pokemon.name}</div>
                 </SelectFormButton>
               );

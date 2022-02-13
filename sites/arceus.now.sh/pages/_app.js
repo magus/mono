@@ -95,7 +95,8 @@ const GlobalStyle = createGlobalStyle`
 
   html,
   body {
-    font-family: sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+      Helvetica Neue, sans-serif;
     font-size: 16px;
     background: rgba(var(--background-color), 1);
     color: rgba(var(--font-color), 1);
@@ -111,14 +112,38 @@ const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+
+  button {
+    cursor: pointer;
+  }
 `;
 
 export default function MyApp({ Component, pageProps }) {
+  const title = 'Pokédex';
+  const description = 'Pokedex for Pokémon Legends: Arceus';
+
   return (
     <>
       <Head>
-        <title>Pokédex</title>
-        <meta name="description" content="Pokedex for Pokémon Legends: Arceus" />
+        <title>{title}</title>
+
+        {/* seo & open graph tags */}
+        <meta name="description" content={description} />
+        <meta name="keywords" content={['pokemon', 'pokedex', 'arceus', 'legends', 'search', 'game'].join(', ')} />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://arceus.vercel.app`} />
+        {/* <meta
+          property="og:image"
+          content={`https://arceus.vercel.app/images/demo.8cfb8bec6712b5681f3efafc8030b71e.jpeg`}
+        /> */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:creator" content="magusnn" />
+        <meta property="twitter:creator:id" content="23604692" />
+
+        {/* favicons */}
         <link rel="icon" href="/pokeball.svg" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -129,6 +154,9 @@ export default function MyApp({ Component, pageProps }) {
         <meta name="theme-color" content="#ffcb05" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        {/* iOS */}
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </Head>
 
       <CSSReset />

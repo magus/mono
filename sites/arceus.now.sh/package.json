@@ -5,6 +5,9 @@
   "private": true,
   "scripts": {
     "build": "NODE_ENV=production next build",
+    "deploy": "now",
+    "deploy:prod": "now --prod",
+    "deploy:purge": "now rm arceus --safe",
     "dev": "next dev",
     "start": "NODE_ENV=production next start",
     "test:lint": "eslint ."

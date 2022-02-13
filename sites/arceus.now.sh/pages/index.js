@@ -7,24 +7,18 @@ import { Type } from '../data/Type';
 import { PokemonImage } from '../components/PokemonImage';
 import { Spacer } from '../components/Spacer';
 import { TypePill } from '../components/TypePill';
-
-const QueryParams = {
-  Search: 'q',
-};
+import { QueryParams } from '../src/QueryParams';
 
 export default function Home() {
   const router = useRouter();
 
-  const isClient = typeof window !== 'undefined';
-  const searchParam = isClient ? new URLSearchParams(window.location.search).get(QueryParams.Search) : '';
-  const [search, set_search] = React.useState(searchParam || '');
+  const [search, set_search] = React.useState('');
 
   const [targets, set_targets] = React.useState(null);
 
   const [filterTypes, set_filterTypes] = React.useState(new Set([]));
 
   React.useEffect(() => {
-    console.debug('fetch');
     fetch('data/ArceusPokedexByNumber.json')
       .then((resp) => resp.json())
       .then((json) => {
@@ -44,20 +38,40 @@ export default function Home() {
         }
 
         set_targets(targets);
-        console.debug({ targets });
       });
   }, []);
 
-  function handleSearch(event) {
-    const value = event.target.value;
-    let query;
+  React.useEffect(() => {
+    if (!router.isReady) return;
 
-    if (value) {
-      query = { [QueryParams.Search]: value };
+    const searchParam = router.query[QueryParams.Search];
+    const typesParam = router.query[QueryParams.Types];
+
+    if (typesParam) {
+      set_filterTypes(new Set(typesParam));
+    }
+
+    if (searchParam) {
+      set_search(searchParam);
+    }
+  }, [router.isReady]);
+
+  React.useEffect(() => {
+    let query = {};
+
+    if (filterTypes.size) {
+      query[QueryParams.Types] = Array.from(filterTypes);
+    }
+
+    if (search) {
+      query[QueryParams.Search] = search;
     }
 
     router.replace({ query });
-    set_search(value);
+  }, [filterTypes, search]);
+
+  function handleSearch(event) {
+    set_search(event.target.value);
   }
 
   const hasTypeFilters = filterTypes.size > 0;
@@ -97,39 +111,41 @@ export default function Home() {
   }
 
   const isSearch = hasTypeFilters || search;
+  // const isSearch = false;
 
   return (
     <Container>
-      <SearchInput value={search} onChange={handleSearch} />
+      <AboveResults>
+        <SearchInput value={search} onChange={handleSearch} />
 
-      <Spacer size="2" />
+        <Spacer size="2" />
 
-      <TypeButtons>
-        {Object.values(Type).map((type) => {
-          function handleClick() {
-            set_filterTypes((_) => {
-              let set = new Set(Array.from(_));
-              set.has(type) ? set.delete(type) : set.add(type);
-              if (set.size > 2) {
-                set = new Set(Array.from(set).slice(set.size - 2, set.size));
-              }
-              return set;
-            });
-          }
+        <TypeButtons>
+          {Object.values(Type).map((type) => {
+            function handleClick() {
+              set_filterTypes((_) => {
+                let set = new Set(Array.from(_));
+                set.has(type) ? set.delete(type) : set.add(type);
+                if (set.size > 2) {
+                  set = new Set(Array.from(set).slice(set.size - 2, set.size));
+                }
+                return set;
+              });
+            }
 
-          const disabled = hasTypeFilters && !filterTypes.has(type);
+            const disabled = hasTypeFilters && !filterTypes.has(type);
 
-          return <TypePill key={type} type={type} $disabled={disabled} onClick={handleClick} />;
-        })}
-      </TypeButtons>
+            return <TypePill key={type} type={type} $disabled={disabled} onClick={handleClick} />;
+          })}
+        </TypeButtons>
+      </AboveResults>
 
       <ResultsContainer>
         {!isSearch ? null : (
-          <ResultCount>
-            <b>{results.length}</b> pokémon found.
-          </ResultCount>
+          <ResultCountContainer key={Date.now()}>
+            <b>{String(results.length)}</b> pokémon found.
+          </ResultCountContainer>
         )}
-
         <Results>
           {results.map((pokemon) => {
             return <ResultPokemon key={pokemonKey(pokemon)} pokemon={pokemon} />;
@@ -145,7 +161,15 @@ const pokemonKey = (pokemon) => `${pokemon.num}-${pokemon.forms[0].name}`;
 function ResultPokemon(props) {
   const pokemon = props.pokemon;
   const [firstForm] = pokemon.forms;
-  const link = `/pokemon/${pokemon.num}`;
+
+  const params = new URLSearchParams();
+  params.set(QueryParams.Form, firstForm.name);
+  const link = `/pokemon/${pokemon.num}?${params.toString()}`;
+
+  let name = pokemon.name;
+  if (firstForm.name) {
+    name += ` (${firstForm.name})`;
+  }
 
   return (
     <Link href={link}>
@@ -153,13 +177,25 @@ function ResultPokemon(props) {
         <ResultPokemonContainer>
           <PokemonImage form={firstForm} pokemon={pokemon} type="icon" />
 
-          <ResultPokemonName>{pokemon.name}</ResultPokemonName>
+          <ResultPokemonName>{name}</ResultPokemonName>
         </ResultPokemonContainer>
       </a>
     </Link>
   );
 }
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  padding: var(--spacer-2);
+`;
+
+const AboveResults = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
 const SearchInput = styled.input`
   border: 1px solid rgba(var(--font-color), 0.8);
   padding: var(--spacer) var(--spacer-2);
@@ -183,14 +219,7 @@ const ResultPokemonName = styled.div`
   font-weight: 200;
 `;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-height: 100vh;
-  padding: var(--spacer-2);
-`;
-
-const ResultCount = styled.div`
+const ResultCountContainer = styled.div`
   font-size: 24px;
   font-weight: 200;
   padding: var(--spacer-2) 0;

@@ -1,4 +1,4 @@
-export { PokemonDetail as default } from './PokemonDetail';
+export { PokemonDetail as default } from '../../../components/screens/PokemonDetail';
 
 export async function getStaticPaths() {
   const ArceusPokedexByNumber = await import('../../../data/ArceusPokedexByNumber.json');
@@ -6,7 +6,9 @@ export async function getStaticPaths() {
   const paths = [];
 
   for (const num in ArceusPokedexByNumber) {
-    paths.push({ params: { num } });
+    if (num !== 'default') {
+      paths.push({ params: { num } });
+    }
   }
 
   return {
@@ -15,7 +17,8 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps(options) {
+  const { num } = options.params;
   const ArceusPokedexByNumber = await import('../../../data/ArceusPokedexByNumber.json');
 
   // hydrate a local pokedex with evolutions
@@ -23,12 +26,13 @@ export async function getStaticProps({ params }) {
 
   function hydratePokemon(n) {
     if (pokedex[n]) return;
+
     pokedex[n] = ArceusPokedexByNumber[n];
+
     pokedex[n].evolutions.prev.forEach(hydratePokemon);
     pokedex[n].evolutions.next.forEach(hydratePokemon);
   }
 
-  const { num } = params;
   hydratePokemon(num);
 
   return {
