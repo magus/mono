@@ -13,6 +13,7 @@ export default function Home() {
   const router = useRouter();
 
   const [search, set_search] = React.useState('');
+  const [wrapTypes, set_wrapTypes] = React.useState(false);
 
   const [targets, set_targets] = React.useState(null);
 
@@ -59,12 +60,18 @@ export default function Home() {
   React.useEffect(() => {
     let query = {};
 
-    if (filterTypes.size) {
-      query[QueryParams.Types] = Array.from(filterTypes);
-    }
+    if (filterTypes.size || search) {
+      set_wrapTypes(false);
 
-    if (search) {
-      query[QueryParams.Search] = search;
+      if (filterTypes.size) {
+        query[QueryParams.Types] = Array.from(filterTypes);
+      }
+
+      if (search) {
+        query[QueryParams.Search] = search;
+      }
+    } else {
+      set_wrapTypes(true);
     }
 
     router.replace({ query });
@@ -113,15 +120,26 @@ export default function Home() {
   const isSearch = hasTypeFilters || search;
   // const isSearch = false;
 
+  const typesInResults = {};
+  for (const pokemon of results) {
+    const [pokemonForm] = pokemon.forms;
+    pokemonForm.types.forEach((t) => {
+      typesInResults[t] = true;
+    });
+  }
+
   return (
     <Container>
       <AboveResults>
-        <SearchInput value={search} onChange={handleSearch} />
+        <SearchInput placeholder="pikachu" value={search} onChange={handleSearch} />
 
         <Spacer size="2" />
 
-        <TypeButtons>
-          {Object.values(Type).map((type) => {
+        <TypeButtons wrap={wrapTypes}>
+          {Array.from(new Set([...Array.from(filterTypes), ...Object.values(Type)])).map((type) => {
+            // only show types that are in result set
+            if (results.length && !typesInResults[type]) return null;
+
             function handleClick() {
               set_filterTypes((_) => {
                 let set = new Set(Array.from(_));
@@ -200,6 +218,7 @@ const AboveResults = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 const SearchInput = styled.input`
   border: 1px solid rgba(var(--font-color), 0.8);
   padding: var(--spacer) var(--spacer-2);
@@ -249,10 +268,10 @@ const Results = styled.div`
 `;
 
 const TypeButtons = styled.div`
+  overflow-x: scroll;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: ${(props) => (props.wrap ? 'wrap' : 'no-wrap')};
   align-items: center;
-  justify-content: center;
   gap: 16px;
 `;
