@@ -37,7 +37,9 @@ export function PokemonDetail(props) {
 
     if (formIndex) {
       const form = pokemon.forms[formIndex];
-      query[QueryParams.Form] = form.name;
+      if (form.name) {
+        query[QueryParams.Form] = form.name;
+      }
     }
 
     router.replace({ query });

@@ -48,7 +48,7 @@ export default function Home() {
     const typesParam = router.query[QueryParams.Types];
 
     if (typesParam) {
-      set_filterTypes(new Set(typesParam));
+      set_filterTypes(new Set(Array.isArray(typesParam) ? typesParam : [typesParam]));
     }
 
     if (searchParam) {
@@ -162,9 +162,13 @@ function ResultPokemon(props) {
   const pokemon = props.pokemon;
   const [firstForm] = pokemon.forms;
 
-  const params = new URLSearchParams();
-  params.set(QueryParams.Form, firstForm.name);
-  const link = `/pokemon/${pokemon.num}?${params.toString()}`;
+  let link = `/pokemon/${pokemon.num}`;
+
+  if (firstForm.name) {
+    const params = new URLSearchParams();
+    params.set(QueryParams.Form, firstForm.name);
+    link += `?${params.toString()}`;
+  }
 
   let name = pokemon.name;
   if (firstForm.name) {
