@@ -15,6 +15,8 @@ const config = {
     ],
   ],
 
+  plugins: [],
+
   env: {
     production: {
       plugins: [

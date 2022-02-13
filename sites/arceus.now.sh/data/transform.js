@@ -2,7 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const util = require('util');
 const { PokedexByName } = require('./PokedexByName.js');
-const Moves = require('./Moves.js');
+const MoveIdsByName = require('./MoveIdsByName.js');
+const MovesbyId = require('./MovesbyId.js');
+const { Class } = require('./Class.js');
 const MovesById = require('./MovesById.js');
 
 // gather each numerical pokemon into an array (forms)
@@ -418,7 +420,7 @@ for (const name of Object.keys(ArceusPokedexByName)) {
     lucario: ['Lucario'],
     abomasnow: ['Abomasnow'],
     gallade: ['Gallade'],
-    basculin: ['Basculin'],
+    basculin: ['Basculin-White-Striped'],
     cherrim: ['Cherrim', 'Cherrim-Sunshine'],
     dialga: ['Dialga', 'Dialga-Origin'],
     palkia: ['Palkia', 'Palkia-Origin'],
@@ -434,6 +436,7 @@ for (const name of Object.keys(ArceusPokedexByName)) {
     for (let i = 0; i < allEntries.length; i++) {
       const entry = allEntries[i];
       const formName = ManualFormAssociations[name][i];
+
       for (const form of entry.pokedex.forms) {
         if (formName === form.name) {
           console.debug('manual map', entry.name, form.name);
@@ -496,9 +499,11 @@ const evoMapping = {};
 for (const number of Object.keys(ArceusPokedexByNumber)) {
   const pokemon = ArceusPokedexByNumber[number];
   const [firstForm] = pokemon;
-
   // ensure all forms can be mapped to same name
   const name = firstForm.pokedex.baseSpecies || firstForm.pokedex.name;
+
+  console.debug(number, name);
+
   for (const form of pokemon) {
     const formName = form.pokedex.baseSpecies || form.pokedex.name;
     if (formName !== name) {
@@ -522,6 +527,18 @@ for (const number of Object.keys(ArceusPokedexByNumber)) {
         continue;
       }
 
+      // manual mapping
+      const manualEvoMap = {
+        550: true,
+      };
+
+      if (manualEvoMap[number]) {
+        console.debug(number, 'manually skipping evolution', name);
+        continue;
+      }
+
+      // find matching forme
+
       let match = false;
       for (const evoForm of evoPokemon) {
         if (form.pokedex.forme === evoForm.pokedex.forme) {
@@ -536,12 +553,11 @@ for (const number of Object.keys(ArceusPokedexByNumber)) {
         }
       }
       if (!match) {
+        console.debug(pretty(evoPokemon));
         throw new Error('unable to find evo match');
       }
     }
   }
-
-  console.debug(number, name);
 }
 
 // console.debug(formeEvos);
@@ -581,7 +597,8 @@ for (const number of Object.keys(ArceusPokedexByNumber)) {
     const offenseTypes = {};
     for (const moveId of [...moves.tutor, ...moves.learn.map(([id]) => id)]) {
       const move = MovesById.Lookup[moveId];
-      if (move.class !== Moves.Class.Status) {
+
+      if (move.class !== Class.Status) {
         offenseTypes[move.type] = 1;
       }
     }
@@ -724,6 +741,8 @@ function getImageId(pokemon) {
     imageId += '-s';
   } else if (pokemon.pokedex.forme === 'Therian') {
     imageId += '-t';
+  } else if (pokemon.pokedex.forme === 'White-Striped') {
+    imageId += '-w';
   } else if (pokemon.pokedex.forme === 'F') {
     imageId += '-f';
   } else if (pokemon.pokedex.baseSpecies === 'Arceus') {
@@ -779,7 +798,8 @@ function isEqual(a, b) {
 }
 
 function verifyMove(name) {
-  const move = Moves.Lookup[name];
+  const moveId = MoveIdsByName.Lookup[name];
+  const move = MovesbyId.Lookup[moveId];
 
   if (!move || !move.type) {
     throw new Error(`Unrecognized moves [${name}]`);

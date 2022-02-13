@@ -1,7 +1,6 @@
-const Moves = require('./Moves.js');
+const MovesById = require('./MovesById.js');
 
-let id = 0;
-for (const name of Object.keys(Moves.Lookup)) {
-  id++;
-  console.debug(id, ':', JSON.stringify({ name, ...Moves.Lookup[name] }));
+for (const id of Object.keys(MovesById.Lookup)) {
+  const move = MovesById.Lookup[id];
+  console.debug(move.id, ':', JSON.stringify({ ...move }));
 }
