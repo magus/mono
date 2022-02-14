@@ -110,8 +110,8 @@ function MoveColumnNames() {
       <TH width="75px">Level</TH>
       <TH width="75px">Master</TH>
       <TH width="200px">Name</TH>
-      <TH width="175px">Type</TH>
-      <TH width="50px">Pow</TH>
+      <TH width="150px">Type</TH>
+      <TH width="75px">Pow</TH>
       <TH width="50px">Acc</TH>
       {/* <TH>PP</TH> */}
     </MoveContainer>
@@ -127,20 +127,20 @@ function Move(props) {
 
   return (
     <MoveContainer key={props.id}>
-      <TD tabularNums>{!props.learn ? '-' : props.learn}</TD>
-      <TD tabularNums>{!props.master ? '-' : props.master}</TD>
+      <TD tabularNums>{!props.learn ? '—' : props.learn}</TD>
+      <TD tabularNums>{!props.master ? '—' : props.master}</TD>
       <TD bold className="name">
         {move.name}
       </TD>
       <TD>
-        <MoveClass type={move.class} />
-        <Spacer size="1" />
         <TypePill type={move.type} />
       </TD>
       <TD bold tabularNums>
-        {move.power}
+        <MoveClass type={move.class} />
+        <Spacer size="1" />
+        {move.power || '—'}
       </TD>
-      <TD tabularNums>{move.acc}</TD>
+      <TD tabularNums>{move.acc === null ? '—' : `${move.acc}%`}</TD>
       {/* <TD>{move.pp}</TD> */}
     </MoveContainer>
   );
