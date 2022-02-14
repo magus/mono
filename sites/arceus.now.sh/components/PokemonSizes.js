@@ -17,7 +17,7 @@ export function PokemonSizes(props) {
         <tbody>
           <tr>
             <th></th>
-            <th>Height</th>
+            <th width="200px">Height</th>
             <th>Weight</th>
           </tr>
 
@@ -27,11 +27,11 @@ export function PokemonSizes(props) {
 
             return (
               <tr key={i}>
-                <td>{size}</td>
-                <td>
+                <td width="200px">{size}</td>
+                <td width="200px">
                   <Height height={height} metric={isMetric} />
                 </td>
-                <td>
+                <td width="200px">
                   <Weight weight={weight} metric={isMetric} />
                 </td>
               </tr>
@@ -95,13 +95,13 @@ function NumberUnit(props) {
 }
 
 const SizeTable = styled.table`
-  width: 100%;
+  padding: var(--spacer-2) 0;
+  max-width: 100%;
   text-align: left;
   border-spacing: 0px;
 
   th,
   td:first-child {
-    width: 20%;
     font-weight: 200;
     font-size: 14px;
   }

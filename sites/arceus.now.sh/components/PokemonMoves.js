@@ -40,19 +40,13 @@ const MovesContainer = styled.div`
 
 const MoveTable = styled.table`
   text-align: left;
-  width: 100%;
+  max-width: 100%;
   border-spacing: 0px;
   font-size: 16px;
 
   th {
     font-weight: 200;
-    font-size: 16px;
-  }
-
-  td {
-    height: 32px;
-    width: 0.1%;
-    white-space: nowrap;
+    font-size: 14px;
   }
 `;
 
@@ -65,29 +59,59 @@ const justifyCenter = css`
   justify-content: center;
 `;
 
-const TDContent = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 8px 0;
-  margin: 0 var(--spacer) 0 0;
-  display: flex;
-  align-items: center;
-  ${(props) => (props.center ? justifyCenter : '')}
+function widthProp(defaultWidth, widthField) {
+  return (props) => {
+    // use default width if width attribute was set
+    if (props.width) return null;
+
+    const width = props[widthField] || defaultWidth;
+
+    if (!width || !~['string', 'number'].indexOf(typeof width)) {
+      return '';
+    }
+
+    if (typeof width === 'string' && (~width.indexOf('%') || ~width.indexOf('px'))) {
+      return width;
+    }
+
+    return `${width}px`;
+  };
+}
+
+const TDContent = styled.td`
+  height: 32px;
+  min-width: ${widthProp('0.1%', '$minWidth')};
+  max-width: ${widthProp('0.1%', '$maxWidth')};
+  white-space: nowrap;
+  font-style: ${(props) => (props.italic ? 'italic' : 'normal')};
+  font-weight: ${(props) => (props.bold ? '600' : 'normal')};
+  font-variant-numeric: ${(props) => (props.tabularNums ? 'tabular-nums' : 'normal')};
+  color: rgba(var(--gray), 1);
+
+  .content {
+    width: 100%;
+    height: 100%;
+    padding: 8px 0;
+    margin: 0 var(--spacer) 0 0;
+    display: flex;
+    align-items: center;
+    ${(props) => (props.center ? justifyCenter : '')}
+  }
 `;
 
 function TD(props) {
   return (
-    <td>
-      <TDContent {...props}>{props.children}</TDContent>
-    </td>
+    <TDContent {...props}>
+      <div className="content">{props.children}</div>
+    </TDContent>
   );
 }
 
 function TH(props) {
   return (
-    <th>
-      <TDContent {...props}>{props.children}</TDContent>
-    </th>
+    <TDContent as="th" {...props}>
+      <div className="content">{props.children}</div>
+    </TDContent>
   );
 }
 
@@ -104,12 +128,12 @@ function MoveGroupHeader(props) {
 function MoveColumnNames() {
   return (
     <MoveContainer>
-      <TH>Level</TH>
-      <TH>Master</TH>
-      <TH>Name</TH>
-      <TH>Type</TH>
-      <TH center>Pow</TH>
-      <TH center>Acc</TH>
+      <TH width="75px">Level</TH>
+      <TH width="75px">Master</TH>
+      <TH width="200px">Name</TH>
+      <TH width="175px">Type</TH>
+      <TH width="50px">Pow</TH>
+      <TH width="50px">Acc</TH>
       {/* <TH>PP</TH> */}
     </MoveContainer>
   );
@@ -124,16 +148,20 @@ function Move(props) {
 
   return (
     <MoveContainer key={props.id}>
-      <TD>{!props.learn ? '-' : props.learn}</TD>
-      <TD>{!props.master ? '-' : props.master}</TD>
-      <TD className="name">{move.name}</TD>
-      <TD center>
+      <TD tabularNums>{!props.learn ? '-' : props.learn}</TD>
+      <TD tabularNums>{!props.master ? '-' : props.master}</TD>
+      <TD bold className="name">
+        {move.name}
+      </TD>
+      <TD>
         <MoveClass type={move.class} />
-        <Spacer size="d2" />
+        <Spacer size="1" />
         <TypePill type={move.type} />
       </TD>
-      <TD center>{move.power}</TD>
-      <TD center>{move.acc}</TD>
+      <TD bold tabularNums>
+        {move.power}
+      </TD>
+      <TD tabularNums>{move.acc}</TD>
       {/* <TD>{move.pp}</TD> */}
     </MoveContainer>
   );
