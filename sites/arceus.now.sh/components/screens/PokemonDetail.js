@@ -65,7 +65,7 @@ const Types = styled.div`
 
 const AlternateForms = styled.div`
   position: relative;
-  width: 100%;
+  width: calc(100% + var(--spacer-2));
   margin: 0 0 0 calc(-1 * var(--spacer-2));
 
   .scroll {
