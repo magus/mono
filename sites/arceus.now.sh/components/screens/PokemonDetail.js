@@ -1,5 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Section } from '../Section';
 import { PokemonForm } from '../PokemonForm';
@@ -29,6 +31,12 @@ export function PokemonDetail(props) {
 
   return (
     <Container>
+      <Link href="/">
+        <a>
+          <Image src="/pokeball.svg" alt="Home" width={32} height={32} />
+        </a>
+      </Link>
+
       <PokemonForm form={form} pokemon={pokemon} handleSelectForm={set_formIndex} />
 
       <Section name="Moves">
