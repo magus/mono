@@ -20,11 +20,9 @@ export function PokemonDetail(props) {
   React.useEffect(() => {
     let query = { [QueryParams.Num]: props.num };
 
-    if (formIndex) {
-      const form = pokemon.forms[formIndex];
-      if (form.name) {
-        query[QueryParams.Form] = form.name;
-      }
+    const form = pokemon.forms[formIndex];
+    if (form.name) {
+      query[QueryParams.Form] = form.name;
     }
 
     router.replace({ query });
