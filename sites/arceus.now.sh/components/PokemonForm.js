@@ -64,6 +64,8 @@ const AlternateForms = styled.div`
   position: relative;
   width: calc(100% + var(--spacer-2));
   margin: 0 0 0 calc(-1 * var(--spacer-2));
+  display: flex;
+  justify-content: center;
 
   .scroll {
     padding: 0 var(--spacer-2);
