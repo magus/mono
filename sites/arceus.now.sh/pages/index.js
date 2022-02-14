@@ -241,12 +241,13 @@ function ResultPokemon(props) {
   const pokemon = props.pokemon;
   const [firstForm] = pokemon.forms;
 
-  let link = `/pokemon/${pokemon.num}`;
+  const link = {
+    pathname: '/pokemon/[num]/[[...form]]',
+    query: { num: pokemon.num, form: [] },
+  };
 
   if (firstForm.name) {
-    const params = new URLSearchParams();
-    params.set(QueryParams.Form, firstForm.name);
-    link += `?${params.toString()}`;
+    link.query.form.push(firstForm.name);
   }
 
   return (

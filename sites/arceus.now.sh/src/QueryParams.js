@@ -1,6 +1,8 @@
 export const QueryParams = {
+  // /index.js
   Search: 'q',
-  Form: 'f',
-  Num: 'num',
   Types: 't',
+  // /pokemon/[num]/[[...form]]
+  Form: 'form',
+  Num: 'num',
 };

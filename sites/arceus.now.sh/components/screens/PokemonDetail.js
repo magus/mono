@@ -10,26 +10,9 @@ export function PokemonDetail(props) {
   const router = useRouter();
 
   const pokemon = props.pokedex[props.num];
-
-  const [formIndex, set_formIndex] = React.useState(0);
+  const [initFormName] = props.form;
+  const [formIndex, set_formIndex] = React.useState(findFormIndex(pokemon, initFormName));
   const form = pokemon.forms[formIndex];
-
-  React.useEffect(() => {
-    if (!router.isReady) return;
-
-    const formParam = router.query[QueryParams.Form];
-
-    // default to first form
-    if (!formParam) return 0;
-
-    // ...find form matching formParam
-    for (let i = 0; i < pokemon.forms.length; i++) {
-      const form = pokemon.forms[i];
-      if (form.name === formParam) {
-        set_formIndex(i);
-      }
-    }
-  }, [router.isReady, props.num]);
 
   React.useEffect(() => {
     let query = { [QueryParams.Num]: props.num };
@@ -53,6 +36,17 @@ export function PokemonDetail(props) {
       </Section>
     </Container>
   );
+}
+
+function findFormIndex(pokemon, name) {
+  for (let i = 0; i < pokemon.forms.length; i++) {
+    const form = pokemon.forms[i];
+    if (form.name === name) {
+      return i;
+    }
+  }
+
+  return 0;
 }
 
 const Container = styled.div`
