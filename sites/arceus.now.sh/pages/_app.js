@@ -60,15 +60,34 @@ p, h1, h2, h3, h4, h5, h6 {
 
 const GlobalStyle = createGlobalStyle`
   :root {
-    --main-color: 249, 109, 16;
-    --secondary-color: 35, 181, 211;
+    --main-color: 255, 203, 5;
+    --main-color-light: 254, 243, 199;
+    --dark-blue: 30, 64, 175;
     --white: 255, 255, 255;
     --black: 0, 0, 0;
-    --dark-blue: 9, 4, 70;
-    --gray: 154, 158, 163;
-    --green: 16, 185, 129;
+
+    --Bug: 131,195,0;
+    --Dark: 91,84,102;
+    --Electric: 251,209,0;
+    --Fairy: 251,137,235;
+    --Fighting: 224,48,106;
+    --Fire: 255,151,65;
+    --Flying: 137,170,227;
+    --Ghost: 76,106,178;
+    --Grass: 56,191,75;
+    --Ground: 232,114,54;
+    --Ice: 76,209,192;
+    --Normal: 145,154,162;
+    --Poison: 181,103,206;
+    --Psychic: 255,102,117;
+    --Rock: 200,182,134;
+    --Steel: 90,142,162;
+    --Water: 54,146,220;
+    --Dragon: 0,111,201;
 
     --spacer: 8px;
+    --spacer-d4: calc(var(--spacer) / 4);
+    --spacer-d2: calc(var(--spacer) / 2);
     --spacer-1: var(--spacer);
     --spacer-2: calc(var(--spacer) * 2);
     --spacer-3: calc(var(--spacer) * 3);
@@ -96,8 +115,7 @@ const GlobalStyle = createGlobalStyle`
 
   html,
   body {
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-      Helvetica Neue, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI', 'Fira Sans', Avenir, 'Helvetica Neue', 'Lucida Grande', sans-serif;
     font-size: 16px;
     background: rgba(var(--background-color), 1);
     color: rgba(var(--font-color), 1);
@@ -115,7 +133,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   button {
+    padding: 0;
     cursor: pointer;
+    border: none;
+    background: none;
+    color: inherit;
   }
 `;
 

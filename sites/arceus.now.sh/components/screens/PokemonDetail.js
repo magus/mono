@@ -1,11 +1,13 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
 import { useRouter } from 'next/router';
+import { AnimatePresence, motion } from 'framer-motion';
 import MovesById from '../../public/data/MovesById';
 import { Category } from '../Category';
 import { TypePill } from '../TypePill';
 import { PokemonImage } from '../PokemonImage';
 import { QueryParams } from '../../src/QueryParams';
+import { Spacer } from '../Spacer';
 
 export function PokemonDetail(props) {
   const router = useRouter();
@@ -53,7 +55,7 @@ export function PokemonDetail(props) {
 }
 
 const Container = styled.div`
-  padding: 32px;
+  padding: var(--spacer-2);
 `;
 
 const Types = styled.div`
@@ -63,14 +65,45 @@ const Types = styled.div`
 `;
 
 const AlternateForms = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: var(--spacer-2) var(--spacer-3);
+  position: relative;
+  width: 100%;
+  margin: 0 0 0 calc(-1 * var(--spacer-2));
+
+  .scroll {
+    padding: 0 var(--spacer-2);
+    overflow-x: scroll;
+    display: flex;
+  }
+
+  .scroll-content {
+    border: 1px solid rgba(var(--font-color), 0.2);
+    border-radius: var(--spacer);
+    padding: var(--spacer) var(--spacer-2);
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacer-2) var(--spacer-3);
+  }
+
+  .scroll-fadeLeft {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to left, rgba(var(--background-color), 0) 0%, rgba(var(--background-color), 1) 100%);
+    width: var(--spacer-2);
+    height: 100%;
+  }
+
+  .scroll-fadeRight {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: linear-gradient(to right, rgba(var(--background-color), 0) 0%, rgba(var(--background-color), 1) 100%);
+    width: var(--spacer-2);
+    height: 100%;
+  }
 `;
 
 const SelectFormButton = styled.button`
-  outline: none;
   border: none;
   background: transparent;
   color: var(--font-color);
@@ -96,42 +129,108 @@ function PokemonForm(props) {
         <TypePill type={type_b} />
       </Types>
 
-      <PokemonImage form={props.form} pokemon={props.pokemon} type="large" />
+      <FormImage>
+        <PokemonImage form={props.form} pokemon={props.pokemon} type="large" />
+      </FormImage>
 
       {props.pokemon.forms.length === 1 ? null : (
         <>
           <AlternateForms>
-            {props.pokemon.forms.map((form, i) => {
-              const active = form.name === props.form.name;
+            <div className="scroll">
+              <div className="scroll-content">
+                {props.pokemon.forms.map((form, i) => {
+                  const active = form.name === props.form.name;
 
-              return (
-                <SelectFormButton disabled={active} key={i} onClick={() => props.handleSelectForm(i)}>
-                  <AlternateFormImage>
-                    <PokemonImage form={form} pokemon={props.pokemon} type="small" />
-                  </AlternateFormImage>
-                  <div>{form.name || props.pokemon.name}</div>
-                </SelectFormButton>
-              );
-            })}
+                  return (
+                    <SelectFormButton disabled={active} key={i} onClick={() => props.handleSelectForm(i)}>
+                      <AlternateFormImage>
+                        <PokemonImage form={form} pokemon={props.pokemon} type="small" />
+                      </AlternateFormImage>
+                      <div>{form.name || props.pokemon.name}</div>
+                    </SelectFormButton>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="scroll-fadeLeft" />
+            <div className="scroll-fadeRight" />
           </AlternateForms>
         </>
       )}
 
-      <PokemonMoves moves={props.form.moves} />
+      <Section name="Moves">
+        <PokemonMoves moves={props.form.moves} />
+      </Section>
     </div>
   );
 }
 
-const MovesContainer = styled.div`
-  h2 {
-    padding: 32px 0 0 0;
-    font-size: 48px;
-    font-weight: 800;
+const SectionContainer = styled.div`
+  .content {
+    overflow: hidden;
   }
 
+  .header-toggle {
+    border-top: 1px solid rgba(var(--font-color), 0.2);
+    border-bottom: 1px solid rgba(var(--font-color), 0.2);
+    width: 100%;
+    text-align: left;
+    margin: var(--spacer-2) 0 0 0;
+    padding: var(--spacer) 0;
+    font-size: 24px;
+    font-weight: 800;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+`;
+
+const OpenIcon = styled(motion.div)`
+  font-size: 16px;
+`;
+
+function Section(props) {
+  const [isOpen, set_isOpen] = React.useState(false);
+
+  return (
+    <SectionContainer>
+      <button className="header-toggle" onClick={() => set_isOpen((o) => !o)}>
+        <OpenIcon initial={{ rotate: -45 }} animate={{ rotate: isOpen ? 0 : -45 }}>
+          &#9698;
+        </OpenIcon>
+        <Spacer size="2" />
+        {props.name}
+      </button>
+      <div className="content">
+        <AnimatePresence>
+          {!isOpen ? null : (
+            <motion.div
+              // force line break
+              initial={{ y: -300, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -300, opacity: 0 }}
+            >
+              {props.children}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </SectionContainer>
+  );
+}
+
+const FormImage = styled.div`
+  padding: var(--spacer) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const MovesContainer = styled.div`
   h3 {
-    padding: 32px 0 0 0;
-    font-size: 32px;
+    padding: var(--spacer-4) 0 0 0;
+    font-size: 18px;
     font-weight: 800;
   }
 `;
@@ -140,7 +239,7 @@ const MoveTable = styled.table`
   text-align: left;
   width: 100%;
   border-spacing: 0px;
-  font-size: 18px;
+  font-size: 16px;
 
   th {
     font-weight: 200;
@@ -148,7 +247,7 @@ const MoveTable = styled.table`
   }
 
   td {
-    height: 44px;
+    height: 32px;
     width: 0.1%;
     white-space: nowrap;
   }
@@ -156,12 +255,10 @@ const MoveTable = styled.table`
 
 const MoveTableContainer = styled.div`
   width: 100%;
-  overflow: scroll;
+  overflow-x: scroll;
 `;
 
-const flexCenter = css`
-  display: flex;
-  align-items: center;
+const justifyCenter = css`
   justify-content: center;
 `;
 
@@ -169,7 +266,10 @@ const TDContent = styled.div`
   width: 100%;
   height: 100%;
   padding: 8px 0;
-  ${(props) => (props.center ? flexCenter : '')}
+  margin: 0 var(--spacer) 0 0;
+  display: flex;
+  align-items: center;
+  ${(props) => (props.center ? justifyCenter : '')}
 `;
 
 function TD(props) {
@@ -201,7 +301,6 @@ function MoveGroupHeader(props) {
 function PokemonMoves(props) {
   return (
     <MovesContainer>
-      <h2>Moves</h2>
       <MoveTableContainer>
         <MoveTable>
           <thead>
@@ -227,24 +326,19 @@ function PokemonMoves(props) {
 function MoveColumnNames() {
   return (
     <MoveContainer>
+      <TH>Level</TH>
+      <TH>Master</TH>
       <TH>Name</TH>
       <TH>Type</TH>
-      <TH center>Category</TH>
-      <TH center>Power</TH>
-      <TH center>Accuracy</TH>
+      <TH center>Pow</TH>
+      <TH center>Acc</TH>
       {/* <TH>PP</TH> */}
-      <TH center>Learn</TH>
-      <TH center>Master</TH>
     </MoveContainer>
   );
 }
 
 const MoveContainer = styled.tr`
-  padding: 8px;
-
-  .name {
-    font-size: 28px;
-  }
+  padding: var(--spacer);
 `;
 
 function Move(props) {
@@ -252,25 +346,24 @@ function Move(props) {
 
   return (
     <MoveContainer key={props.id}>
+      <TD>{!props.learn ? '-' : props.learn}</TD>
+      <TD>{!props.master ? '-' : props.master}</TD>
       <TD className="name">{move.name}</TD>
-      <TD>
-        <TypePill type={move.type} />
-      </TD>
       <TD center>
         <MoveClass type={move.class} />
+        <Spacer size="d2" />
+        <TypePill type={move.type} />
       </TD>
       <TD center>{move.power}</TD>
       <TD center>{move.acc}</TD>
       {/* <TD>{move.pp}</TD> */}
-      <TD center>{props.learn}</TD>
-      <TD center>{props.master}</TD>
     </MoveContainer>
   );
 }
 
 const MoveClassContainer = styled.div`
-  width: 32px;
-  height: 32px;
+  width: 20px;
+  height: 20px;
 `;
 function MoveClass(props) {
   return (

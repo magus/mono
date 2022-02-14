@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
+  width: 100%;
+  height: 100%;
+
   svg {
     width: 100%;
     height: 100%;
+    filter: drop-shadow(-1px 0px 4px rgba(0, 0, 0, 0.5));
   }
 `;
 

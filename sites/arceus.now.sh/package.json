@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@magusn/react": "0.6.0",
+    "framer-motion": "^3.1.1",
     "fuzzysort": "^1.1.4",
     "next": "12.0.8",
     "react": "^17.0.2",
