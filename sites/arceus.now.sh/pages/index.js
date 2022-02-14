@@ -20,6 +20,8 @@ export default function Home() {
 
   const [filterTypes, set_filterTypes] = React.useState(new Set([]));
 
+  const [results, set_results] = React.useState([]);
+
   React.useEffect(() => {
     fetch('data/ArceusPokedexByNumber.json')
       .then((resp) => resp.json())
@@ -84,51 +86,76 @@ export default function Home() {
 
   const [filterType_a, filterType_b] = Array.from(filterTypes);
   const hasTypeFilters = filterTypes.size > 0;
-  let results = [];
+  const isSearch = hasTypeFilters || search;
 
-  if (targets) {
-    let searchTargets = [];
+  React.useEffect(() => {
+    let timeoutId;
+    let asyncSearch = { cancel: () => {} };
 
-    if (!hasTypeFilters) {
-      searchTargets = targets.all;
-    } else {
-      // no search input, show all that match all types in filterTypes
+    function submitResults(results) {
+      timeoutId = setTimeout(() => set_results(results), 100);
+    }
 
-      if (filterType_a) {
-        for (const pokemon of targets[filterType_a]) {
-          for (const form of pokemon.forms) {
-            if (filterType_b) {
-              if (~form.types.indexOf(filterType_a) && ~form.types.indexOf(filterType_b)) {
+    if (targets) {
+      let searchTargets = [];
+
+      if (!hasTypeFilters) {
+        searchTargets = targets.all;
+      } else {
+        // no search input, show all that match all types in filterTypes
+
+        if (filterType_a) {
+          for (const pokemon of targets[filterType_a]) {
+            for (const form of pokemon.forms) {
+              if (filterType_b) {
+                if (~form.types.indexOf(filterType_a) && ~form.types.indexOf(filterType_b)) {
+                  searchTargets.push(pokemon);
+                }
+              } else {
                 searchTargets.push(pokemon);
               }
-            } else {
-              searchTargets.push(pokemon);
             }
           }
         }
       }
+
+      if (search) {
+        const keys = ['name'];
+        const options = { keys, allowTypo: true };
+
+        asyncSearch = fuzzysort.goAsync(search, searchTargets, options);
+        asyncSearch.then((searchResults) => {
+          submitResults(
+            searchResults.map((searchResult) => {
+              const pokemon = searchResult.obj;
+              const [result] = searchResult;
+              // build search highlight html
+              const highlight = fuzzysort.highlight(result, '<span class="result-highlight">', '</span>');
+              return { pokemon, highlight };
+            }),
+          );
+        });
+      } else if (hasTypeFilters) {
+        // delay results a bit to give render breathing room
+        submitResults(
+          searchTargets.map((pokemon) => {
+            return { pokemon };
+          }),
+        );
+      } else {
+        submitResults([]);
+      }
     }
 
-    if (search) {
-      const keys = ['name'];
-      const options = { keys, allowTypo: true };
-      const searchResults = fuzzysort.go(search, searchTargets, options);
-      results = searchResults.map((searchResult) => {
-        const pokemon = searchResult.obj;
-        const [result] = searchResult;
-        // build search highlight html
-        const highlight = fuzzysort.highlight(result, '<span class="result-highlight">', '</span>');
-        return { pokemon, highlight };
-      });
-    } else if (hasTypeFilters) {
-      results = searchTargets.map((pokemon) => {
-        return { pokemon };
-      });
-    }
+    return function cleanup() {
+      clearTimeout(timeoutId);
+      asyncSearch.cancel();
+    };
+  }, [search, targets, hasTypeFilters, filterType_a, filterType_b]);
+
+  function handleFocus(event) {
+    event.target.setSelectionRange(0, event.target.value.length);
   }
-
-  const isSearch = hasTypeFilters || search;
-  // const isSearch = false;
 
   const typesInResults = {};
   for (const result of results) {
@@ -136,10 +163,6 @@ export default function Home() {
     pokemonForm.types.forEach((t) => {
       typesInResults[t] = true;
     });
-  }
-
-  function handleFocus(event) {
-    event.target.setSelectionRange(0, event.target.value.length);
   }
 
   // client side: wait for router before rendering
