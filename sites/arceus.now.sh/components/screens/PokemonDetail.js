@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { Section } from '../Section';
 import { PokemonForm } from '../PokemonForm';
 import { PokemonMoves } from '../PokemonMoves';
+import { PokemonSizes } from '../PokemonSizes';
 import { QueryParams } from '../../src/QueryParams';
 
 export function PokemonDetail(props) {
@@ -38,6 +39,10 @@ export function PokemonDetail(props) {
       </Link>
 
       <PokemonForm form={form} pokemon={pokemon} handleSelectForm={set_formIndex} />
+
+      <Section name="Sizes">
+        <PokemonSizes sizes={pokemon.sizes} />
+      </Section>
 
       <Section name="Moves">
         <PokemonMoves moves={form.moves} />

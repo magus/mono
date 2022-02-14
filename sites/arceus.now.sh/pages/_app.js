@@ -63,6 +63,7 @@ const GlobalStyle = createGlobalStyle`
     --main-color: 255, 203, 5;
     --main-color-light: 254, 243, 199;
     --dark-blue: 30, 64, 175;
+    --gray: 161, 161, 170;
     --white: 255, 255, 255;
     --black: 0, 0, 0;
 
