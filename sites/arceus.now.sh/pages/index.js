@@ -20,22 +20,52 @@ export default function Home() {
 
   const [filterTypes, set_filterTypes] = React.useState(new Set([]));
 
-  const [results, set_results] = React.useState([]);
+  const [results, set_results] = React.useState(null);
+
+  function handleSearch(event) {
+    set_search(event.target.value);
+  }
+
+  function handleFocus(event) {
+    event.target.setSelectionRange(0, event.target.value.length);
+  }
+
+  function handleClear() {
+    set_search('');
+    set_filterTypes(new Set([]));
+  }
+
+  const [filterType_a, filterType_b] = Array.from(filterTypes);
+  const hasTypeFilters = filterTypes.size > 0;
+  const isSearch = hasTypeFilters || search;
+  const hasResults = Array.isArray(results);
+
+  const typesInResults = {};
+
+  if (hasResults) {
+    results.forEach((result) => {
+      const [pokemonForm] = result.pokemon.forms;
+      pokemonForm.types.forEach((t) => {
+        typesInResults[t] = true;
+      });
+    });
+  }
 
   React.useEffect(() => {
     fetch('data/ArceusPokedexByNumber.json')
       .then((resp) => resp.json())
       .then((json) => {
         const targets = {};
-        targets.all = Object.values(json);
+        targets.all = [];
 
-        for (const pokemon of targets.all) {
+        for (const pokemon of Object.values(json)) {
           for (const form of pokemon.forms) {
             const [type_a, type_b] = form.types;
             if (type_a && !targets[type_a]) targets[type_a] = [];
             if (type_b && !targets[type_b]) targets[type_b] = [];
 
             const formPokemon = { ...pokemon, forms: [form] };
+            targets.all.push(formPokemon);
             type_a && targets[type_a].push(formPokemon);
             type_b && targets[type_b].push(formPokemon);
           }
@@ -79,14 +109,6 @@ export default function Home() {
 
     router.replace({ query });
   }, [filterTypes, search]);
-
-  function handleSearch(event) {
-    set_search(event.target.value);
-  }
-
-  const [filterType_a, filterType_b] = Array.from(filterTypes);
-  const hasTypeFilters = filterTypes.size > 0;
-  const isSearch = hasTypeFilters || search;
 
   React.useEffect(() => {
     let timeoutId;
@@ -143,7 +165,7 @@ export default function Home() {
           }),
         );
       } else {
-        submitResults([]);
+        submitResults(null);
       }
     }
 
@@ -153,36 +175,31 @@ export default function Home() {
     };
   }, [search, targets, hasTypeFilters, filterType_a, filterType_b]);
 
-  function handleFocus(event) {
-    event.target.setSelectionRange(0, event.target.value.length);
-  }
-
-  const typesInResults = {};
-  for (const result of results) {
-    const [pokemonForm] = result.pokemon.forms;
-    pokemonForm.types.forEach((t) => {
-      typesInResults[t] = true;
-    });
-  }
-
   // client side: wait for router before rendering
   if (typeof window !== 'undefined' && !router.isReady) return null;
 
   return (
     <Container>
       <AboveResults>
-        <SearchInput
-          ref={searchInputRef}
-          onFocus={handleFocus}
-          placeholder="pikachu"
-          value={search}
-          onChange={handleSearch}
-        />
+        <SearchInputContainer>
+          <SearchInput
+            ref={searchInputRef}
+            onFocus={handleFocus}
+            placeholder="pikachu"
+            value={search}
+            onChange={handleSearch}
+          />
+          {!isSearch ? null : (
+            <button className="clear" onClick={handleClear}>
+              ❌
+            </button>
+          )}
+        </SearchInputContainer>
 
         <TypeButtons $isWrap={isWrap}>
           {Array.from(new Set([...Array.from(filterTypes), ...Object.values(Type)])).map((type) => {
-            // only show types that are in result set
-            if (results.length && !typesInResults[type]) return null;
+            // when showing results, only show types that are in result set
+            if (hasResults && !typesInResults[type]) return null;
 
             function handleClick() {
               set_filterTypes((_) => {
@@ -206,25 +223,27 @@ export default function Home() {
         </TypeButtons>
       </AboveResults>
 
-      <ResultsContainer>
-        {!isSearch ? null : (
-          <ResultCountContainer key={Date.now()}>
-            <b>{String(results.length)}</b> pokémon found.
-          </ResultCountContainer>
-        )}
-        <Results>
-          {results.map((result) => {
-            return (
-              <ResultPokemon
-                key={pokemonKey(result.pokemon)}
-                pokemon={result.pokemon}
-                highlight={result.highlight}
-                type={filterType_a}
-              />
-            );
-          })}
-        </Results>
-      </ResultsContainer>
+      {!hasResults ? null : (
+        <ResultsContainer>
+          {!isSearch ? null : (
+            <ResultCountContainer>
+              <b>{String(results.length)}</b> pokémon found.
+            </ResultCountContainer>
+          )}
+          <Results>
+            {results.map((result) => {
+              return (
+                <ResultPokemon
+                  key={pokemonKey(result.pokemon)}
+                  pokemon={result.pokemon}
+                  highlight={result.highlight}
+                  type={filterType_a}
+                />
+              );
+            })}
+          </Results>
+        </ResultsContainer>
+      )}
     </Container>
   );
 }
@@ -281,9 +300,29 @@ const AboveResults = styled.div`
   flex-direction: column;
 `;
 
+const SearchInputContainer = styled.div`
+  --clearButtonWidth: var(--spacer-6);
+
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .clear {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--clearButtonWidth);
+  }
+`;
+
 const SearchInput = styled.input`
+  width: 100%;
   border: 1px solid rgba(var(--font-color), 0.8);
-  padding: var(--spacer) var(--spacer-2);
+  padding: var(--spacer) var(--clearButtonWidth) var(--spacer) var(--spacer-2);
   border-radius: var(--spacer);
   font-size: 24px;
   color: var(--font-color);
