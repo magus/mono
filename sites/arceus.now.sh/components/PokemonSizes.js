@@ -52,7 +52,7 @@ export function PokemonSizes(props) {
 function Height(props) {
   const { height } = props;
 
-  if (!height) return '-';
+  if (!height) return '—';
 
   if (props.metric) {
     return <NumberUnit value={height.m} unit="m" />;
@@ -68,7 +68,7 @@ function Height(props) {
 function Weight(props) {
   const { weight } = props;
 
-  if (!weight) return '-';
+  if (!weight) return '—';
 
   if (props.metric) {
     return <NumberUnit value={weight.kg} unit="kg" />;
