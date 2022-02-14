@@ -78,17 +78,23 @@ function Weight(props) {
 }
 
 const NumberUnitContainer = styled.span`
+  font-variant-numeric: tabular-nums;
+
   .unit {
+    font-variant-numeric: normal;
     padding: 0 0 0 var(--spacer-d2);
     color: rgba(var(--gray), 1);
     font-size: 12px;
     font-weight: 600;
   }
 `;
+
+const numberFormatter = new Intl.NumberFormat();
+
 function NumberUnit(props) {
   return (
     <NumberUnitContainer>
-      <span>{props.value}</span>
+      <span>{numberFormatter.format(props.value)}</span>
       <span className="unit">{props.unit}</span>
     </NumberUnitContainer>
   );

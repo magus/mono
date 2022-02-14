@@ -59,29 +59,8 @@ const justifyCenter = css`
   justify-content: center;
 `;
 
-function widthProp(defaultWidth, widthField) {
-  return (props) => {
-    // use default width if width attribute was set
-    if (props.width) return null;
-
-    const width = props[widthField] || defaultWidth;
-
-    if (!width || !~['string', 'number'].indexOf(typeof width)) {
-      return '';
-    }
-
-    if (typeof width === 'string' && (~width.indexOf('%') || ~width.indexOf('px'))) {
-      return width;
-    }
-
-    return `${width}px`;
-  };
-}
-
 const TDContent = styled.td`
   height: 32px;
-  min-width: ${widthProp('0.1%', '$minWidth')};
-  max-width: ${widthProp('0.1%', '$maxWidth')};
   white-space: nowrap;
   font-style: ${(props) => (props.italic ? 'italic' : 'normal')};
   font-weight: ${(props) => (props.bold ? '600' : 'normal')};
