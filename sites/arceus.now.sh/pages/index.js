@@ -9,21 +9,91 @@ import { PokemonImage } from '../components/PokemonImage';
 import { TypePill } from '../components/TypePill';
 import { QueryParams } from '../src/QueryParams';
 
+function initializeState() {
+  return {
+    search: '',
+    filterTypes: new Set(),
+    results: [],
+    searchStatus: 'done',
+    init: false,
+  };
+}
+
+function addFilterType(state, type) {
+  if (!Type[type]) return;
+
+  let set = new Set(Array.from(state.filterTypes));
+  set.has(type) ? set.delete(type) : set.add(type);
+  if (set.size > 2) {
+    set = new Set(Array.from(set).slice(set.size - 2, set.size));
+  }
+  state.filterTypes = set;
+}
+
+function setSearch(state, search) {
+  state.search = search;
+  state.searchStatus = 'pending';
+}
+
+function reducer(prevState, action) {
+  const [type, data] = action;
+
+  console.debug('[reducer]', type, data);
+
+  const state = { ...prevState };
+
+  switch (type) {
+    case 'init': {
+      if (data.query.search) {
+        setSearch(state, data.query.search);
+      }
+      if (data.query.types) {
+        const queryTypes = Array.isArray(data.query.types) ? data.query.types : [data.query.types];
+        queryTypes.forEach((t) => addFilterType(state, t));
+      }
+      return state;
+    }
+
+    case 'search': {
+      setSearch(state, data);
+      return state;
+    }
+
+    case 'results': {
+      state.init = true;
+      state.searchStatus = 'done';
+      state.results = data;
+      return state;
+    }
+
+    case 'filter-type': {
+      addFilterType(state, data);
+      return state;
+    }
+
+    case 'clear': {
+      const initState = initializeState();
+      state.search = initState.search;
+      state.filterTypes = initState.filterTypes;
+      return state;
+    }
+
+    default:
+      throw new Error(`[reducer] unexpeected action [${type}]`);
+  }
+}
+
 export default function Home() {
   const router = useRouter();
 
+  const [state, dispatch] = React.useReducer(reducer, null, initializeState);
+
   const searchInputRef = React.useRef(null);
-  const [search, set_search] = React.useState('');
-  const [isWrap, set_isWrap] = React.useState(false);
 
   const [targets, set_targets] = React.useState(null);
 
-  const [filterTypes, set_filterTypes] = React.useState(new Set([]));
-
-  const [results, set_results] = React.useState(null);
-
   function handleSearch(event) {
-    set_search(event.target.value);
+    dispatch(['search', event.target.value]);
   }
 
   function handleFocus(event) {
@@ -31,25 +101,22 @@ export default function Home() {
   }
 
   function handleClear() {
-    set_search('');
-    set_filterTypes(new Set([]));
+    dispatch(['clear']);
   }
 
-  const [filterType_a, filterType_b] = Array.from(filterTypes);
-  const hasTypeFilters = filterTypes.size > 0;
-  const isSearch = hasTypeFilters || search;
-  const hasResults = Array.isArray(results);
+  const [filterType_a, filterType_b] = Array.from(state.filterTypes);
+  const hasTypeFilters = state.filterTypes.size > 0;
+  const isSearch = hasTypeFilters || state.search;
+
+  console.debug('render', state);
 
   const typesInResults = {};
-
-  if (hasResults) {
-    results.forEach((result) => {
-      const [pokemonForm] = result.pokemon.forms;
-      pokemonForm.types.forEach((t) => {
-        typesInResults[t] = true;
-      });
+  state.results.forEach((result) => {
+    const [pokemonForm] = result.pokemon.forms;
+    pokemonForm.types.forEach((t) => {
+      typesInResults[t] = true;
     });
-  }
+  });
 
   React.useEffect(() => {
     fetch('data/ArceusPokedexByNumber.json')
@@ -71,51 +138,46 @@ export default function Home() {
           }
         }
 
+        console.debug('setting targets');
         set_targets(targets);
       });
   }, []);
 
+  // initialize state from router/url/query
   React.useEffect(() => {
     if (!router.isReady) return;
 
-    const searchParam = router.query[QueryParams.Search];
-    const typesParam = router.query[QueryParams.Types];
+    const query = {
+      search: router.query[QueryParams.Search],
+      types: router.query[QueryParams.Types],
+    };
 
-    if (typesParam) {
-      set_filterTypes(new Set(Array.isArray(typesParam) ? typesParam : [typesParam]));
-    }
-
-    if (searchParam) {
-      set_search(searchParam);
-    }
+    dispatch(['init', { query }]);
   }, [router.isReady]);
 
+  // synchronize state with router/url/query
   React.useEffect(() => {
     let query = {};
 
-    if (filterTypes.size || search) {
-      set_isWrap(false);
+    if (state.filterTypes.size) {
+      query[QueryParams.Types] = Array.from(state.filterTypes);
+    }
 
-      if (filterTypes.size) {
-        query[QueryParams.Types] = Array.from(filterTypes);
-      }
-
-      if (search) {
-        query[QueryParams.Search] = search;
-      }
-    } else {
-      set_isWrap(true);
+    if (state.search) {
+      query[QueryParams.Search] = state.search;
     }
 
     router.replace({ query });
-  }, [filterTypes, search]);
+  }, [state.filterTypes, state.search]);
 
   React.useEffect(() => {
+    console.debug('handle search');
+
     let timeoutId;
     let asyncSearch = { cancel: () => {} };
 
     function submitResults(results) {
-      timeoutId = setTimeout(() => set_results(results), 100);
+      timeoutId = setTimeout(() => dispatch(['results', results]), 100);
     }
 
     if (targets) {
@@ -141,11 +203,11 @@ export default function Home() {
         }
       }
 
-      if (search) {
+      if (state.search) {
         const keys = ['name'];
         const options = { keys, allowTypo: true };
 
-        asyncSearch = fuzzysort.goAsync(search, searchTargets, options);
+        asyncSearch = fuzzysort.goAsync(state.search, searchTargets, options);
         asyncSearch.then((searchResults) => {
           submitResults(
             searchResults.map((searchResult) => {
@@ -165,7 +227,7 @@ export default function Home() {
           }),
         );
       } else {
-        submitResults(null);
+        submitResults([]);
       }
     }
 
@@ -173,10 +235,12 @@ export default function Home() {
       clearTimeout(timeoutId);
       asyncSearch.cancel();
     };
-  }, [search, targets, hasTypeFilters, filterType_a, filterType_b]);
+  }, [state.search, targets, hasTypeFilters, filterType_a, filterType_b]);
 
-  // client side: wait for router before rendering
-  if (typeof window !== 'undefined' && !router.isReady) return null;
+  // todo: client side wait for init and subsequent search before rendering
+  // maybe possible to just program loading ui for searchStatus instead
+
+  if (!state.init) return null;
 
   return (
     <Container>
@@ -186,7 +250,7 @@ export default function Home() {
             ref={searchInputRef}
             onFocus={handleFocus}
             placeholder="pikachu"
-            value={search}
+            value={state.search}
             onChange={handleSearch}
           />
           {!isSearch ? null : (
@@ -196,23 +260,16 @@ export default function Home() {
           )}
         </SearchInputContainer>
 
-        <TypeButtons $isWrap={isWrap}>
-          {Array.from(new Set([...Array.from(filterTypes), ...Object.values(Type)])).map((type) => {
+        <TypeButtons row={isSearch}>
+          {Array.from(new Set([...Array.from(state.filterTypes), ...Object.values(Type)])).map((type) => {
             // when showing results, only show types that are in result set
-            if (hasResults && !typesInResults[type]) return null;
+            if (isSearch && !typesInResults[type]) return null;
 
             function handleClick() {
-              set_filterTypes((_) => {
-                let set = new Set(Array.from(_));
-                set.has(type) ? set.delete(type) : set.add(type);
-                if (set.size > 2) {
-                  set = new Set(Array.from(set).slice(set.size - 2, set.size));
-                }
-                return set;
-              });
+              dispatch(['filter-type', type]);
             }
 
-            const disabled = hasTypeFilters && !filterTypes.has(type);
+            const disabled = hasTypeFilters && !state.filterTypes.has(type);
 
             return (
               <motion.div key={type} layout layoutTransition={spring}>
@@ -223,15 +280,15 @@ export default function Home() {
         </TypeButtons>
       </AboveResults>
 
-      {!hasResults ? null : (
+      {!isSearch ? null : (
         <ResultsContainer>
           {!isSearch ? null : (
             <ResultCountContainer>
-              <b>{String(results.length)}</b> pokémon found.
+              <b>{String(state.results.length)}</b> pokémon found.
             </ResultCountContainer>
           )}
           <Results>
-            {results.map((result) => {
+            {state.results.map((result) => {
               return (
                 <ResultPokemon
                   key={pokemonKey(result.pokemon)}
@@ -395,9 +452,9 @@ const TypeButtons = styled.div`
   overflow-x: scroll;
   display: flex;
   flex-direction: row;
-  flex-wrap: ${(props) => (props.$isWrap ? 'wrap' : 'no-wrap')};
+  flex-wrap: ${(props) => (props.row ? 'no-wrap' : 'wrap')};
   align-items: center;
-  justify-content: ${(props) => (props.$isWrap ? 'center' : 'flex-start')};
+  justify-content: ${(props) => (props.row ? 'flex-start' : 'center')};
   gap: var(--spacer);
   padding: var(--spacer-2) 0;
 `;
