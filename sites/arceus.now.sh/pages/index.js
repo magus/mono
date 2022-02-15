@@ -237,9 +237,6 @@ export default function Home() {
     };
   }, [state.search, targets, hasTypeFilters, filterType_a, filterType_b]);
 
-  // todo: client side wait for init and subsequent search before rendering
-  // maybe possible to just program loading ui for searchStatus instead
-
   if (!state.init) return null;
 
   return (

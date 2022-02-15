@@ -1,7 +1,5 @@
 
 # TODO
-- prevent type buttons jumping on back navigation from pokemon/detail
-
 - calculate all type combinations
   - what is the minimal type combination to hit every pokemon 1x?
   - what is the minimal type combination to hit every pokemon 2x?
