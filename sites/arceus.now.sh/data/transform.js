@@ -730,7 +730,7 @@ function getImageId(pokemon) {
   } else if (pokemon.pokedex.forme === 'Alola') {
     imageId += '-a';
   } else if (pokemon.pokedex.forme === 'Sandy') {
-    imageId += '-s';
+    imageId += '-c';
   } else if (pokemon.pokedex.forme === 'Trash') {
     imageId += '-t';
   } else if (pokemon.pokedex.forme === 'Sunshine') {
