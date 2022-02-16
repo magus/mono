@@ -21,6 +21,22 @@
   | NOR | FIR | WAT | ... (use first 3 letters + color to represent types)
   |  1  |  2  |  ½  | ... (0, ¼, ½, 1, 2, 4)
 
+- show 'Stats' on PokemonDetail
+  - show horizontal line bars
+  - color for ranges (red, orange, yellow, green, bright green, bluish)
+    - maybe use interpolate to generate colors between ranges
+      e.g.
+        [0,30] (red)
+        [30,60] (orange)
+        [60,90] (yellow)
+        [90,120] (green)
+        [120,150] (dark green)
+        [150,255] (green blue)
+    e.g.
+      HP  255 -------------------------
+      ATK 100 ----------                (100)
+      .. etc.
+
 
 - add optional slug to index (search) route
 - selected by toggling buttons

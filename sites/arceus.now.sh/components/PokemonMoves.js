@@ -58,6 +58,9 @@ const MoveTableContainer = styled.div`
 const justifyCenter = css`
   justify-content: center;
 `;
+const justifyEnd = css`
+  justify-content: flex-end;
+`;
 
 const TDContent = styled.td`
   height: 32px;
@@ -75,6 +78,7 @@ const TDContent = styled.td`
     display: flex;
     align-items: center;
     ${(props) => (props.center ? justifyCenter : '')}
+    ${(props) => (props.right ? justifyEnd : '')}
   }
 `;
 
@@ -109,9 +113,9 @@ function MoveColumnNames() {
     <MoveContainer>
       <TH width="75px">Level</TH>
       <TH width="75px">Master</TH>
-      <TH width="200px">Name</TH>
-      <TH width="150px">Type</TH>
-      <TH width="75px">Pow</TH>
+      <TH width="175px">Name</TH>
+      <TH width="125px">Type</TH>
+      <TH width="85px">Pow</TH>
       <TH width="50px">Acc</TH>
       {/* <TH>PP</TH> */}
     </MoveContainer>
