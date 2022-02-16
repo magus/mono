@@ -1,19 +1,19 @@
 export { PokemonDetail as default } from '../../../../components/screens/PokemonDetail';
 
+import { import_ArceusPokedexByNumber } from '../../../../src/import_ArceusPokedexByNumber';
+
 export async function getStaticPaths() {
-  const ArceusPokedexByNumber = await import('../../../../data/ArceusPokedexByNumber.json');
+  const ArceusPokedexByNumber = await import_ArceusPokedexByNumber();
 
   const paths = [];
 
   for (const num in ArceusPokedexByNumber) {
-    if (num !== 'default') {
-      const pokemon = ArceusPokedexByNumber[num];
-      for (const form of pokemon.forms) {
-        if (form.name) {
-          paths.push({ params: { num, form: [form.name] } });
-        } else {
-          paths.push({ params: { num, form: [] } });
-        }
+    const pokemon = ArceusPokedexByNumber[num];
+    for (const form of pokemon.forms) {
+      if (form.name) {
+        paths.push({ params: { num, form: [form.name] } });
+      } else {
+        paths.push({ params: { num, form: [] } });
       }
     }
   }
@@ -28,7 +28,7 @@ export async function getStaticProps(options) {
   const { num } = options.params;
   const [form] = options.params.form || [];
 
-  const ArceusPokedexByNumber = await import('../../../../data/ArceusPokedexByNumber.json');
+  const ArceusPokedexByNumber = await import_ArceusPokedexByNumber();
 
   // hydrate a local pokedex with evolutions
   const pokedex = {};

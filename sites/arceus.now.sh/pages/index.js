@@ -8,6 +8,7 @@ import { Type } from '../data/Type';
 import { PokemonImage } from '../components/PokemonImage';
 import { TypePill } from '../components/TypePill';
 import { QueryParams } from '../src/QueryParams';
+import { import_ArceusPokedexByNumber } from '../src/import_ArceusPokedexByNumber';
 
 function initializeState() {
   return {
@@ -83,6 +84,26 @@ function reducer(prevState, action) {
   }
 }
 
+function buildTargetsFromPokedex(pokedex) {
+  const targets = {};
+  targets.all = [];
+
+  for (const pokemon of Object.values(pokedex)) {
+    for (const form of pokemon.forms) {
+      const [type_a, type_b] = form.types;
+      if (type_a && !targets[type_a]) targets[type_a] = [];
+      if (type_b && !targets[type_b]) targets[type_b] = [];
+
+      const formPokemon = { ...pokemon, forms: [form] };
+      targets.all.push(formPokemon);
+      type_a && targets[type_a].push(formPokemon);
+      type_b && targets[type_b].push(formPokemon);
+    }
+  }
+
+  return targets;
+}
+
 export default function Home() {
   const router = useRouter();
 
@@ -117,28 +138,11 @@ export default function Home() {
   });
 
   React.useEffect(() => {
-    fetch('data/ArceusPokedexByNumber.json')
-      .then((resp) => resp.json())
-      .then((json) => {
-        const targets = {};
-        targets.all = [];
+    async function getTargets() {
+      set_targets(buildTargetsFromPokedex(await import_ArceusPokedexByNumber()));
+    }
 
-        for (const pokemon of Object.values(json)) {
-          for (const form of pokemon.forms) {
-            const [type_a, type_b] = form.types;
-            if (type_a && !targets[type_a]) targets[type_a] = [];
-            if (type_b && !targets[type_b]) targets[type_b] = [];
-
-            const formPokemon = { ...pokemon, forms: [form] };
-            targets.all.push(formPokemon);
-            type_a && targets[type_a].push(formPokemon);
-            type_b && targets[type_b].push(formPokemon);
-          }
-        }
-
-        console.debug('setting targets');
-        set_targets(targets);
-      });
+    getTargets();
   }, []);
 
   // initialize state from router/url/query
