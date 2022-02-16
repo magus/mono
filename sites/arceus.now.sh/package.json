@@ -9,6 +9,7 @@
     "deploy:prod": "now --prod",
     "deploy:purge": "now rm arceus --safe",
     "dev": "next dev",
+    "prod": "yarn build && yarn start",
     "start": "NODE_ENV=production next start",
     "test:lint": "eslint ."
   },
