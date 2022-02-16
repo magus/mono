@@ -144,7 +144,7 @@ const GlobalStyle = createGlobalStyle`
 
 export default function MyApp({ Component, pageProps }) {
   const title = 'Pokédex';
-  const description = 'Pokedex for Pokémon Legends: Arceus';
+  const description = 'Pokédex for Pokémon Legends: Arceus';
 
   return (
     <>
@@ -153,7 +153,10 @@ export default function MyApp({ Component, pageProps }) {
 
         {/* seo & open graph tags */}
         <meta name="description" content={description} />
-        <meta name="keywords" content={['pokemon', 'pokedex', 'arceus', 'legends', 'search', 'game'].join(', ')} />
+        <meta
+          name="keywords"
+          content={['pokemon', 'pokémon', 'pokédex', 'pokedex', 'arceus', 'legends', 'search', 'game'].join(', ')}
+        />
         <meta property="og:locale" content="en_US" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />

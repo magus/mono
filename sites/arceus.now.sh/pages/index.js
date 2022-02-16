@@ -281,7 +281,7 @@ export default function Home() {
         <ResultsContainer>
           {!isSearch ? null : (
             <ResultCountContainer>
-              <b>{String(state.results.length)}</b> pokémon found.
+              <b>{String(state.results.length)}</b> Pokémon found.
             </ResultCountContainer>
           )}
           <Results>
