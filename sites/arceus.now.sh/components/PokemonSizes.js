@@ -1,10 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Spacer } from './Spacer';
 
 export function PokemonSizes(props) {
-  console.debug('[PokemonSizes]', props);
-
   const [isMetric, set_isMetric] = React.useState(false);
 
   if (!props.sizes) {

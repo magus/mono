@@ -108,8 +108,6 @@ export default function Home() {
   const hasTypeFilters = state.filterTypes.size > 0;
   const isSearch = hasTypeFilters || state.search;
 
-  console.debug('render', state);
-
   const typesInResults = {};
   state.results.forEach((result) => {
     const [pokemonForm] = result.pokemon.forms;
@@ -171,8 +169,6 @@ export default function Home() {
   }, [state.filterTypes, state.search]);
 
   React.useEffect(() => {
-    console.debug('handle search');
-
     let timeoutId;
     let asyncSearch = { cancel: () => {} };
 
