@@ -3,7 +3,7 @@ import fuzzysort from 'fuzzysort';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Type } from '../data/Type';
 import { PokemonImage } from '../components/PokemonImage';
 import { TypePill } from '../components/TypePill';
@@ -258,46 +258,54 @@ export default function Home() {
         </SearchInputContainer>
 
         <TypeButtons row={isSearch}>
-          {Array.from(new Set([...Array.from(state.filterTypes), ...Object.values(Type)])).map((type) => {
-            // when showing results, only show types that are in result set
-            if (isSearch && !typesInResults[type]) return null;
+          <AnimatePresence>
+            {Array.from(new Set([...Array.from(state.filterTypes), ...Object.values(Type)])).map((type) => {
+              // when showing results, only show types that are in result set
+              const hide = isSearch && !typesInResults[type];
+              if (hide) return null;
 
-            function handleClick() {
-              dispatch(['filter-type', type]);
-            }
+              function handleClick() {
+                dispatch(['filter-type', type]);
+              }
 
-            const disabled = hasTypeFilters && !state.filterTypes.has(type);
+              const disabled = hasTypeFilters && !state.filterTypes.has(type);
 
-            return (
-              <motion.div key={type} layout layoutTransition={spring}>
-                <TypePill type={type} $disabled={disabled} onClick={handleClick} />
-              </motion.div>
-            );
-          })}
+              return (
+                <motion.div
+                  key={type}
+                  layout
+                  layoutTransition={spring}
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <TypePill type={type} $disabled={disabled} onClick={handleClick} />
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
         </TypeButtons>
       </AboveResults>
 
-      {!isSearch ? null : (
-        <ResultsContainer>
-          {!isSearch ? null : (
-            <ResultCountContainer>
-              <b>{String(state.results.length)}</b> Pokémon found.
-            </ResultCountContainer>
-          )}
-          <Results>
-            {state.results.map((result) => {
-              return (
-                <ResultPokemon
-                  key={pokemonKey(result.pokemon)}
-                  pokemon={result.pokemon}
-                  highlight={result.highlight}
-                  type={filterType_a}
-                />
-              );
-            })}
-          </Results>
-        </ResultsContainer>
-      )}
+      <ResultsContainer>
+        {!isSearch ? null : (
+          <ResultCountContainer>
+            <b>{String(state.results.length)}</b> Pokémon found.
+          </ResultCountContainer>
+        )}
+        <Results>
+          {state.results.map((result) => {
+            return (
+              <ResultPokemon
+                key={pokemonKey(result.pokemon)}
+                pokemon={result.pokemon}
+                highlight={result.highlight}
+                type={filterType_a}
+              />
+            );
+          })}
+        </Results>
+      </ResultsContainer>
     </Container>
   );
 }
@@ -449,9 +457,15 @@ const TypeButtons = styled.div`
   overflow-x: scroll;
   display: flex;
   flex-direction: row;
-  flex-wrap: ${(props) => (props.row ? 'no-wrap' : 'wrap')};
+
+  /* flex-wrap: ${(props) => (props.row ? 'no-wrap' : 'wrap')}; */
+  flex-wrap: wrap;
+
   align-items: center;
-  justify-content: ${(props) => (props.row ? 'flex-start' : 'center')};
+
+  /* justify-content: ${(props) => (props.row ? 'flex-start' : 'center')}; */
+  justify-content: center;
+
   gap: var(--spacer);
   padding: var(--spacer-2) 0;
 `;
