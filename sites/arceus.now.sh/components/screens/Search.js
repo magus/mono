@@ -19,11 +19,8 @@ function initializeState() {
   };
 }
 
-function addFilterType(state, type) {
-  if (!Type[type]) return;
-
+function validateFilterTypes(state) {
   let set = new Set(Array.from(state.filterTypes));
-  set.has(type) ? set.delete(type) : set.add(type);
   if (set.size > 2) {
     set = new Set(Array.from(set).slice(set.size - 2, set.size));
   }
@@ -43,14 +40,20 @@ function reducer(prevState, action) {
   const state = { ...prevState };
 
   switch (type) {
-    case 'init': {
-      if (data.query.search) {
-        setSearch(state, data.query.search);
-      }
+    case 'sync-query': {
+      setSearch(state, data.query.search || '');
+      state.filterTypes = new Set();
+
       if (data.query.types) {
         const queryTypes = Array.isArray(data.query.types) ? data.query.types : [data.query.types];
-        queryTypes.forEach((t) => addFilterType(state, t));
+        queryTypes.forEach((t) => {
+          if (Type[t]) {
+            state.filterTypes.add(t);
+          }
+        });
+        validateFilterTypes(state);
       }
+
       return state;
     }
 
@@ -67,7 +70,10 @@ function reducer(prevState, action) {
     }
 
     case 'filter-type': {
-      addFilterType(state, data);
+      if (Type[data]) {
+        state.filterTypes.has(data) ? state.filterTypes.delete(data) : state.filterTypes.add(data);
+      }
+      validateFilterTypes(state);
       return state;
     }
 
@@ -124,6 +130,7 @@ export function Search() {
   }, []);
 
   // initialize state from router/url/query
+  // listen to router.query changes and sync back to state
   React.useEffect(() => {
     if (!router.isReady) return;
 
@@ -132,25 +139,32 @@ export function Search() {
       types: router.query[QueryParams.Types],
     };
 
-    dispatch(['init', { query }]);
-  }, [router.isReady]);
+    dispatch(['sync-query', { query }]);
+  }, [router.isReady, router.query]);
 
   // synchronize state with router/url/query
   React.useEffect(() => {
-    let query = {};
+    const catureUrl_timeoutId = setTimeout(() => {
+      let query = {};
+      if (state.filterTypes.size) {
+        query[QueryParams.Types] = Array.from(state.filterTypes);
+      }
+      if (state.search) {
+        query[QueryParams.Search] = state.search;
+      }
 
-    if (state.filterTypes.size) {
-      query[QueryParams.Types] = Array.from(state.filterTypes);
-    }
+      // console.debug('[Search]', 'persisting', JSON.stringify(query));
+      router.push({ query });
+    }, 1 * 1000);
 
-    if (state.search) {
-      query[QueryParams.Search] = state.search;
-    }
-
-    router.replace({ query });
-  }, [state.filterTypes, state.search]);
+    return function cleanup() {
+      clearTimeout(catureUrl_timeoutId);
+    };
+  }, [filterType_a, filterType_b, state.search]);
 
   React.useEffect(() => {
+    // console.debug('run search useEffect');
+
     let timeoutId;
     let asyncSearch = { cancel: () => {} };
 

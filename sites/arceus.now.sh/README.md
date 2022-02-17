@@ -4,9 +4,6 @@
   - what is the minimal type combination to hit every pokemon 1x?
   - what is the minimal type combination to hit every pokemon 2x?
 
-- push query state after unchanged for 2s
-  - this will create a search history we can go swipe backward through. currently a back navigation doesn’t correctly capture all the searches you made
-
 - motion.div for ResultsContainer and add layout for animating the transition/movement as the type pills refine during search and container shifts up and down
 
 - color category icons same as other sites
