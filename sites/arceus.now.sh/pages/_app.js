@@ -20,7 +20,7 @@ const CSSReset = createGlobalStyle`
   3. Allow percentage-based heights in the application
 */
 html, body {
-  height: 100%;
+  min-height: 100%;
 }
 /*
   Typographic tweaks!
