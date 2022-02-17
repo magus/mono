@@ -84,7 +84,6 @@ const justifyEnd = css`
 `;
 
 const TDContent = styled.td`
-  height: 32px;
   white-space: nowrap;
   font-style: ${(props) => (props.italic ? 'italic' : 'normal')};
   font-weight: ${(props) => (props.bold ? '600' : 'normal')};
