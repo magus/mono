@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { ResultPokemon } from '../ResultPokemon';
+import { HomeIcon } from '../HomeIcon';
 import { Section } from '../Section';
 import { PokemonMoves } from '../PokemonMoves';
 import { TypePill } from '../TypePill';
@@ -10,6 +11,8 @@ export function Type(props) {
 
   return (
     <Container>
+      <HomeIcon />
+
       <div className="type-header">
         <TypePill type={props.type} />
       </div>

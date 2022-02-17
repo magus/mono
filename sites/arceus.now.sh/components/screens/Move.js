@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { HomeIcon } from '../HomeIcon';
 import { ResultPokemon } from '../ResultPokemon';
 import { Category } from '../Category';
 import { TypePill } from '../TypePill';
@@ -9,6 +10,8 @@ export function Move(props) {
 
   return (
     <Container>
+      <HomeIcon />
+
       <div className="move-meta">
         <table>
           <tbody>
