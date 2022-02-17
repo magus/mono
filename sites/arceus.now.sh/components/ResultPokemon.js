@@ -35,9 +35,9 @@ export function ResultPokemon(props) {
               </ResultPokemonName>
             </div>
             <div className="types">
-              <TypePill type={typeA} />
+              <TypePill type={typeA} withoutLabel />
               <Spacer size="1" />
-              <TypePill type={typeB} />
+              <TypePill type={typeB} withoutLabel />
             </div>
           </div>
         </a>
