@@ -5,7 +5,7 @@ export function PokemonImage(props) {
 
   if (props.pokemon.num === 493 && ~['sprite', 'icon'].indexOf(props.type)) {
     imageId = zeroPad(props.pokemon.num, 3);
-  } else if (props.pokemon.num === 902 && props.type === 'icon') {
+  } else if (~[487, 902].indexOf(props.pokemon.num) && props.type === 'icon') {
     imageId = zeroPad(props.pokemon.num, 3);
   } else {
     imageId = props.form.imageId;
