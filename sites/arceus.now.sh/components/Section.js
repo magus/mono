@@ -3,8 +3,13 @@ import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Spacer } from './Spacer';
 
+const MOTION_STATES = {
+  open: { y: 0, height: 'auto', opacity: 1 },
+  closed: { y: -300, height: 0, opacity: 0 },
+};
 export function Section(props) {
-  const [isOpen, set_isOpen] = React.useState(!!props.open);
+  const initOpen = !!props.open;
+  const [isOpen, set_isOpen] = React.useState(initOpen);
 
   return (
     <SectionContainer>
@@ -16,13 +21,13 @@ export function Section(props) {
         {props.name}
       </button>
       <div className="content">
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {!isOpen ? null : (
             <motion.div
               // force line break
-              // initial={{ y: -300, height: 0, opacity: 0 }}
-              animate={{ y: 0, height: 'auto', opacity: 1 }}
-              exit={{ y: -300, height: 0, opacity: 0 }}
+              initial={MOTION_STATES.closed}
+              animate={MOTION_STATES.open}
+              exit={MOTION_STATES.closed}
             >
               {props.children}
             </motion.div>
