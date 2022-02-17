@@ -20,7 +20,7 @@ export function Section(props) {
           {!isOpen ? null : (
             <motion.div
               // force line break
-              initial={{ y: -300, height: 0, opacity: 0 }}
+              // initial={{ y: -300, height: 0, opacity: 0 }}
               animate={{ y: 0, height: 'auto', opacity: 1 }}
               exit={{ y: -300, height: 0, opacity: 0 }}
             >
