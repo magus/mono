@@ -216,6 +216,22 @@ export function Search() {
 
   if (!state.init) return null;
 
+  const filteredTypes = Array.from(new Set([...Array.from(state.filterTypes), ...Object.values(Type)])).filter(
+    (type) => {
+      // when showing results, only show types that are in result set
+      return !(isSearch && !typesInResults[type]);
+    },
+  );
+
+  let displayedTypes = filteredTypes;
+  if (displayedTypes.length === 0) {
+    // if we have no matching types to display but we have filterTypes enabled
+    // then show the type pill so we can tap it to disable the filter
+    if (state.filterTypes.size > 0) {
+      displayedTypes = Array.from(state.filterTypes);
+    }
+  }
+
   return (
     <Container>
       <AboveResults>
@@ -236,11 +252,7 @@ export function Search() {
 
         <TypeButtons row={isSearch}>
           <AnimatePresence>
-            {Array.from(new Set([...Array.from(state.filterTypes), ...Object.values(Type)])).map((type) => {
-              // when showing results, only show types that are in result set
-              const hide = isSearch && !typesInResults[type];
-              if (hide) return null;
-
+            {displayedTypes.map((type) => {
               function handleClick() {
                 dispatch(['filter-type', type]);
               }
