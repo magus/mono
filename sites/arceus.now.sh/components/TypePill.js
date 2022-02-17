@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Link from 'next/link';
 import { TypeSymbol } from './TypeSymbol';
 
@@ -17,7 +17,7 @@ export function TypePill(props) {
       <TypeSymbolContainer>
         <TypeSymbol type={type} />
       </TypeSymbolContainer>
-      <TypeName>{type.toUpperCase()}</TypeName>
+      {props.withoutLabel ? null : <TypeName>{type.toUpperCase()}</TypeName>}
     </TypeContainer>
   );
 
@@ -38,14 +38,23 @@ export function TypePill(props) {
 }
 
 const TypeColor = (props) => `var(--${props.type})`;
+const WithoutLabel = (props) => {
+  if (props.withoutLabel) {
+    return '';
+  }
 
+  return css`
+    width: 100px;
+    padding: 0 var(--spacer-2) 0 0;
+  `;
+};
 const TypeContainer = styled.div`
+  ${WithoutLabel}
+
   border: none;
   outline: none;
-  width: 100px;
   border-radius: var(--spacer-d2);
   background-color: rgba(${TypeColor}, 1);
-  padding: 0 var(--spacer-2) 0 0;
   color: #fefefe;
   display: flex;
   flex-direction: row;
@@ -55,6 +64,7 @@ const TypeContainer = styled.div`
 `;
 
 const TypeName = styled.div`
+  margin: 0 0 0 var(--spacer-d2);
   flex: 1;
   text-align: center;
   font-weight: 400;
@@ -67,7 +77,6 @@ const TypeName = styled.div`
 const TypeSymbolContainer = styled.div`
   /* border-right: 1px solid #fefefe; */
   flex-shrink: 0;
-  margin: 0 var(--spacer-d2) 0 0;
   width: 24px !important;
   height: 24px !important;
 `;
