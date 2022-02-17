@@ -7,7 +7,7 @@ import { PokemonMoves } from '../PokemonMoves';
 import { TypePill } from '../TypePill';
 
 export function Type(props) {
-  console.debug('[Type]', props);
+  // console.debug('[Type]', props);
 
   return (
     <Container>

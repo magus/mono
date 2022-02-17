@@ -38,7 +38,7 @@ function setSearch(state, search) {
 function reducer(prevState, action) {
   const [type, data] = action;
 
-  console.debug('[reducer]', type, data);
+  // console.debug('[reducer]', type, data);
 
   const state = { ...prevState };
 

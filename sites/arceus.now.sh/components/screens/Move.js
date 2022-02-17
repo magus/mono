@@ -6,7 +6,7 @@ import { Category } from '../Category';
 import { TypePill } from '../TypePill';
 
 export function Move(props) {
-  console.debug('[Move]', props);
+  // console.debug('[Move]', props);
 
   return (
     <Container>
