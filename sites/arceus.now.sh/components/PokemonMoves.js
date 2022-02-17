@@ -196,7 +196,7 @@ function Move(props) {
       <TD bold tabularNums>
         {move.power || '—'}
       </TD>
-      <TD tabularNums>{move.acc === null ? '—' : `${move.acc}%`}</TD>
+      <TD tabularNums>{move.acc || '—'}%</TD>
       {/* <TD>{move.pp}</TD> */}
     </MoveContainer>
   );

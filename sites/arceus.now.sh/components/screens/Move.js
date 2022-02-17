@@ -35,11 +35,11 @@ export function Move(props) {
             </tr>
             <tr className="pow">
               <td>Power</td>
-              <td>{props.move.power}</td>
+              <td>{props.move.power || '—'}</td>
             </tr>
             <tr className="acc">
               <td>Accuracy</td>
-              <td>{props.move.acc}</td>
+              <td>{props.move.acc || '—'}%</td>
             </tr>
             <tr className="pp">
               <td>PP</td>
