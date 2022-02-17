@@ -56,6 +56,7 @@ const MovesContainer = styled.div`
     padding: var(--spacer-4) 0 0 0;
     font-size: 18px;
     font-weight: 800;
+    font-variant: small-caps;
   }
 `;
 
@@ -68,6 +69,7 @@ const MoveTable = styled.table`
   th {
     font-weight: 200;
     font-size: 14px;
+    font-variant: small-caps;
   }
 `;
 

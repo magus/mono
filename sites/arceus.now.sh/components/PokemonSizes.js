@@ -107,6 +107,7 @@ const SizeTable = styled.table`
   td:first-child {
     font-weight: 200;
     font-size: 14px;
+    font-variant: small-caps;
   }
 `;
 

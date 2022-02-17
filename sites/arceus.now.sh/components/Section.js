@@ -44,6 +44,7 @@ const SectionContainer = styled.div`
   }
 
   .header-toggle {
+    font-variant: small-caps;
     border-top: 1px solid rgba(var(--font-color), 0.2);
     border-bottom: 1px solid rgba(var(--font-color), 0.2);
     width: 100%;
