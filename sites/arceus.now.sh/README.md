@@ -48,6 +48,7 @@
 - /moves (aka offense) toggle (off by default)
   - select up to four types
   - selecting types shows pokemon who can learn a move with type coverage
+
 - /coverage (aka defense) toggle (off by default)
   - select as many types as you want
   - visualize percents as a bar (color subsections, show percent)
