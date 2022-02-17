@@ -55,7 +55,17 @@ export async function getStaticProps(options) {
       const pokemon = ArceusPokedexByNumber[params.num];
       const form = pokemon.forms[params.formIndex];
 
-      return { ...pokemon, form };
+      const result = {
+        name: pokemon.name,
+        num: pokemon.num,
+        form: { name: null, types: form.types, imageId: form.imageId },
+      };
+
+      if (form.name) {
+        result.form.name = form.name;
+      }
+
+      return result;
     });
 
   const move = MovesById.Lookup[id];
