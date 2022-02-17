@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Spacer } from './Spacer';
 
 export function Section(props) {
-  const [isOpen, set_isOpen] = React.useState(false);
+  const [isOpen, set_isOpen] = React.useState(!!props.open);
 
   return (
     <SectionContainer>

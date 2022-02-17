@@ -1,9 +1,22 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
+import Link from 'next/link';
 import MovesById from '../public/data/MovesById';
 import { Category } from './Category';
 import { TypePill } from './TypePill';
-import { Spacer } from './Spacer';
+
+function sortFn(getValue) {
+  return (a, b) => {
+    const vA = getValue(a);
+    const vB = getValue(b);
+    if (vA > vB) {
+      return +1;
+    } else if (vA < vB) {
+      return -1;
+    }
+    return 0;
+  };
+}
 
 export function PokemonMoves(props) {
   return (
@@ -11,18 +24,26 @@ export function PokemonMoves(props) {
       <MoveTableContainer>
         <MoveTable>
           <thead>
-            <MoveColumnNames />
+            <MoveColumnNames withoutLevels={props.withoutLevels} />
           </thead>
           <tbody>
-            {props.moves.learn.map((learnMoveSpec) => {
-              const [moveId, learn, master] = learnMoveSpec;
-              return <Move key={moveId} id={moveId} learn={learn} master={master} />;
-            })}
+            {props.withoutLevels ? (
+              props.moves.sort(sortFn((m) => m.name.toUpperCase())).map((move) => {
+                return <Move key={move.id} id={move.id} withoutLevels={props.withoutLevels} />;
+              })
+            ) : (
+              <>
+                {props.moves.learn.map((learnMoveSpec) => {
+                  const [moveId, learn, master] = learnMoveSpec;
+                  return <Move key={moveId} id={moveId} learn={learn} master={master} />;
+                })}
 
-            <MoveGroupHeader>Tutor</MoveGroupHeader>
-            {props.moves.tutor.map((moveId) => {
-              return <Move key={moveId} id={moveId} />;
-            })}
+                <MoveGroupHeader>Tutor</MoveGroupHeader>
+                {props.moves.tutor.map((moveId) => {
+                  return <Move key={moveId} id={moveId} />;
+                })}
+              </>
+            )}
           </tbody>
         </MoveTable>
       </MoveTableContainer>
@@ -80,6 +101,15 @@ const TDContent = styled.td`
     ${(props) => (props.center ? justifyCenter : '')}
     ${(props) => (props.right ? justifyEnd : '')}
   }
+
+  &.name a {
+    width: 100%;
+    height: 100%;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 function TD(props) {
@@ -108,14 +138,20 @@ function MoveGroupHeader(props) {
   );
 }
 
-function MoveColumnNames() {
+function MoveColumnNames(props) {
   return (
     <MoveContainer>
-      <TH width="75px">Level</TH>
-      <TH width="75px">Master</TH>
+      {props.withoutLevels ? null : (
+        <>
+          <TH width="75px">Level</TH>
+          <TH width="75px">Master</TH>
+        </>
+      )}
+
       <TH width="175px">Name</TH>
       <TH width="125px">Type</TH>
-      <TH width="85px">Pow</TH>
+      <TH width="25px">Cat</TH>
+      <TH width="50px">Pow</TH>
       <TH width="50px">Acc</TH>
       {/* <TH>PP</TH> */}
     </MoveContainer>
@@ -127,21 +163,36 @@ const MoveContainer = styled.tr`
 `;
 
 function Move(props) {
-  const move = MovesById.Lookup[props.id];
+  const { id } = props;
+  const move = MovesById.Lookup[id];
+
+  const link = {
+    pathname: '/move/[id]',
+    query: { id },
+  };
 
   return (
-    <MoveContainer key={props.id}>
-      <TD tabularNums>{!props.learn ? '—' : props.learn}</TD>
-      <TD tabularNums>{!props.master ? '—' : props.master}</TD>
+    <MoveContainer key={id}>
+      {props.withoutLevels ? null : (
+        <>
+          <TD tabularNums>{!props.learn ? '—' : props.learn}</TD>
+          <TD tabularNums>{!props.master ? '—' : props.master}</TD>
+        </>
+      )}
+
       <TD bold className="name">
-        {move.name}
+        <Link href={link}>
+          <a>{move.name}</a>
+        </Link>
+      </TD>
+
+      <TD>
+        <TypePill link type={move.type} />
       </TD>
       <TD>
-        <TypePill type={move.type} />
+        <MoveClass type={move.class} />
       </TD>
       <TD bold tabularNums>
-        <MoveClass type={move.class} />
-        <Spacer size="1" />
         {move.power || '—'}
       </TD>
       <TD tabularNums>{move.acc === null ? '—' : `${move.acc}%`}</TD>

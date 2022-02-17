@@ -1,21 +1,40 @@
+import * as React from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
 import { TypeSymbol } from './TypeSymbol';
 
 export function TypePill(props) {
-  if (!props.type) {
+  const { type } = props;
+
+  if (!type) {
     return null;
   }
 
   const as = props.onClick ? 'button' : undefined;
 
-  return (
+  const content = (
     <TypeContainer as={as} {...props}>
       <TypeSymbolContainer>
-        <TypeSymbol type={props.type} />
+        <TypeSymbol type={type} />
       </TypeSymbolContainer>
-      <TypeName>{props.type.toUpperCase()}</TypeName>
+      <TypeName>{type.toUpperCase()}</TypeName>
     </TypeContainer>
   );
+
+  if (props.link) {
+    const link = {
+      pathname: '/type/[type]',
+      query: { type },
+    };
+
+    return (
+      <Link href={link}>
+        <a>{content}</a>
+      </Link>
+    );
+  }
+
+  return content;
 }
 
 const TypeColor = (props) => `var(--${props.type})`;

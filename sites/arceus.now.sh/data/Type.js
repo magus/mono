@@ -66,5 +66,3 @@ exports.Type = Type;
 //   [TypeEnum.Steel]: Type.Steel,
 //   [TypeEnum.Fairy]: Type.Fairy,
 // };
-
-// exports.Type = Type;

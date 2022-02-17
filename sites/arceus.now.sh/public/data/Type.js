@@ -19,50 +19,50 @@ const Type = {
   Fairy: 'Fairy',
 };
 
-// fill array with [0..18] then map back to type names
-// prettier-ignore
-const [Normal,Fire,Water,Grass,Electric,Ice,Fighting,Poison,Ground,Flying,Psychic,Bug,Rock,Ghost,Dragon,Dark,Steel,Fairy] = new Array(18).fill(0).map((_, i) => i);
-
-Type.Enum = {
-  Normal,
-  Fire,
-  Water,
-  Grass,
-  Electric,
-  Ice,
-  Fighting,
-  Poison,
-  Ground,
-  Flying,
-  Psychic,
-  Bug,
-  Rock,
-  Ghost,
-  Dragon,
-  Dark,
-  Steel,
-  Fairy,
-};
-
-Type.ById = {
-  [Type.Enum.Normal]: Type.Normal,
-  [Type.Enum.Fire]: Type.Fire,
-  [Type.Enum.Water]: Type.Water,
-  [Type.Enum.Grass]: Type.Grass,
-  [Type.Enum.Electric]: Type.Electric,
-  [Type.Enum.Ice]: Type.Ice,
-  [Type.Enum.Fighting]: Type.Fighting,
-  [Type.Enum.Poison]: Type.Poison,
-  [Type.Enum.Ground]: Type.Ground,
-  [Type.Enum.Flying]: Type.Flying,
-  [Type.Enum.Psychic]: Type.Psychic,
-  [Type.Enum.Bug]: Type.Bug,
-  [Type.Enum.Rock]: Type.Rock,
-  [Type.Enum.Ghost]: Type.Ghost,
-  [Type.Enum.Dragon]: Type.Dragon,
-  [Type.Enum.Dark]: Type.Dark,
-  [Type.Enum.Steel]: Type.Steel,
-  [Type.Enum.Fairy]: Type.Fairy,
-};
-
 exports.Type = Type;
+
+// // fill array with [0..18] then map back to type names
+// // prettier-ignore
+// const [Normal,Fire,Water,Grass,Electric,Ice,Fighting,Poison,Ground,Flying,Psychic,Bug,Rock,Ghost,Dragon,Dark,Steel,Fairy] = new Array(18).fill(0).map((_, i) => i);
+
+// const TypeEnum = {
+//   Normal,
+//   Fire,
+//   Water,
+//   Grass,
+//   Electric,
+//   Ice,
+//   Fighting,
+//   Poison,
+//   Ground,
+//   Flying,
+//   Psychic,
+//   Bug,
+//   Rock,
+//   Ghost,
+//   Dragon,
+//   Dark,
+//   Steel,
+//   Fairy,
+// };
+
+// const TypeById = {
+//   [TypeEnum.Normal]: Type.Normal,
+//   [TypeEnum.Fire]: Type.Fire,
+//   [TypeEnum.Water]: Type.Water,
+//   [TypeEnum.Grass]: Type.Grass,
+//   [TypeEnum.Electric]: Type.Electric,
+//   [TypeEnum.Ice]: Type.Ice,
+//   [TypeEnum.Fighting]: Type.Fighting,
+//   [TypeEnum.Poison]: Type.Poison,
+//   [TypeEnum.Ground]: Type.Ground,
+//   [TypeEnum.Flying]: Type.Flying,
+//   [TypeEnum.Psychic]: Type.Psychic,
+//   [TypeEnum.Bug]: Type.Bug,
+//   [TypeEnum.Rock]: Type.Rock,
+//   [TypeEnum.Ghost]: Type.Ghost,
+//   [TypeEnum.Dragon]: Type.Dragon,
+//   [TypeEnum.Dark]: Type.Dark,
+//   [TypeEnum.Steel]: Type.Steel,
+//   [TypeEnum.Fairy]: Type.Fairy,
+// };

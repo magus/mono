@@ -20,13 +20,12 @@ export function PokemonDetail(props) {
   React.useEffect(() => {
     let query = { [QueryParams.Num]: props.num };
 
-    const form = pokemon.forms[formIndex];
     if (form.name) {
       query[QueryParams.Form] = form.name;
     }
 
     router.replace({ query });
-  }, [formIndex]);
+  }, [form.name, props.num]);
 
   return (
     <Container>
@@ -42,7 +41,7 @@ export function PokemonDetail(props) {
         <PokemonSizes sizes={pokemon.sizes} />
       </Section>
 
-      <Section name="Moves">
+      <Section name="Moves" open>
         <PokemonMoves moves={form.moves} />
       </Section>
     </Container>

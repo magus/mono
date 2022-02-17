@@ -1,6 +1,6 @@
-export { PokemonDetail as default } from '../../../../components/screens/PokemonDetail';
+export { PokemonDetail as default } from '../../../components/screens/PokemonDetail';
 
-import { import_ArceusPokedexByNumber } from '../../../../src/import_ArceusPokedexByNumber';
+import { import_ArceusPokedexByNumber } from '../../../src/import_ArceusPokedexByNumber';
 
 export async function getStaticPaths() {
   const ArceusPokedexByNumber = await import_ArceusPokedexByNumber();
