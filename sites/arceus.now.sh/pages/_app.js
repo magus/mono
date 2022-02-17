@@ -1,5 +1,7 @@
+import * as React from 'react';
 import Script from 'next/script';
 import Head from 'next/head';
+import Router from 'next/router';
 import { createGlobalStyle } from 'styled-components';
 
 // https://www.joshwcomeau.com/css/custom-css-reset/
@@ -198,9 +200,64 @@ export default function MyApp({ Component, pageProps }) {
       <CSSReset />
       <GlobalStyle />
 
+      <ScrollRestoration />
+
       <Component {...pageProps} />
     </>
   );
+}
+
+function ScrollRestoration() {
+  React.useEffect(() => {
+    window.history.scrollRestoration = 'manual';
+
+    let currentUrl = null;
+    let isHistoryNavigation = false;
+    const cachedScroll = {};
+
+    Router.beforePopState(() => {
+      isHistoryNavigation = true;
+
+      // must return true to allow nextjs to handle navigation
+      // https://nextjs.org/docs/api-reference/next/router#routerbeforepopstate
+      return true;
+    });
+
+    function handle_routeChangeStart() {
+      if (currentUrl && (window.scrollX || window.scrollY)) {
+        cachedScroll[currentUrl] = [window.scrollX, window.scrollY];
+        // alert(['[ScrollRestoration]', 'caching', currentUrl, cachedScroll[currentUrl]].join(' '));
+      } else {
+        // this is the first route on page load, just record it
+        currentUrl = [window.location.pathname, window.location.search].join('');
+      }
+    }
+
+    function handle_routeChangeComplete(url) {
+      currentUrl = url;
+
+      const scrollData = cachedScroll[url];
+
+      if (isHistoryNavigation && scrollData) {
+        isHistoryNavigation = false;
+        setTimeout(() => {
+          // alert(['[ScrollRestoration]', 'restoring', url, scrollData].join(' '));
+          const [x, y] = scrollData;
+          window.scrollTo(x, y);
+        }, 100);
+      }
+    }
+
+    Router.events.on('routeChangeStart', handle_routeChangeStart);
+    Router.events.on('routeChangeComplete', handle_routeChangeComplete);
+
+    return function cleanup() {
+      Router.events.off('routeChangeStart', handle_routeChangeStart);
+      Router.events.off('routeChangeComplete', handle_routeChangeComplete);
+    };
+  }, []);
+
+  return null;
 }
 
 const GOOGLE_TAG_MANAGER = `
