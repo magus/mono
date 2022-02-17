@@ -4,6 +4,21 @@
   - what is the minimal type combination to hit every pokemon 1x?
   - what is the minimal type combination to hit every pokemon 2x?
 
+- push query state after unchanged for 2s
+  - this will create a search history we can go swipe backward through. currently a back navigation doesn’t correctly capture all the searches you made
+
+- motion.div for ResultsContainer and add layout for animating the transition/movement as the type pills refine during search and container shifts up and down
+
+- color category icons same as other sites
+  - physical (red) special (gray) and status (light gray)
+
+
+- correct MovesById with data from links below
+  - https://m.bulbapedia.bulbagarden.net/wiki/List_of_moves_(Legends:_Arceus)
+  - https://m.bulbapedia.bulbagarden.net/wiki/Move_mastery
+
+
+
 - build simple calculator for calculating damage move_type against defending type_a + type_b
   - represent type effectiveness in a 2d array
     e.g.
@@ -72,6 +87,7 @@
       "<b>X</b> Pokémon take <b>½x damage<b>"
   - consider defaulting to 2x being selected to demonstrate
 
+- wrap logic for coverage visualization above into component and include on `/type/[type]` page
 
 - optimize json data generation / delivery
   - avoid transforming data after fetching
