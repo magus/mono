@@ -21,12 +21,11 @@ export function Move(props) {
               </td>
             </tr>
             <tr className="type">
-              <td>Type</td>
-              <td>
+              <td colSpan="2">
                 <TypePill type={props.move.type} />
               </td>
             </tr>
-            <tr className="category">
+            <tr className="cat">
               <td>Category</td>
               <td>
                 <div>
@@ -67,18 +66,26 @@ const Container = styled.div`
 
   .move-meta {
     display: flex;
-    justify-content: center;
   }
 
-  .category {
+  td {
+    padding: 0 var(--spacer-2) var(--spacer-d2) 0;
+  }
+
+  .cat {
     td:nth-child(2) div {
       width: 20px;
     }
   }
 
+  .cat,
   .pow,
   .acc,
   .pp {
+    td:nth-child(1) {
+      font-style: italic;
+      font-variant: small-caps;
+    }
     td:nth-child(2) {
       font-variant-numeric: tabular-nums;
     }
