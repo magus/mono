@@ -11,5 +11,6 @@ module.exports = {
   },
   rules: {
     'no-console': 1,
+    'import/no-unresolved': 2,
   },
 };
