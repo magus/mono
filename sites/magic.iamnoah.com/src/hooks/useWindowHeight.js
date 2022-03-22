@@ -14,7 +14,9 @@ export default function useWindowHeight() {
     //   };
     // }
 
-    requestAnimationFrame(() => {
+    const raf = window.requestAnimationFrame || window.setTimeout;
+
+    raf(() => {
       // requestAnimationFrame(() => {})
       // console.debug(JSON.stringify(getHeights(), null, 2));
       set_height(window.innerHeight);
