@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import graphql from 'src/server/graphql';
 import * as ServerHandler from '../../../src/server/handler';
 
-const checkMethod = ServerHandler.method(['POST']);
+const checkMethod = ServerHandler.method(['GET']);
 
 const loginConfirmUrl = `${process.env.PROTOCOL}://${process.env.HOSTNAME}/auth/confirm`;
 
