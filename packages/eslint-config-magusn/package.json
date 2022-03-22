@@ -1,5 +1,6 @@
 {
   "name": "@magusn/eslint-config-magusn",
+  "alias": "eslint",
   "description": "mono repo eslint config",
   "version": "0.4.0",
   "gitHead": "47bd21f5d85c6aba674a55c2535aee6ba37b4218",
