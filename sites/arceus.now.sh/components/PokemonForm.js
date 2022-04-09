@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { TypePill } from './TypePill';
 import { PokemonImage } from './PokemonImage';
+import { Spacer } from './Spacer';
 
 export function PokemonForm(props) {
   const [type_a, type_b] = props.form.types;
@@ -23,18 +24,21 @@ export function PokemonForm(props) {
           <AlternateForms>
             <div className="scroll">
               <div className="scroll-content">
-                {props.pokemon.forms.map((form, i) => {
-                  const active = form.name === props.form.name;
+                <div className="scroll-content-border">
+                  {props.pokemon.forms.map((form, i) => {
+                    const active = form.name === props.form.name;
 
-                  return (
-                    <SelectFormButton disabled={active} key={i} onClick={() => props.handleSelectForm(i)}>
-                      <AlternateFormImage>
-                        <PokemonImage form={form} pokemon={props.pokemon} type="small" />
-                      </AlternateFormImage>
-                      <div>{form.name || props.pokemon.name}</div>
-                    </SelectFormButton>
-                  );
-                })}
+                    return (
+                      <SelectFormButton disabled={active} key={i} onClick={() => props.handleSelectForm(i)}>
+                        <AlternateFormImage>
+                          <PokemonImage form={form} pokemon={props.pokemon} type="small" />
+                        </AlternateFormImage>
+                        <div>{form.name || props.pokemon.name}</div>
+                      </SelectFormButton>
+                    );
+                  })}
+                </div>
+                <Spacer size="2" />
               </div>
             </div>
 
@@ -62,21 +66,26 @@ const FormImage = styled.div`
 
 const AlternateForms = styled.div`
   position: relative;
-  width: calc(100% + var(--spacer-2));
   margin: 0 0 0 calc(-1 * var(--spacer-2));
   display: flex;
   justify-content: center;
 
   .scroll {
-    padding: 0 var(--spacer-2);
     overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
     display: flex;
   }
 
   .scroll-content {
+    margin: 0 var(--spacer-2);
+    display: flex;
+    flex-direction: row;
+  }
+
+  .scroll-content-border {
+    padding: var(--spacer) var(--spacer-2);
     border: 1px solid rgba(var(--font-color), 0.2);
     border-radius: var(--spacer);
-    padding: var(--spacer) var(--spacer-2);
     display: flex;
     flex-direction: row;
     gap: var(--spacer-2) var(--spacer-3);
