@@ -1,5 +1,6 @@
 {
   "name": "@magusn/mono",
+  "alias": "mono",
   "description": "workspace to catch root monorepo changes",
   "version": "0.3.0",
   "author": "magus",
