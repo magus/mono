@@ -13,8 +13,8 @@ export const desc = 'Run yarn command for workspace';
 
 export function builder(yargs) {
   const workspaces = getWorkspaces();
-  const wsNames = workspaces.list.map((ws) => ws.pkg.name);
-  const wsAliases = workspaces.list.map((ws) => ws.pkg.alias);
+  const wsNames = workspaces.list.map((ws) => ws.pkg.name).filter(Boolean);
+  const wsAliases = workspaces.list.map((ws) => ws.pkg.alias).filter(Boolean);
 
   return yargs.option('workspace', {
     describe: 'workspace for which to run command',
