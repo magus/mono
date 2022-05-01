@@ -129,8 +129,6 @@ export default function MyApp({ Component, pageProps }) {
   const title = 'misc';
   const description = 'just random things';
 
-  console.debug({ pageProps });
-
   return (
     <>
       <Head>
