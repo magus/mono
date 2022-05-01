@@ -1,0 +1,32 @@
+{
+  "name": "misc.vercel.app",
+  "alias": "misc",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "NODE_ENV=production next build",
+    "deploy": "now",
+    "deploy:prod": "now --prod",
+    "deploy:purge": "now rm misc --safe",
+    "dev": "next dev",
+    "prod": "FORCE=true yarn build && yarn start",
+    "start": "NODE_ENV=production next start",
+    "test:lint": "eslint ."
+  },
+  "dependencies": {
+    "@magusn/react": "0.6.0",
+    "framer-motion": "^6.3.3",
+    "next": "12.0.8",
+    "next-transpile-modules": "^9.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "@magusn/eslint-config-magusn": "0.4.0",
+    "babel-plugin-styled-components": "^1.13.3",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "eslint": "8.7.0",
+    "eslint-config-next": "12.0.8"
+  }
+}
