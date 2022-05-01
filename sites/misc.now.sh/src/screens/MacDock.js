@@ -85,7 +85,12 @@ function MacDockInternal() {
               animate={{ transition: { duration: 0.4 }, opacity: 1, y: 0 }}
               exit={{ transition: { duration: 0.8 }, opacity: 0, y: -50 }}
             >
-              <Image src={ICONS[selected].src} alt={ICONS[selected]} width={SIZES.selected} height={SIZES.selected} />
+              <Image
+                src={getImageUrl(ICONS[selected].src)}
+                alt={ICONS[selected]}
+                width={SIZES.selected}
+                height={SIZES.selected}
+              />
             </SelectedIcon>
           )}
         </AnimatePresence>
@@ -121,7 +126,7 @@ function MacDockInternal() {
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={['mac-dock', 'icons', icon.src].join('/')} alt={icon.alt} />
+                <img src={getImageUrl(icon.src)} alt={icon.alt} />
               </Icon>
             );
           })}
@@ -130,6 +135,8 @@ function MacDockInternal() {
     </React.Fragment>
   );
 }
+
+const getImageUrl = (src) => ['/mac-dock', 'icons', src].join('/');
 
 const ICONS = [];
 ICONS.push({ alt: 'app-store', src: 'app-store.png' });
