@@ -43,16 +43,29 @@ export function parser(locals) {
       describe: 'extension of output video file',
       type: 'string',
     })
-    .option('no-audio', {
-      alias: ['an'],
+    .option('crop', {
+      alias: 'c',
       demandOption: false,
-      describe: 'remove audio track from input source',
+      describe: 'use a still image to dynamically select crop region',
       type: 'boolean',
+    })
+    .option('crop-frame-seconds', {
+      alias: 'cfs',
+      demandOption: false,
+      describe: 'seconds into video to use for capturing still frame used for dynamic crop',
+      implies: 'crop',
+      type: 'number',
     })
     .option('preserve-frames', {
       alias: 'pf',
       demandOption: false,
       describe: 'attempt to preserve frames by increasing fps when speeding up video',
+      type: 'boolean',
+    })
+    .option('no-audio', {
+      alias: ['an'],
+      demandOption: false,
+      describe: 'remove audio track from input source',
       type: 'boolean',
     })
     .option('no-video', {
