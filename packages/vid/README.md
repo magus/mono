@@ -12,12 +12,13 @@ vid ~/Downloads/youtube-crop.mp4 --get fps --get size # output fps and size vide
 
 ## Ideas
 
-- publish like a node cli on npm for simple `npm i -g @magus/vid` install
-  - https://dev.to/aadityasiva/make-and-publish-a-nodejs-cli-in-10-minutes-njj
-- resize
 - crop
   - `ffmpeg -i in.mp4 -filter:v "crop=out_w:out_h:x:y" out.mp4`
   - binary search for crop? feedback ask for left/right/stop on width and height to continue search
+
+- publish like a node cli on npm for simple `npm i -g @magus/vid` install
+  - https://dev.to/aadityasiva/make-and-publish-a-nodejs-cli-in-10-minutes-njj
+
 
 ## License
 

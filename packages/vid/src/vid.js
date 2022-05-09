@@ -35,6 +35,12 @@ try {
 
       return result;
     })
+    .option('dimension', {
+      alias: ['d', 'scale', 'size'],
+      demandOption: false,
+      describe: 'scale largest dimension to this value  (maintain aspect ratio)',
+      type: 'number',
+    })
     .option('speed', {
       alias: 's',
       demandOption: false,
@@ -98,7 +104,7 @@ try {
       }
 
       // verify single options are not passed twice (arrays)
-      for (const opt of ['speed', 'ext']) {
+      for (const opt of ['speed', 'ext', 'size']) {
         if (Array.isArray(argv[opt])) {
           const name = chalk.bracket(opt);
           const value = chalk.array(argv[opt]);
@@ -196,28 +202,46 @@ try {
     cmd.push(`-r ${metadata.fps * argv.speed}`);
   }
 
-  let audioFilters = [];
-  let targetSpeed = argv.speed;
-  while (isSlowDown ? targetSpeed < factor : targetSpeed > factor) {
-    audioFilters.push(factor);
-    targetSpeed /= factor;
+  const videoFilters = [];
+  const audioFilters = [];
+
+  if (argv.speed) {
+    videoFilters.push(`setpts=${Math.pow(argv.speed, -1)}*PTS`);
+
+    let tempos = [];
+    let targetSpeed = argv.speed;
+    while (isSlowDown ? targetSpeed < factor : targetSpeed > factor) {
+      tempos.push(factor);
+      targetSpeed /= factor;
+    }
+    tempos.push(targetSpeed);
+
+    const audioSpeedFilter = tempos.map((v) => `atempo=${v}`).join(',');
+    audioFilters.push(audioSpeedFilter);
   }
-  audioFilters.push(targetSpeed);
 
-  const audioFilter = audioFilters.map((v) => `atempo=${v}`).join(',');
-  const videoFilter = `setpts=${Math.pow(argv.speed, -1)}*PTS`;
-
-  let filter;
+  if (argv.size) {
+    videoFilters.push(`scale=w=${argv.size}:h=${argv.size}:force_original_aspect_ratio=decrease:flags=lanczos`);
+  }
 
   if (argv['no-audio']) {
-    filter = `-an -filter:v "${videoFilter}"`;
+    cmd.push('-an');
   } else if (argv['no-video']) {
-    filter = `-vn -filter:a "${audioFilter}"`;
-  } else {
-    filter = `-filter_complex "[0:v]${videoFilter}[v];[0:a]${audioFilter}[a]" -map "[v]" -map "[a]"`;
+    cmd.push('-vn');
   }
 
-  cmd.push(filter);
+  const filtersComplex = [];
+
+  if (videoFilters.length) {
+    filtersComplex.push(`[0:v]${videoFilters.join(',')}[v]`);
+  }
+  if (audioFilters.length) {
+    filtersComplex.push(`[0:a]${audioFilters.join(',')}[a]`);
+  }
+
+  if (filtersComplex.length) {
+    cmd.push(`-filter_complex "${filtersComplex.join(';')}" -map "[v]" -map "[a]"`);
+  }
 
   cmd.push(outputPath);
 
@@ -230,8 +254,7 @@ try {
     optParts,
     outputPath,
     audioFilters,
-    audioFilter,
-    videoFilter,
+    videoFilters,
     metadata,
   });
 
