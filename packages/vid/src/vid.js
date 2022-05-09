@@ -10,7 +10,10 @@ import * as chalk from './common/chalk.js';
 
 const RE = {
   filename: /(?<filename>.*?)\.(?<extension>[^\.]+)$/,
+  dimensions: /(?<width>\d+)x(?<height>\d+)/,
 };
+
+const int = (n) => parseInt(n, 10);
 
 let cli_argv;
 
@@ -63,6 +66,19 @@ try {
       describe: 'remove video track from input source',
       type: 'boolean',
     })
+    .option('get', {
+      demandOption: false,
+      describe: 'output metadata related to the input source',
+      choices: ['fps', 'dimensions', 'size'],
+    })
+    .coerce('get', (input) => {
+      // guarantee always an array
+      if (input && !Array.isArray(input)) {
+        return [input];
+      }
+
+      return input;
+    })
     .check((argv) => {
       // capture cli argv for use in catch
       cli_argv = argv;
@@ -107,6 +123,48 @@ try {
     })
     .help().argv;
 
+  const metadata = {};
+
+  metadata.fps = eval(
+    child_process
+      .execSync(
+        [
+          'ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of csv=s=x:p=0',
+          argv.input_video_file.fullPath,
+        ].join(' '),
+      )
+      .toString()
+      .trim(),
+  );
+
+  const dimensions = child_process
+    .execSync(
+      [
+        'ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0',
+        argv.input_video_file.fullPath,
+      ].join(' '),
+    )
+    .toString()
+    .trim()
+    .match(RE.dimensions).groups;
+
+  metadata.size = {};
+
+  metadata.size.width = int(dimensions.width);
+  metadata.size.height = int(dimensions.height);
+  metadata.dimensions = metadata.size;
+
+  if (argv.get) {
+    console.log();
+    console.log('📹 Video metadata');
+    console.log();
+    for (const field of argv.get) {
+      console.log('-', field, metadata[field]);
+    }
+
+    process.exit(0);
+  }
+
   const cmd = ['ffmpeg', '-i', argv.input_video_file.fullPath];
 
   // gather opt parts to append to output filename
@@ -134,20 +192,8 @@ try {
   const isSlowDown = argv.speed < 1;
   const factor = isSlowDown ? 0.5 : 2;
 
-  const fps = eval(
-    child_process
-      .execSync(
-        [
-          'ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of csv=s=x:p=0',
-          argv.input_video_file.fullPath,
-        ].join(' '),
-      )
-      .toString()
-      .trim(),
-  );
-
   if (argv['preserve-frames'] && !isSlowDown) {
-    cmd.push(`-r ${fps * argv.speed}`);
+    cmd.push(`-r ${metadata.fps * argv.speed}`);
   }
 
   let audioFilters = [];
@@ -186,7 +232,7 @@ try {
     audioFilters,
     audioFilter,
     videoFilter,
-    fps,
+    metadata,
   });
 
   console.log(cmd.join(' '));
