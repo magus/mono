@@ -1,0 +1,23 @@
+{
+  "name": "@magusn/vid",
+  "alias": "vid",
+  "description": "cli helper for ffmpeg",
+  "version": "0.1.0",
+  "author": "magus",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "main": "src/vid.js",
+  "bin": {
+    "vid": "./src/vid.js"
+  },
+  "repository": "magus/vid",
+  "scripts": {},
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "yargs": "^17.3.0"
+  },
+  "devDependencies": {
+    "@magusn/eslint-config-magusn": "0.4.0"
+  }
+}
