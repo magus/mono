@@ -23,7 +23,7 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@magusn/eslint-config-magusn": "0.4.0",
+    "@magusn/eslint-config-magusn": "0.5.0",
     "babel-plugin-styled-components": "^1.13.3",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "eslint": "8.7.0",

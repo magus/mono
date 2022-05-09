@@ -1,5 +1,15 @@
 # @magusn/eslint-config-magusn
 
+## 0.5.0
+
+### Minor Changes
+
+- 954a0bd: eslint-plugin-import for import/recommended
+
+### Patch Changes
+
+- ebeb6c4: match eslint-config-next eslint-plugin-react version
+
 ## 0.4.0
 
 ### Minor Changes

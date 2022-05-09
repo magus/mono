@@ -1,5 +1,11 @@
 # magic.iamnoah.com
 
+## 0.5.2
+
+### Patch Changes
+
+- 4a222ab: run eslint directly (next lint requires config to lint all folders)
+
 ## 0.5.1
 
 ### Patch Changes

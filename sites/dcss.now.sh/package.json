@@ -1,7 +1,7 @@
 {
   "name": "dcss.now.sh",
   "alias": "dcss",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "gitHead": "aec834edeb765842a69d4957b69167a71134dc1a",
   "private": true,
   "scripts": {
@@ -21,7 +21,7 @@
     "subscriptions-transport-ws": "^0.9.18"
   },
   "devDependencies": {
-    "@magusn/eslint-config-magusn": "0.4.0",
+    "@magusn/eslint-config-magusn": "0.5.0",
     "eslint": "8.7.0",
     "eslint-config-next": "12.0.8"
   }

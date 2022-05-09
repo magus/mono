@@ -1,5 +1,11 @@
 # @magusn/mono
 
+## 0.4.0
+
+### Minor Changes
+
+- 819d2e6: install mono globally
+
 ## 0.3.0
 
 ### Minor Changes
