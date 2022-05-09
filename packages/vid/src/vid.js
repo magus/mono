@@ -214,7 +214,7 @@ try {
   } else if (argv['no-video']) {
     filter = `-vn -filter:a "${audioFilter}"`;
   } else {
-    let filter = `-filter_complex "[0:v]${videoFilter}[v];[0:a]${audioFilter}[a]" -map "[v]" -map "[a]"`;
+    filter = `-filter_complex "[0:v]${videoFilter}[v];[0:a]${audioFilter}[a]" -map "[v]" -map "[a]"`;
   }
 
   cmd.push(filter);
