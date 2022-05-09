@@ -45,7 +45,7 @@ try {
   }
 
   if (!cli_argv.verbose) {
-    console.log('\n', chalk.mono(' Add `-v` to see stack trace for this failure.'));
+    console.log('\n', chalk.mono('Add `-v` to see stack trace for this failure.'));
     process.exit(1);
   } else {
     console.log();
