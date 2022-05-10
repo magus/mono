@@ -66,13 +66,30 @@ mono release
 
 Finally to publish changes, particularly to public modules such as `@magusn/react` or `@magusn/eslint-config-magusn` you should follow up with `mono changeset publish` which will tag and publish the releases to npm. This is required for deploys since they require pulling public dependencies from public NPM repository.
 
+NOTE: `changeset publish` assumes that last commit is the release commit. You should not commit any changes between
+calling `version` and `publish`. The commands are separate to allow you to validate the release changes are correct.
+
 ```sh
 mono changeset publish
 git push --follow-tags
 ```
 
-NOTE: `changeset publish` assumes that last commit is the release commit. You should not commit any changes between
-calling `version` and `publish`. The commands are separate to allow you to validate the release changes are correct.
+IMPORTANT: This publish command may fail with a `402 Payment Required` error, you must be sure to set `publishConfig` in the `package.json`
+
+```
+🦋  info Publishing "@magusn/vid" at "0.2.1"
+🦋  error an error occurred while publishing @magusn/vid: E402 402 Payment Required - PUT https://registry.npmjs.org/@magusn%2fvid - You must sign up for private packages
+🦋  error <Buffer 6e 70 6d 20 45 52 52 21 20 63 6f 64 65 20 45 34 30 32 0a 6e 70 6d 20 45 52 52 21 20 34 30 32 20 50 61 79 6d 65 6e 74 20 52 65 71 75 69 72 65 64 20 2d ... 395 more bytes>
+🦋  error packages failed to publish:
+🦋  @magusn/vid@0.2.1
+error Command failed with exit code 1.
+```
+
+```
+"publishConfig": {
+  "access": "public"
+},
+```
 
 
 # todo
