@@ -2,6 +2,12 @@
 
 > cli helper for ffmpeg
 
+## Install
+
+```sh
+yarn global add @magusn/vid
+```
+
 ## Usage
 
 ```sh
