@@ -10,6 +10,9 @@
   "bin": {
     "vid": "./src/vid.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": "magus/mono/packages/vid",
   "scripts": {},
   "dependencies": {
