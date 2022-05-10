@@ -1,5 +1,11 @@
 # @magusn/vid
 
+## 0.2.2
+
+### Patch Changes
+
+- 92703ea: set publishConfig for package.json
+
 ## 0.2.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @magusn/mono
 
+## 0.4.1
+
+### Patch Changes
+
+- 21355a6: update publish documenation
+
 ## 0.4.0
 
 ### Minor Changes
