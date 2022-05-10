@@ -1,5 +1,11 @@
 # @magusn/vid
 
+## 0.2.1
+
+### Patch Changes
+
+- fd123ea: updating repository path
+
 ## 0.2.0
 
 ### Minor Changes
