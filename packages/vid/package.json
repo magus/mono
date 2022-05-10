@@ -10,7 +10,7 @@
   "bin": {
     "vid": "./src/vid.js"
   },
-  "repository": "magus/vid",
+  "repository": "magus/mono/packages/vid",
   "scripts": {},
   "dependencies": {
     "chalk": "^5.0.0",
