@@ -18,9 +18,12 @@ function MacDockInternal() {
   const dockWidth = windowWidth - SIZES.bottomMarginHorizontal - SIZES.dockPadding;
   const pxPerIcon = Math.min(Math.floor(dockWidth / ICONS.length), SIZES.iconMax);
 
+  const isTouchDevice = React.useRef(true);
+  const isTouching = React.useRef(false);
   const iconRefs = React.useRef(new Array(ICONS.length));
   const [active, set_active] = React.useState(null);
   const [selected, set_selected] = React.useState(null);
+  const isActive = typeof active === 'number';
 
   function hitTest(clientX) {
     for (let i = 0; i < iconRefs.current.length; i++) {
@@ -35,7 +38,7 @@ function MacDockInternal() {
   }
 
   function getSize(i) {
-    if (typeof active !== 'number') {
+    if (!isActive) {
       return null;
     }
 
@@ -101,17 +104,30 @@ function MacDockInternal() {
           style={{ maxHeight: pxPerIcon + SIZES.dockPadding, width: ICONS.length * pxPerIcon }}
           onMouseLeave={() => set_active(null)}
           onTouchEnd={() => {
-            set_selected(active);
-            set_active(null);
+            if (isTouching.current) {
+              set_selected(active);
+              set_active(null);
+            }
+            isTouching.current = false;
           }}
-          onMouseMove={(e) => hitTest(e.nativeEvent.clientX)}
+          onMouseMove={(e) => {
+            isTouchDevice.current = false;
+            hitTest(e.nativeEvent.clientX);
+          }}
           onTouchMove={(e) => {
+            isTouchDevice.current = true;
+            isTouching.current = true;
             const [touchEvent] = e.nativeEvent.touches;
             hitTest(touchEvent.clientX);
           }}
         >
           {ICONS.map((icon, i) => {
             const width = sizes[i] || pxOtherIcon;
+            const zoomed = Boolean(sizes[i]);
+            const zoomFactor = isTouchDevice.current ? -3 : -6;
+            const iconBaseY = isActive && isTouchDevice.current ? pxPerIcon * 3 : 0;
+            const activeIconY = zoomed ? width / zoomFactor : 0;
+
             return (
               <Icon
                 key={icon.alt}
@@ -119,7 +135,7 @@ function MacDockInternal() {
                 onClick={() => {
                   set_selected(i);
                 }}
-                animate={{ width }}
+                animate={{ width, y: activeIconY, paddingBottom: iconBaseY }}
                 transition={MOTION.icon}
                 whileTap={{
                   scale: 0.9,
