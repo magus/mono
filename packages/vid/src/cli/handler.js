@@ -1,7 +1,10 @@
 import path from 'path';
 import fs from 'fs';
 import Inquirer from 'inquirer';
+import * as Ora from 'ora';
 import Jimp from 'jimp';
+
+import * as chalk from '../common/chalk.js';
 import * as CLI from '../common/CLI.js';
 import { VidError } from '../common/VidError.js';
 
@@ -31,11 +34,24 @@ export async function handler(argv) {
     process.exit(0);
   }
 
-  // gather opt parts to append to output filename
-  const optParts = [];
-
   const { filename, extension } = path.basename(argv.input_video_file.fullPath).match(RE.filename).groups;
   const inputPath = path.dirname(argv.input_video_file.fullPath);
+
+  // gather opt parts to append to output filename
+
+  const optParts = [];
+  for (const opt of ['speed', 'dimension']) {
+    if (Object.prototype.hasOwnProperty.call(argv, opt)) {
+      optParts.push(`${opt}-${argv[opt]}`);
+    }
+  }
+  for (const opt of ['no-audio', 'no-video', 'preserve-frames']) {
+    if (argv[opt]) {
+      optParts.push(opt);
+    }
+  }
+
+  // build ffmpeg command based on argv
 
   const cmdParts = ['ffmpeg', '-i', argv.input_video_file.fullPath];
 
@@ -79,6 +95,8 @@ export async function handler(argv) {
     videoFilters.push(
       `scale=w=${argv.dimension}:h=${argv.dimension}:force_original_aspect_ratio=decrease:flags=lanczos`,
     );
+
+    videoFilters.push('scale=trunc(iw/2)*2:trunc(ih/2)*2');
   }
 
   if (argv['no-audio']) {
@@ -100,18 +118,6 @@ export async function handler(argv) {
     cmdParts.push(`-filter_complex "${filtersComplex.join(';')}" -map "[v]" -map "[a]"`);
   }
 
-  for (const opt of ['speed', 'dimension']) {
-    if (Object.prototype.hasOwnProperty.call(argv, opt)) {
-      optParts.push(`${opt}-${argv[opt]}`);
-    }
-  }
-
-  for (const opt of ['no-audio', 'no-video', 'preserve-frames']) {
-    if (argv[opt]) {
-      optParts.push(opt);
-    }
-  }
-
   const outputFilename = [filename, Date.now(), optParts.join('--')].join('.');
   const outputPath = path.join(inputPath, [outputFilename, argv.ext].join('.'));
 
@@ -119,26 +125,36 @@ export async function handler(argv) {
 
   const cmd = cmdParts.join(' ');
 
-  console.log({
-    argv,
-    cmdParts,
-    cmd,
-    inputPath,
-    filename,
-    extension,
-    optParts,
-    outputPath,
-    audioFilters,
-    videoFilters,
-    metadata,
+  if (argv.verbose) {
+    console.debug({
+      argv,
+      cmdParts,
+      cmd,
+      inputPath,
+      filename,
+      extension,
+      optParts,
+      outputPath,
+      audioFilters,
+      videoFilters,
+      metadata,
+    });
+  }
+
+  const ffmpeg_exec = CLI.exec(cmd);
+
+  Ora.oraPromise(ffmpeg_exec.promise, {
+    prefixText: ' 📹',
+    text: ' Executing `ffmpeg` command ... ',
+    successText: () => `Successfully converted ${chalk.bracket(argv.input_video_file.input)}.`,
+    failText: () => `Failed to convert ${chalk.bracket(argv.input_video_file.input)}.`,
   });
 
-  console.log();
-  console.log(' ', '🤖 📹 Executing `ffmpeg` command ...');
-  console.log(' ', cmd);
-  console.log();
-
-  await CLI.exec(cmd);
+  try {
+    await ffmpeg_exec.promise;
+  } catch (err) {
+    throw new VidError(['ffmpeg', ffmpeg_exec.stderr].join(':'));
+  }
 }
 
 function ffprobe(input, fields) {
@@ -188,7 +204,7 @@ async function handleUserCrop({ argv, inputPath }) {
   const cropSeconds = argv['crop-frame-seconds'] || 0;
   const stillCropFrame = `ffmpeg -hide_banner -loglevel error -ss ${cropSeconds} -i ${argv.input_video_file.fullPath} -frames:v 1 ${cropImageOutputPath}`;
   CLI.execSync(stillCropFrame);
-  await CLI.exec(`open ${cropImageOutputPath}`);
+  CLI.execSync(`open ${cropImageOutputPath}`);
   await confirmGate('Are you done?');
 
   const cropImage = await Jimp.read(cropImageOutputPath);
@@ -198,13 +214,11 @@ async function handleUserCrop({ argv, inputPath }) {
   // scan left-to-right top-to-bottom
   for (let y = 0; y < cropImage.bitmap.height; y++) {
     if (cropBounds.x !== null) {
-      console.debug('early exit image scan', { y });
       break;
     }
 
     for (let x = 0; x < cropImage.bitmap.width; x++) {
       if (cropBounds.x !== null) {
-        console.debug('early exit image scan', { x, y });
         break;
       }
 
