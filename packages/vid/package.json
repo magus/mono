@@ -4,7 +4,6 @@
   "description": "cli helper for ffmpeg",
   "version": "0.1.1",
   "author": "magus",
-  "private": true,
   "license": "MIT",
   "type": "module",
   "main": "src/vid.js",
