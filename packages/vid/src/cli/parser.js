@@ -8,7 +8,7 @@ import { VidError } from '../common/VidError.js';
 
 export function parser(locals) {
   return yargs(hideBin(process.argv))
-    .command('$0 [input_video_file]', 'cli helper for ffmpeg')
+    .command('$0 <input_video_file>', 'cli helper for ffmpeg')
     .positional('input_video_file', {
       describe: 'path to video file to convert',
       type: 'string',
