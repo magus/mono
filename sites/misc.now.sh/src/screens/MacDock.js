@@ -2,14 +2,28 @@ import * as React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
-import Head from 'next/head';
 // import { Spacer } from '@magusn/react';
 
+export function getStaticProps() {
+  const title = 'mac dock';
+  const description = 'a mac dock because we can';
+  const keywords = ['mac', 'dock', 'demo', 'zoom'];
+  const url = 'https://misc.vercel.app/mac-dock';
+  const favicon = '/mac-dock/favicon.png';
+  const image = 'https://misc.vercel.app/mac-dock/desktop-demo.cd064188c3fcc1e7c9d41bd1307f1111.png';
+
+  const seo = { title, description, keywords, url, favicon, image };
+
+  return { props: { seo } };
+}
+
 export function MacDock() {
+  // SSR
   if (typeof window === 'undefined') {
     return null;
   }
 
+  // Client
   return <MacDockInternal />;
 }
 
@@ -74,10 +88,6 @@ function MacDockInternal() {
   return (
     <React.Fragment>
       <NoScrollBody />
-
-      <Head>
-        <link rel="icon" href="/mac-dock/favicon.png" />
-      </Head>
 
       <SelectedIconContainer style={{ height: `calc(100vh - ${pxPerIcon}px)` }}>
         <AnimatePresence>

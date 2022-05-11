@@ -125,40 +125,38 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const SVG = (emoji) =>
+  `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${emoji}</text></svg>`;
+
 export default function MyApp({ Component, pageProps }) {
-  const title = 'misc';
-  const description = 'just random things';
+  const title = pageProps?.seo?.title || 'misc';
+  const description = pageProps?.seo?.description || 'just random things';
+  const keywords = pageProps?.seo?.keywords || ['misc', 'random', '???', 'demo'];
+  const url = pageProps?.seo?.url || 'https://misc.vercel.app';
+  const favicon = pageProps?.seo?.favicon || SVG('🤔');
+  const image = pageProps?.seo?.image || '';
 
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title key="title">{title}</title>
 
         {/* seo & open graph tags */}
-        <meta name="description" content={description} />
-        <meta name="keywords" content={['misc', 'random', '???', 'demo'].join(', ')} />
-        <meta property="og:locale" content="en_US" />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://misc.vercel.app`} />
-        {/* <meta
-          property="og:image"
-          content={`https://misc.vercel.app/images/demo.8cfb8bec6712b5681f3efafc8030b71e.jpeg`}
-        /> */}
+        <meta name="description" content={description} key="meta:description" />
+        <meta name="keywords" content={keywords.join(', ')} key="meta:keywords" />
+        <meta property="og:locale" content="en_US" key="meta:og:locale" />
+        <meta property="og:title" content={title} key="meta:og:title" />
+        <meta property="og:description" content={description} key="meta:og:description" />
+        <meta property="og:type" content="website" key="meta:og:type" />
+        <meta property="og:url" content={url} key="meta:og:url" />
+        <meta property="og:image" content={image} />
+
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:creator" content="magusnn" />
         <meta property="twitter:creator:id" content="23604692" />
 
         {/* favicons */}
-        {/* <link rel="icon" href="/pokeball.svg" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#e4000f" />
-        <meta name="msapplication-TileColor" content="#ffcb05" />
-        <meta name="theme-color" content="#ffcb05" /> */}
+        <link rel="icon" href={favicon} />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
