@@ -144,6 +144,7 @@ function MacDockInternal() {
                 ref={(ref) => (iconRefs.current[i] = ref)}
                 onClick={() => {
                   set_selected(i);
+                  set_active(i);
                 }}
                 animate={{ width, y: activeIconY, paddingBottom: iconBaseY }}
                 transition={MOTION.icon}
