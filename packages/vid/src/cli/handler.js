@@ -13,9 +13,11 @@ export async function handler(argv) {
 
   const metadata = {};
 
-  metadata.fps = eval(ffprobe(argv.input_video_file.fullPath, ['r_frame_rate']).r_frame_rate);
+  metadata.fps = eval(ffprobe_video(argv.input_video_file.fullPath, ['r_frame_rate']).r_frame_rate);
 
-  const dimensions = ffprobe(argv.input_video_file.fullPath, ['width', 'height']);
+  const dimensions = ffprobe_video(argv.input_video_file.fullPath, ['width', 'height']);
+
+  metadata.audio = ffprobe_audio(argv.input_video_file.fullPath);
 
   metadata.size = {};
 
@@ -53,7 +55,7 @@ export async function handler(argv) {
 
   // build ffmpeg command based on argv
 
-  const cmdParts = ['ffmpeg', '-i', argv.input_video_file.fullPath];
+  const cmdParts = ['ffmpeg', '-i', quotify(argv.input_video_file.fullPath)];
 
   // audio can only be adjusted in factors of up to 2
   // so calculate the sequence of factors that equal the target speed
@@ -79,8 +81,10 @@ export async function handler(argv) {
     }
     tempos.push(targetSpeed);
 
-    const audioSpeedFilter = tempos.map((v) => `atempo=${v}`).join(',');
-    audioFilters.push(audioSpeedFilter);
+    if (metadata.audio) {
+      const audioSpeedFilter = tempos.map((v) => `atempo=${v}`).join(',');
+      audioFilters.push(audioSpeedFilter);
+    }
   }
 
   // output image to crop / resize
@@ -115,11 +119,18 @@ export async function handler(argv) {
   }
 
   if (filtersComplex.length) {
-    cmdParts.push(`-filter_complex "${filtersComplex.join(';')}" -map "[v]" -map "[a]"`);
+    const filterComplex = [`-filter_complex "${filtersComplex.join(';')}"`];
+    if (videoFilters.length) {
+      filterComplex.push('-map "[v]"');
+    }
+    if (audioFilters.length) {
+      filterComplex.push('-map "[a]"');
+    }
+    cmdParts.push(filterComplex.join(' '));
   }
 
-  const outputFilename = [filename, Date.now(), optParts.join('--')].join('.');
-  const outputPath = path.join(inputPath, [outputFilename, argv.ext].join('.'));
+  const outputFilename = [filename, Date.now(), optParts.join('--'), argv.ext].filter(Boolean).join('.');
+  const outputPath = quotify(path.join(inputPath, outputFilename));
 
   cmdParts.push(outputPath);
 
@@ -146,7 +157,8 @@ export async function handler(argv) {
   Ora.oraPromise(ffmpeg_exec.promise, {
     prefixText: ' 📹',
     text: ' Executing `ffmpeg` command ... ',
-    successText: () => `Successfully converted ${chalk.bracket(argv.input_video_file.input)}.`,
+    successText: () =>
+      `Successfully converted ${chalk.bracket(argv.input_video_file.input)} to ${chalk.bracket(outputFilename)}.`,
     failText: () => `Failed to convert ${chalk.bracket(argv.input_video_file.input)}.`,
   });
 
@@ -155,12 +167,29 @@ export async function handler(argv) {
   } catch (err) {
     throw new VidError(['ffmpeg', ffmpeg_exec.stderr].join(':'));
   }
+
+  CLI.execSync(`open ${inputPath}`);
 }
 
-function ffprobe(input, fields) {
+const quotify = (content) => `"${content}"`;
+
+function ffprobe_audio(input) {
+  const cmd = [
+    // extract audio stream from
+    `ffprobe -show_streams -select_streams a -loglevel error`,
+    // input video
+    quotify(input),
+  ].join(' ');
+
+  const probeData = CLI.execSync(cmd);
+
+  return probeData;
+}
+
+function ffprobe_video(input, fields) {
   const cmd = [
     `ffprobe -v error -select_streams v:0 -show_entries stream=${fields.join(',')} -of csv=s=x:p=0`,
-    input,
+    quotify(input),
   ].join(' ');
 
   const probeData = CLI.execSync(cmd);
@@ -202,7 +231,11 @@ async function handleUserCrop({ argv, inputPath }) {
   const cropImageOutputPath = path.join(inputPath, cropImageFilename);
   // write out tmp cropping image
   const cropSeconds = argv['crop-frame-seconds'] || 0;
-  const stillCropFrame = `ffmpeg -hide_banner -loglevel error -ss ${cropSeconds} -i ${argv.input_video_file.fullPath} -frames:v 1 ${cropImageOutputPath}`;
+  const stillCropFrame = [
+    'ffmpeg -hide_banner -loglevel error',
+    `-ss ${cropSeconds} -i ${quotify(argv.input_video_file.fullPath)} -frames:v 1`,
+    quotify(cropImageOutputPath),
+  ].join(' ');
   CLI.execSync(stillCropFrame);
   CLI.execSync(`open ${cropImageOutputPath}`);
   await confirmGate('Are you done?');
