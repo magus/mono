@@ -62,8 +62,6 @@ function MacDockInternal() {
         return pxPerIcon * 3;
       case 1:
         return pxPerIcon * 2;
-      case 2:
-        return pxPerIcon;
       default:
         return null;
     }
@@ -134,9 +132,7 @@ function MacDockInternal() {
           {ICONS.map((icon, i) => {
             const width = sizes[i] || pxOtherIcon;
             const zoomed = Boolean(sizes[i]);
-            const zoomFactor = isTouchDevice.current ? -3 : -6;
-            const iconBaseY = isActive && isTouchDevice.current ? pxPerIcon * 3 : 0;
-            const activeIconY = zoomed ? width / zoomFactor : 0;
+            const activeIconY = zoomed ? (width - pxPerIcon) / -4 : 0;
 
             return (
               <Icon
@@ -146,7 +142,7 @@ function MacDockInternal() {
                   set_selected(i);
                   set_active(i);
                 }}
-                animate={{ width, y: activeIconY, paddingBottom: iconBaseY }}
+                animate={{ width, y: activeIconY }}
                 transition={MOTION.icon}
                 whileTap={{
                   scale: 0.9,
