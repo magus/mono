@@ -1,5 +1,16 @@
 # @magusn/vid
 
+## 0.3.0
+
+### Minor Changes
+
+- 558bcf3: quotify input and safer complex filter when no audio etc
+
+### Patch Changes
+
+- a01216b: install instructions
+- 4973ea7: input_video_file required positional
+
 ## 0.2.2
 
 ### Patch Changes
