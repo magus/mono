@@ -1,3 +1,4 @@
+# arceus.now.sh
 
 # TODO
 - calculate all type combinations
