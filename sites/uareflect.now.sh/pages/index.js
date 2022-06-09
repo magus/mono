@@ -2,8 +2,8 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
 export default function Home(props) {
-  const title = 'ua reflect';
-  const description = props.ua;
+  const title = props.ua;
+  const description = 'ua reflect';
   const keywords = ['user agent', 'developer', 'test', 'debug', 'tool'];
   const image = 'https://uareflect.vercel.app/ua-reflect.png';
 
@@ -26,8 +26,8 @@ export default function Home(props) {
         <meta property="twitter:card" content="summary" />
         <meta property="twitter:creator" content="magusnn" />
         <meta property="twitter:creator:id" content="23604692" />
-        <meta property="twitter:title" content={description} />
-        <meta property="twitter:description" content={title} />
+        <meta property="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
         <meta property="twitter:image" content={image} />
         <meta property="twitter:image:alt" content="a mirror" />
       </Head>
