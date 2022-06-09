@@ -5,7 +5,7 @@ export default function Home(props) {
   const title = 'ua reflect';
   const description = props.ua;
   const keywords = ['user agent', 'developer', 'test', 'debug', 'tool'];
-  const image = '/ua-reflect.png';
+  const image = 'https://uareflect.vercel.app/ua-reflect.png';
 
   return (
     <div className={styles.container}>
@@ -23,8 +23,13 @@ export default function Home(props) {
         <meta property="og:description" content={description} />
         <meta property="og:image" content={image} />
 
+        <meta property="twitter:card" content="summary" />
         <meta property="twitter:creator" content="magusnn" />
         <meta property="twitter:creator:id" content="23604692" />
+        <meta property="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:image" content={image} />
+        <meta property="twitter:image:alt" content="a mirror" />
       </Head>
 
       <main className={styles.main}>
