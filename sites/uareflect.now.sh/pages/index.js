@@ -26,8 +26,8 @@ export default function Home(props) {
         <meta property="twitter:card" content="summary" />
         <meta property="twitter:creator" content="magusnn" />
         <meta property="twitter:creator:id" content="23604692" />
-        <meta property="twitter:title" content={title} />
-        <meta property="twitter:description" content={description} />
+        <meta property="twitter:title" content={description} />
+        <meta property="twitter:description" content={title} />
         <meta property="twitter:image" content={image} />
         <meta property="twitter:image:alt" content="a mirror" />
       </Head>
