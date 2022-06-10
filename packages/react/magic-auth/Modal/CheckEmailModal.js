@@ -8,10 +8,12 @@ import { Button } from '../../components/Button';
 export function CheckEmailModal({ dismiss, jwtToken, phrase }) {
   const auth = useMagicAuth();
   const approved = graphql.watchLoginRequest(jwtToken);
+  const locals = React.useRef({ is_completeLogin: false });
 
-  React.useEffect(async () => {
-    if (approved) {
-      await auth.actions.completeLogin();
+  React.useEffect(() => {
+    if (approved && !locals.current.is_completeLogin) {
+      locals.current.is_completeLogin = true;
+      auth.actions.completeLogin();
     }
   }, [approved]);
 
