@@ -138,14 +138,22 @@ function MagicAuthProviderInternal(props) {
   }
 
   async function completeLogin() {
-    const response = await fetch('/api/auth/complete', {
-      method: 'POST',
-    });
-    if (response.status === 200) {
+    try {
+      const response = await fetch('/api/auth/complete', {
+        method: 'POST',
+      });
+
+      if (response.status !== 200) {
+        throw new Error(response.status);
+      }
+
       const json = await response.json();
+
       if (json.jwtToken) {
         await setAuthentication(json);
       }
+    } catch (err) {
+      throw new Error(`failed to complete login [${err.message}]`);
     }
   }
 
@@ -185,7 +193,8 @@ function MagicAuthProviderInternal(props) {
         console.error('[MagicAuthProvider]', 'handleRefreshTokens', { response, json });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error('[MagicAuthProvider]', 'handleRefreshTokens', { error });
+        console.error('[MagicAuthProvider]', 'handleRefreshTokens', error.message, { error });
+        throw error;
       }
 
       return false;

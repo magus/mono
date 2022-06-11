@@ -13,7 +13,12 @@ export function CheckEmailModal({ dismiss, jwtToken, phrase }) {
   React.useEffect(() => {
     if (approved && !locals.current.is_completeLogin) {
       locals.current.is_completeLogin = true;
-      auth.actions.completeLogin();
+
+      try {
+        auth.actions.completeLogin();
+      } catch (err) {
+        throw new Error(`[CheckEmailModal] failed to complete login [${err.message}]`);
+      }
     }
   }, [approved]);
 
