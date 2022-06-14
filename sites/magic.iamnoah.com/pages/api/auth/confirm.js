@@ -13,26 +13,24 @@ export default async function loginConfirm(req, res) {
 
     const { id, token } = req.query;
 
-    // set loginToken to approved
+    // the query to approve takes in the login request id and also the secret (token)
+    // both must match in order to approve the login request
     const data = await graphql.query(approveLoginToken, {
-      variables: { id },
+      variables: {
+        id,
+        secret: token,
+      },
     });
 
-    // when login token exists
-    //   { data: { loginToken: { secret: '...' } } }
-    // when login token does not exist
-    //   { data: { loginToken: null } }
-    if (!data.loginToken) {
-      throw new Error('login token missing, try again');
-    }
-
-    // token does not match stored secret
-    if (data.loginToken.secret !== token) {
+    // if the login token is not found (secret or id are wrong)
+    if (data.loginToken.affected_rows === 0) {
       throw new Error('login token invalid, try again');
     }
 
+    const [loginToken] = data.loginToken.returning;
+
     // verify loginToken not expired
-    if (Date.now() > new Date(data.loginToken.expires).getTime()) {
+    if (Date.now() > new Date(loginToken.expires).getTime()) {
       throw new Error('login token expired, try again');
     }
 
@@ -48,7 +46,7 @@ export default async function loginConfirm(req, res) {
     //     </head>
     //   </html>
     // `);
-    return res.status(302).redirect(`${loginConfirmUrl}?email=${data.loginToken.email}`);
+    return res.status(302).redirect(`${loginConfirmUrl}?email=${loginToken.email}`);
   } catch (e) {
     console.error(e);
 
@@ -57,11 +55,13 @@ export default async function loginConfirm(req, res) {
 }
 
 const approveLoginToken = gql`
-  mutation ApproveLoginToken($id: uuid!) {
-    loginToken: update_loginToken_by_pk(pk_columns: { id: $id }, _set: { approved: true }) {
-      secret
-      expires
-      email
+  mutation ApproveLoginToken($id: uuid!, $secret: String!) {
+    loginToken: update_loginToken(where: { id: { _eq: $id }, secret: { _eq: $secret } }, _set: { approved: true }) {
+      affected_rows
+      returning {
+        expires
+        email
+      }
     }
   }
 `;
