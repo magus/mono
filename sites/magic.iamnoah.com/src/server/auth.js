@@ -150,7 +150,7 @@ async function refreshAuthentication(req, res, serverToken, authCookie) {
 
   let loginTokenId;
 
-  // serverToken may be either a
+  // serverToken may be either
   //   1. completing a login (loginToken, first refresh token)
   //   2. or refreshing a login (refreshToken)
 

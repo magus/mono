@@ -11,9 +11,13 @@ const EXPIRE_TIMER_FREQUENCY_MS = 5 * 1000;
 const EXPIRE_DURATION_THRESHOLD = 0.25;
 
 export function MagicAuthProvider(props) {
+  if (props.disabled) {
+    return props.children;
+  }
+
   return (
     <Modal.Provider>
-      <MagicAuthProviderInternal>
+      <MagicAuthProviderInternal {...props}>
         {props.children}
         <Modal.Portal />
       </MagicAuthProviderInternal>

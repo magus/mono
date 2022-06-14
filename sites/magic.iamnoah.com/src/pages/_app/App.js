@@ -7,7 +7,7 @@ import LoginGate from '@components/LoginGate';
 
 export default function App(props) {
   return (
-    <Providers>
+    <Providers {...props}>
       <AppShell {...props}>
         <AuthApp {...props} />
       </AppShell>

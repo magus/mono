@@ -11,11 +11,13 @@ const theme = {
 };
 
 export default function Providers(props) {
+  const { disableAuth } = props.Component;
+
   return (
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <MagicAuthProvider>{props.children}</MagicAuthProvider>
+        <MagicAuthProvider disabled={disableAuth}>{props.children}</MagicAuthProvider>
       </ThemeProvider>
     </>
   );
