@@ -125,38 +125,33 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const SVG = (emoji) =>
-  `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${emoji}</text></svg>`;
-
 export default function MyApp({ Component, pageProps }) {
-  const title = pageProps?.seo?.title || 'misc';
-  const description = pageProps?.seo?.description || 'just random things';
-  const keywords = pageProps?.seo?.keywords || ['misc', 'random', '???', 'demo'];
-  const url = pageProps?.seo?.url || 'https://misc.vercel.app';
-  const favicon = pageProps?.seo?.favicon || SVG('🤔');
-  const image = pageProps?.seo?.image || '';
+  const title = pageProps?.seo?.title;
+  const description = pageProps?.seo?.description;
+  const url = pageProps?.seo?.url;
+  const image = pageProps?.seo?.image;
 
   return (
     <>
       <Head>
-        <title key="title">{title}</title>
+        {!title ? null : <title key="title">{title}</title>}
 
         {/* seo & open graph tags */}
-        <meta name="description" content={description} key="meta:description" />
-        <meta name="keywords" content={keywords.join(', ')} key="meta:keywords" />
-        <meta property="og:locale" content="en_US" key="meta:og:locale" />
-        <meta property="og:title" content={title} key="meta:og:title" />
-        <meta property="og:description" content={description} key="meta:og:description" />
+        {!title ? null : <meta name="title" content={title} key="meta:title" />}
+        {!description ? null : <meta name="description" content={description} key="meta:description" />}
+
+        {!title ? null : <meta property="og:title" content={title} key="meta:og:title" />}
+        {!description ? null : <meta property="og:description" content={description} key="meta:og:description" />}
         <meta property="og:type" content="website" key="meta:og:type" />
-        <meta property="og:url" content={url} key="meta:og:url" />
-        <meta property="og:image" content={image} />
-
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:creator" content="magusnn" />
-        <meta property="twitter:creator:id" content="23604692" />
-
-        {/* favicons */}
-        <link rel="icon" href={favicon} />
+        {!url ? null : <meta property="og:url" content={url} key="meta:og:url" />}
+        {!image ? null : <meta property="og:image" content={image} />}
+        {!pageProps?.seo?.type ? null : <meta property="og:image:type" content={pageProps.seo.type} />}
+        {!pageProps?.seo?.dimensions ? null : (
+          <React.Fragment>
+            <meta property="og:image:width" content={pageProps.seo.dimensions.width} />
+            <meta property="og:image:height" content={pageProps.seo.dimensions.height} />
+          </React.Fragment>
+        )}
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 

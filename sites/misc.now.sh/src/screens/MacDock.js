@@ -8,9 +8,9 @@ export function getStaticProps() {
   const title = 'mac dock';
   const description = 'a mac dock because we can';
   const keywords = ['mac', 'dock', 'demo', 'zoom'];
-  const url = 'https://misc.vercel.app/mac-dock';
+  const url = 'https://misc-noah.vercel.app/mac-dock';
   const favicon = '/mac-dock/favicon.png';
-  const image = 'https://misc.vercel.app/mac-dock/desktop-demo.cd064188c3fcc1e7c9d41bd1307f1111.png';
+  const image = 'https://misc-noah.vercel.app/mac-dock/desktop-demo.cd064188c3fcc1e7c9d41bd1307f1111.png';
 
   const seo = { title, description, keywords, url, favicon, image };
 
