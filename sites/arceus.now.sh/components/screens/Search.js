@@ -114,12 +114,16 @@ export function Search() {
   const hasTypeFilters = state.filterTypes.size > 0;
   const isSearch = hasTypeFilters || state.search;
 
-  const typesInResults = {};
-  state.results.forEach((result) => {
-    result.pokemon.form.types.forEach((t) => {
-      typesInResults[t] = true;
+  const typesInResults = React.useMemo(() => {
+    const typesInResults = {};
+    state.results.forEach((result) => {
+      result.pokemon.form.types.forEach((t) => {
+        typesInResults[t] = true;
+      });
     });
-  });
+
+    return typesInResults;
+  }, [state.results]);
 
   React.useEffect(() => {
     async function getTargets() {
@@ -228,23 +232,40 @@ export function Search() {
     };
   }, [state.search, targets, hasTypeFilters, filterType_a, filterType_b]);
 
-  if (!state.init) return null;
+  const [displayedTypes, set_displayedTypes] = React.useState([]);
 
-  const filteredTypes = Array.from(new Set([...Array.from(state.filterTypes), ...Object.values(Type)])).filter(
-    (type) => {
-      // when showing results, only show types that are in result set
-      return !(isSearch && !typesInResults[type]);
-    },
-  );
+  const isFirstTypeFilter = displayedTypes.length === Object.values(Type).length;
 
-  let displayedTypes = filteredTypes;
-  if (displayedTypes.length === 0) {
-    // if we have no matching types to display but we have filterTypes enabled
-    // then show the type pill so we can tap it to disable the filter
-    if (state.filterTypes.size > 0) {
-      displayedTypes = Array.from(state.filterTypes);
+  React.useEffect(() => {
+    let timeoutId;
+
+    let displayedTypes = Array.from(new Set([...Array.from(state.filterTypes), ...Object.values(Type)])).filter(
+      (type) => {
+        // when showing results, only show types that are in result set
+        return !(isSearch && !typesInResults[type]);
+      },
+    );
+
+    if (displayedTypes.length === 0) {
+      // if we have no matching types to display but we have filterTypes
+      // then show the type pill so we can tap it to disable the filter
+      if (state.filterTypes.size > 0) {
+        displayedTypes = Array.from(state.filterTypes);
+      }
     }
-  }
+
+    if (state.filterTypes.size === 1 && isFirstTypeFilter) {
+      // when selecting the first type, delay displayed type update
+      // to allow selecting a second type quickly without layout shift
+      timeoutId = setTimeout(() => set_displayedTypes(displayedTypes), 1 * 1000);
+    } else {
+      set_displayedTypes(displayedTypes);
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [isSearch, state.filterTypes, typesInResults, isFirstTypeFilter]);
+
+  if (!state.init) return null;
 
   return (
     <Container>

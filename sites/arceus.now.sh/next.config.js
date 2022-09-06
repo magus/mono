@@ -1,4 +1,7 @@
-module.exports = {
+const packages = ['@magusn/react'];
+const withTM = require('next-transpile-modules')(packages);
+
+module.exports = withTM({
   reactStrictMode: false,
   images: {
     domains: ['www.serebii.net'],
@@ -8,4 +11,4 @@ module.exports = {
     // > FORCE=true mono ws arceus deploy:prod
     ignoreDuringBuilds: process.env.FORCE === 'true',
   },
-};
+});

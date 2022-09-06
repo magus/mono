@@ -18,6 +18,7 @@
     "framer-motion": "^3.1.1",
     "fuzzysort": "^1.1.4",
     "next": "12.0.8",
+    "next-transpile-modules": "^9.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "styled-components": "^5.3.3"
