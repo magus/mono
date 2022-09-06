@@ -1,7 +1,7 @@
 {
   "name": "misc.vercel.app",
   "alias": "misc",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "build": "NODE_ENV=production next build",
@@ -14,7 +14,7 @@
     "test:lint": "eslint ."
   },
   "dependencies": {
-    "@magusn/react": "0.6.0",
+    "@magusn/react": "0.7.0",
     "framer-motion": "^6.3.3",
     "next": "12.0.8",
     "next-transpile-modules": "^9.0.0",

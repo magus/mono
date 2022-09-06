@@ -1,5 +1,20 @@
 # magic.iamnoah.com
 
+## 0.6.0
+
+### Minor Changes
+
+- 863ae8b: respect disableAuth flag to prevent race conditions
+
+### Patch Changes
+
+- 2e83057: /api/auth/confirm validates login request secret
+- 7393deb: race condition calling `/api/auth/complete`
+- Updated dependencies [d486780]
+- Updated dependencies [9c4fdc8]
+- Updated dependencies [863ae8b]
+  - @magusn/react@0.7.0
+
 ## 0.5.2
 
 ### Patch Changes

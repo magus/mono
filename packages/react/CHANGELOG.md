@@ -1,5 +1,13 @@
 # @magusn/react
 
+## 0.7.0
+
+### Minor Changes
+
+- d486780: throw errors when /api/auth/complete fails
+- 9c4fdc8: debug hooks
+- 863ae8b: respect disableAuth flag to prevent race conditions
+
 ## 0.6.0
 
 ### Minor Changes
