@@ -5,9 +5,9 @@
   "private": true,
   "scripts": {
     "build": "NODE_ENV=production next build",
-    "deploy": "now",
-    "deploy:prod": "now --prod",
-    "deploy:purge": "now rm uareflect --safe",
+    "deploy": "vercel",
+    "deploy:prod": "vercel --prod",
+    "deploy:purge": "vercel rm uareflect --safe",
     "dev": "next dev",
     "prod": "FORCE=true yarn build && yarn start",
     "start": "NODE_ENV=production next start",

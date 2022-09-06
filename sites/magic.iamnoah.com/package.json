@@ -7,9 +7,9 @@
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "build": "NODE_ENV=production next build",
-    "deploy": "now",
-    "deploy:prod": "now --prod",
-    "deploy:purge": "now rm magic --safe",
+    "deploy": "vercel",
+    "deploy:prod": "vercel --prod",
+    "deploy:purge": "vercel rm magic --safe",
     "dev": "next dev",
     "lerna:setup": "./scripts/setup.sh",
     "prod": "yarn build && yarn start",
