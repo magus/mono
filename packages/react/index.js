@@ -11,3 +11,4 @@
 //
 // export * lets components/index.js control exports
 export * from './components';
+export * from './hooks';
