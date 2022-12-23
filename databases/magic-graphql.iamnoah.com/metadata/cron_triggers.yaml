@@ -1,1 +1,10 @@
-[]
+- name: dcsseeds_scrapePlayers
+  webhook: https://dcss.vercel.app/api/job/scrapePlayers
+  schedule: '*/5 * * * *'
+  include_in_metadata: true
+  payload: {}
+  retry_conf:
+    num_retries: 0
+    retry_interval_seconds: 10
+    timeout_seconds: 30
+    tolerance_seconds: 21600

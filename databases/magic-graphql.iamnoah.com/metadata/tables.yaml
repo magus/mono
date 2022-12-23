@@ -1,146 +1,266 @@
 - table:
+    name: dcsseeds_scrapePlayers
     schema: public
-    name: loginToken
-  object_relationships:
-  - name: refreshToken
-    using:
-      manual_configuration:
-        remote_table:
-          schema: public
-          name: refreshToken
-        column_mapping:
-          id: loginTokenId
-  - name: user
-    using:
-      foreign_key_constraint_on: userId
   select_permissions:
-  - role: login
-    permission:
-      columns:
-      - approved
-      - id
-      filter:
-        id:
-          _eq: X-Hasura-User-Id
-      limit: 1
-  - role: self
-    permission:
-      columns:
-      - approved
-      - created
-      - domain
-      - expires
-      - geo
-      - id
-      - ip
-      - userAgent
-      filter:
-        userId:
-          _eq: X-Hasura-User-Id
-  delete_permissions:
-  - role: self
-    permission:
-      filter:
-        userId:
-          _eq: X-Hasura-User-Id
-  event_triggers:
-  - name: loginSendEmail
-    definition:
-      enable_manual: false
-      insert:
-        columns: '*'
-      update:
+    - role: anonymous
+      permission:
         columns:
-        - approved
-        - email
-        - secret
-        - created
-        - expires
-        - id
-        - userId
-    retry_conf:
-      num_retries: 5
-      interval_sec: 30
-      timeout_sec: 60
-    webhook: https://magicwords.vercel.app/api/events/loginSendEmail
+          - id
+          - name
+          - server
+        filter: {}
+    - role: user
+      permission:
+        columns:
+          - id
+          - name
+          - server
+        filter: {}
 - table:
+    name: dcsseeds_scrapePlayers_branch
     schema: public
+  select_permissions:
+    - role: anonymous
+      permission:
+        columns:
+          - name
+          - order
+        filter: {}
+    - role: user
+      permission:
+        columns:
+          - name
+          - order
+        filter: {}
+- table:
+    name: dcsseeds_scrapePlayers_errors
+    schema: public
+- table:
+    name: dcsseeds_scrapePlayers_item
+    schema: public
+  object_relationships:
+    - name: branch
+      using:
+        manual_configuration:
+          column_mapping:
+            branchName: name
+          insertion_order: null
+          remote_table:
+            name: dcsseeds_scrapePlayers_branch
+            schema: public
+    - name: player
+      using:
+        manual_configuration:
+          column_mapping:
+            playerId: id
+          insertion_order: null
+          remote_table:
+            name: dcsseeds_scrapePlayers
+            schema: public
+    - name: seedVersion
+      using:
+        manual_configuration:
+          column_mapping:
+            seed: seed
+            version: version
+          insertion_order: null
+          remote_table:
+            name: dcsseeds_scrapePlayers_seedVersion
+            schema: public
+  select_permissions:
+    - role: anonymous
+      permission:
+        columns:
+          - level
+          - branchName
+          - fullVersion
+          - location
+          - morgue
+          - name
+          - seed
+          - version
+          - timestamp
+          - id
+          - playerId
+        filter: {}
+    - role: user
+      permission:
+        columns:
+          - level
+          - branchName
+          - fullVersion
+          - location
+          - morgue
+          - name
+          - seed
+          - version
+          - timestamp
+          - id
+          - playerId
+        filter: {}
+- table:
+    name: dcsseeds_scrapePlayers_seedVersion
+    schema: public
+  select_permissions:
+    - role: anonymous
+      permission:
+        columns:
+          - seed
+          - version
+        filter: {}
+    - role: user
+      permission:
+        columns:
+          - seed
+          - version
+        filter: {}
+- table:
+    name: loginToken
+    schema: public
+  object_relationships:
+    - name: refreshToken
+      using:
+        manual_configuration:
+          column_mapping:
+            id: loginTokenId
+          insertion_order: null
+          remote_table:
+            name: refreshToken
+            schema: public
+    - name: user
+      using:
+        foreign_key_constraint_on: userId
+  select_permissions:
+    - role: login
+      permission:
+        columns:
+          - approved
+          - id
+        filter:
+          id:
+            _eq: X-Hasura-User-Id
+        limit: 1
+    - role: self
+      permission:
+        columns:
+          - approved
+          - created
+          - domain
+          - expires
+          - geo
+          - id
+          - ip
+          - userAgent
+        filter:
+          userId:
+            _eq: X-Hasura-User-Id
+  delete_permissions:
+    - role: self
+      permission:
+        filter:
+          userId:
+            _eq: X-Hasura-User-Id
+  event_triggers:
+    - name: loginSendEmail
+      definition:
+        enable_manual: false
+        insert:
+          columns: '*'
+        update:
+          columns:
+            - approved
+            - email
+            - secret
+            - created
+            - expires
+            - id
+            - userId
+      retry_conf:
+        interval_sec: 30
+        num_retries: 5
+        timeout_sec: 60
+      webhook: https://magicwords.vercel.app/api/events/loginSendEmail
+- table:
     name: refreshToken
-  object_relationships:
-  - name: loginToken
-    using:
-      manual_configuration:
-        remote_table:
-          schema: public
-          name: loginToken
-        column_mapping:
-          loginTokenId: id
-  - name: user
-    using:
-      manual_configuration:
-        remote_table:
-          schema: public
-          name: user
-        column_mapping:
-          userId: id
-  select_permissions:
-  - role: self
-    permission:
-      columns:
-      - created
-      - expires
-      - geo
-      - ip
-      - lastActive
-      - loginTokenId
-      - userAgent
-      filter:
-        userId:
-          _eq: X-Hasura-User-Id
-- table:
     schema: public
+  object_relationships:
+    - name: loginToken
+      using:
+        manual_configuration:
+          column_mapping:
+            loginTokenId: id
+          insertion_order: null
+          remote_table:
+            name: loginToken
+            schema: public
+    - name: user
+      using:
+        manual_configuration:
+          column_mapping:
+            userId: id
+          insertion_order: null
+          remote_table:
+            name: user
+            schema: public
+  select_permissions:
+    - role: self
+      permission:
+        columns:
+          - created
+          - expires
+          - geo
+          - ip
+          - lastActive
+          - loginTokenId
+          - userAgent
+        filter:
+          userId:
+            _eq: X-Hasura-User-Id
+- table:
     name: role
-- table:
     schema: public
+- table:
     name: user
-  array_relationships:
-  - name: roles
-    using:
-      foreign_key_constraint_on:
-        column: userId
-        table:
-          schema: public
-          name: user_role
-  select_permissions:
-  - role: self
-    permission:
-      columns:
-      - created
-      - email
-      - id
-      - updated
-      filter:
-        id:
-          _eq: X-Hasura-User-Id
-      limit: 1
-  - role: user
-    permission:
-      columns:
-      - id
-      filter: {}
-      limit: 1
-- table:
     schema: public
+  array_relationships:
+    - name: roles
+      using:
+        foreign_key_constraint_on:
+          column: userId
+          table:
+            name: user_role
+            schema: public
+  select_permissions:
+    - role: self
+      permission:
+        columns:
+          - created
+          - email
+          - id
+          - updated
+        filter:
+          id:
+            _eq: X-Hasura-User-Id
+        limit: 1
+    - role: user
+      permission:
+        columns:
+          - id
+        filter: {}
+        limit: 1
+- table:
     name: user_role
+    schema: public
   object_relationships:
-  - name: role
-    using:
-      manual_configuration:
-        remote_table:
-          schema: public
-          name: role
-        column_mapping:
-          roleId: id
-  - name: user
-    using:
-      foreign_key_constraint_on: userId
+    - name: role
+      using:
+        manual_configuration:
+          column_mapping:
+            roleId: id
+          insertion_order: null
+          remote_table:
+            name: role
+            schema: public
+    - name: user
+      using:
+        foreign_key_constraint_on: userId
