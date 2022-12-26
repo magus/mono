@@ -1,5 +1,11 @@
 # misc.vercel.app
 
+## 0.1.2
+
+### Patch Changes
+
+- cc14de5: use vercel cli
+
 ## 0.1.1
 
 ### Patch Changes

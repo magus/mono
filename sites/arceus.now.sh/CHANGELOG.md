@@ -1,6 +1,13 @@
 # arceus.vercel.app
 
+## 0.1.1
+
+### Patch Changes
+
+- cc14de5: use vercel cli
+
 ## 0.1.0
+
 ### Minor Changes
 
 - 03ab4df: delay type filter for fast double type selection

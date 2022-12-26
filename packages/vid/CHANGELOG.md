@@ -1,5 +1,12 @@
 # @magusn/vid
 
+## 0.3.1
+
+### Patch Changes
+
+- e0fadcd: refactor: ffprobe
+- 5923b96: docs: development command
+
 ## 0.3.0
 
 ### Minor Changes

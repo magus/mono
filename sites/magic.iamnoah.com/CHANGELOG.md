@@ -1,5 +1,11 @@
 # magic.iamnoah.com
 
+## 0.6.1
+
+### Patch Changes
+
+- cc14de5: use vercel cli
+
 ## 0.6.0
 
 ### Minor Changes
