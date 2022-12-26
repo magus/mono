@@ -17,6 +17,12 @@ vid ~/Downloads/youtube-crop.mp4 --crop               # dynamic region cropping 
 vid ~/Downloads/youtube-crop.mp4 --get fps --get size # output fps and size video metadata
 ```
 
+## Development
+
+```sh
+mono ws vid -- vid -v input.mp4
+```
+
 ## Ideas
 
 - publish like a node cli on npm for simple `npm i -g @magus/vid` install
