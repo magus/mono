@@ -11,18 +11,31 @@ import { VidError } from '../common/VidError.js';
 export async function handler(argv) {
   // gather metadata about input source video
 
+  if (argv.verbose) {
+    console.debug(argv);
+  }
+
   const metadata = {};
 
-  metadata.fps = eval(ffprobe_video(argv.input_video_file.fullPath, ['r_frame_rate']).r_frame_rate);
+  const video_probe = ffprobe(argv, 'video');
+  const audio_probe = ffprobe(argv, 'audio');
 
-  const dimensions = ffprobe_video(argv.input_video_file.fullPath, ['width', 'height']);
+  // returns fraction such as `25/1`
+  // use `eval` to resolve into integer
+  metadata.fps = eval(video_probe.r_frame_rate);
 
-  metadata.audio = ffprobe_audio(argv.input_video_file.fullPath);
+  metadata.video = {};
+  metadata.video.bitrate = int(video_probe.bit_rate);
+
+  metadata.audio = {};
+  metadata.audio.bitrate = int(audio_probe.bit_rate);
+
+  metadata.bitrate = metadata.video.bitrate + metadata.audio.bitrate;
 
   metadata.size = {};
 
-  metadata.size.width = int(dimensions.width);
-  metadata.size.height = int(dimensions.height);
+  metadata.size.width = int(video_probe.width);
+  metadata.size.height = int(video_probe.height);
   metadata.dimensions = metadata.size;
 
   if (argv.get) {
@@ -90,8 +103,12 @@ export async function handler(argv) {
   // output image to crop / resize
   if (argv.crop) {
     const rect = await handleUserCrop({ argv, inputPath });
-    videoFilters.push(`crop=${rect.width}:${rect.height}:${rect.x}:${rect.y}`);
 
+    if (argv.verbose) {
+      console.debug('crop', { rect });
+    }
+
+    videoFilters.push(`crop=${rect.width}:${rect.height}:${rect.x}:${rect.y}`);
     optParts.push(['crop', rect.x, rect.y, rect.width, rect.height].join('-'));
   }
 
@@ -120,12 +137,15 @@ export async function handler(argv) {
 
   if (filtersComplex.length) {
     const filterComplex = [`-filter_complex "${filtersComplex.join(';')}"`];
+
     if (videoFilters.length) {
       filterComplex.push('-map "[v]"');
     }
+
     if (audioFilters.length) {
       filterComplex.push('-map "[a]"');
     }
+
     cmdParts.push(filterComplex.join(' '));
   }
 
@@ -173,32 +193,28 @@ export async function handler(argv) {
 
 const quotify = (content) => `"${content}"`;
 
-function ffprobe_audio(input) {
+function ffprobe(argv, stream) {
+  const input = argv.input_video_file.fullPath;
+
   const cmd = [
-    // extract audio stream from
-    `ffprobe -show_streams -select_streams a -loglevel error`,
-    // input video
+    // build for stream
+    'ffprobe -v error -show_streams -select_streams',
+    stream === 'video' ? 'v:0' : 'a',
     quotify(input),
   ].join(' ');
 
-  const probeData = CLI.execSync(cmd);
+  const probe_data = CLI.execSync(cmd);
+  const probe_entry_list = probe_data.split('\n');
 
-  return probeData;
-}
-
-function ffprobe_video(input, fields) {
-  const cmd = [
-    `ffprobe -v error -select_streams v:0 -show_entries stream=${fields.join(',')} -of csv=s=x:p=0`,
-    quotify(input),
-  ].join(' ');
-
-  const probeData = CLI.execSync(cmd);
-
-  // split result by the 'x' join character
-  const probeDataList = probeData.split('x');
   const result = {};
-  for (let i = 0; i < probeDataList.length; i++) {
-    result[fields[i]] = probeDataList[i];
+
+  for (const entry of probe_entry_list) {
+    const [key, value] = entry.split('=');
+    result[key] = value;
+  }
+
+  if (argv.verbose) {
+    console.debug('ffprobe', stream, { cmd, probe_data, result });
   }
 
   return result;
