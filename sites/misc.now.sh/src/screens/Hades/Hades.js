@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import * as eurydice from './eurydice.js';
 import BOON_LIST from './data/boons.json';
 import * as RARITY from './data/rarity';
+import * as GODS from './data/gods';
 import * as list from '../../modules/list';
 
 const BOON_MAP = list.to_map((b) => b.key, BOON_LIST);
@@ -83,7 +84,7 @@ export function Hades() {
           const boon_data = BOON_MAP[boon.key];
 
           return (
-            <BoonSelect key={boon.key}>
+            <BoonSelect key={boon.key} god={boon_data.god}>
               <div>{boon_data.name}</div>
 
               <div className="end">
@@ -125,9 +126,13 @@ export function Hades() {
             });
           }
 
+          console.debug({ boon });
+
           return (
             <div key={boon.key}>
-              <BoonButton onClick={handle_click}>{boon.name}</BoonButton>
+              <BoonButton god={boon.god} onClick={handle_click}>
+                {boon.name}
+              </BoonButton>
             </div>
           );
         })}
@@ -150,7 +155,13 @@ const LevelInput = styled.input`
 `;
 
 const BoonButton = styled(Button)`
-  --main-color: 55, 55, 55;
+  --main-color: ${(props) => {
+    return god_rgb(props.god);
+  }};
+
+  --white: ${(props) => {
+    return god_rgb(props.god, 1 / 8);
+  }};
 `;
 
 const BoonSelect = styled.div`
@@ -158,7 +169,9 @@ const BoonSelect = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
+  color: rgb(${(props) => god_rgb(props.god)});
 
   .end {
     display: flex;
@@ -181,3 +194,30 @@ function round(value, decimals) {
 }
 
 const percent = (value) => `${round(value * 100, 1)}%`;
+
+function god_rgb(god, mult = 1) {
+  const adjust = (rgb) => rgb.map((v) => v * mult).join(', ');
+
+  switch (god) {
+    case GODS.T.zeus:
+      return adjust([243, 229, 102]);
+    case GODS.T.demeter:
+      return adjust([229, 236, 252]);
+    case GODS.T.hermes:
+      return adjust([229, 164, 105]);
+    case GODS.T.aphrodite:
+      return adjust([201, 117, 194]);
+    case GODS.T.ares:
+      return adjust([226, 55, 54]);
+    case GODS.T.artemis:
+      return adjust([139, 193, 80]);
+    case GODS.T.dionysus:
+      return adjust([160, 58, 203]);
+    case GODS.T.poseidon:
+      return adjust([80, 155, 207]);
+    case GODS.T.athena:
+      return adjust([185, 169, 104]);
+    default:
+      return adjust([55, 55, 55]);
+  }
+}
