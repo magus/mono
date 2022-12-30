@@ -1,28 +1,26 @@
 import boons from './data/boons';
-import rarity from './data/rarity';
-import * as GODS from './data/gods';
+import * as RARITY from './data/rarity';
 import * as list from '../../modules/list';
 
 const boon_map = list.to_map((b) => b.key, boons);
-const rarity_enum = list.to_numeric_enum(rarity);
 
-console.debug({ boon_map, rarity_enum, GODS });
+// console.debug({ boon_map, RARITY, GODS });
 
-const current_list = [
-  // { name: 'thunder flourish', level: 1, rarity: 0 },
-  // { name: 'lightning strike', level: 3, rarity: 1 },
-  // { name: 'thunder dash', level: 1, rarity: 3 },
-  // { name: "zeus's aid", level: 6, rarity: 2 },
-  { name: 'tempest flourish', level: 2, rarity: 0 },
-  { name: 'trippy shot', level: 1, rarity: 2 },
-  // { name: 'divine dash', level: 1, rarity: 0 },
-  // { name: 'hyper sprint', level: 1, rarity: 0 },
-  // { name: 'rush delivery', level: 1, rarity: 1 },
-];
+// const current_list = [
+//   // { key: 'thunder flourish', level: 1, rarity: RARITY.N.common },
+//   // { key: 'lightning strike', level: 3, rarity: RARITY.N.rare },
+//   // { key: 'thunder dash', level: 1, rarity: RARITY.N.heroic },
+//   // { key: "zeus's aid", level: 6, rarity: RARITY.N.epic },
+//   { key: 'tempest flourish', level: 2, rarity: RARITY.N.common },
+//   { key: 'trippy shot', level: 1, rarity: RARITY.N.epic },
+//   // { key: 'divine dash', level: 1, rarity: RARITY.N.common },
+//   // { key: 'hyper sprint', level: 1, rarity: RARITY.N.common },
+//   // { key: 'rush delivery', level: 1, rarity: RARITY.N.rare },
+// ];
 
 // Ambrosia Delight
 // up to 2 random boons are upgraded to the next rarity
-function ambrosia_delight() {
+export function ambrosia_delight(current_list) {
   const relative_score_list = [];
   const boon_score_list = [];
 
@@ -30,11 +28,11 @@ function ambrosia_delight() {
     // skip boons this ability cannot 'hit'
     // we use this to weight the chance of the random
     // chance of this boon being selected for upgrade
-    if (current_boon.rarity === rarity_enum.heroic) {
+    if (current_boon.rarity === RARITY.N.heroic) {
       continue;
     }
 
-    const boon = boon_map[current_boon.name];
+    const boon = boon_map[current_boon.key];
     const pom = boon_pom(boon, current_boon.level);
 
     const value = boon.rarity[current_boon.rarity] + pom;
@@ -55,12 +53,12 @@ function ambrosia_delight() {
 
 // Pom Porridge
 // up to 4 random Boons gain +1 Lv.*
-function pom_porridge() {
+export function pom_porridge(current_list) {
   const relative_score_list = [];
   const boon_score_list = [];
 
   for (const current_boon of current_list) {
-    const boon = boon_map[current_boon.name];
+    const boon = boon_map[current_boon.key];
     const base_value = boon.rarity[current_boon.rarity];
 
     const pom = boon_pom(boon, current_boon.level);
@@ -113,6 +111,3 @@ function chance_score(max_picks, score_list) {
   console.debug({ max_picks, score_list, picks, total, average, average_pick });
   return average_pick;
 }
-
-ambrosia_delight();
-pom_porridge();
