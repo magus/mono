@@ -12,4 +12,9 @@ module.exports = {
     // allow console because we strip it out in .babelrc.js anyway
     'no-console': [0],
   },
+  settings: {
+    'import/resolver': {
+      'babel-module': {},
+    },
+  },
 };

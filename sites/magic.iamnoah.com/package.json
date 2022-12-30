@@ -26,6 +26,7 @@
     "@sentry/node": "^5.29.2",
     "@sentry/tracing": "^5.29.2",
     "cookie": "^0.4.1",
+    "eslint-import-resolver-babel-module": "^5.3.1",
     "framer-motion": "^3.1.1",
     "geo-from-ip": "^2.0.0",
     "graphql": "^15.4.0",
