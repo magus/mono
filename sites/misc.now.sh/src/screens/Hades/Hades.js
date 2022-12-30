@@ -43,8 +43,12 @@ export function Hades() {
 
   return (
     <React.Fragment>
-      <div>Ambrosia Delight {ambrosia_delight}</div>
-      <div>Pom Porridge {pom_porridge}</div>
+      <Choice win={ambrosia_delight > pom_porridge}>
+        Ambrosia Delight +{percent(round(ambrosia_delight, 3))} damage
+      </Choice>
+      <Choice win={ambrosia_delight < pom_porridge}>Pom Porridge +{percent(round(pom_porridge, 3))} damage</Choice>
+
+      <Spacer vertical size="4" />
 
       <div>
         {current_list.map((boon) => {
@@ -93,7 +97,8 @@ export function Hades() {
                   })}
                 </select>
                 <Spacer size="4" />
-                <LevelInput value={boon.level} onChange={handle_level} type="number" />
+                <LevelInputLabel>Lv.</LevelInputLabel>
+                <LevelInput pattern="[0-9]*" value={boon.level} onChange={handle_level} type="number" />
                 <Spacer size="4" />
                 <button onClick={handle_delete}>❌</button>
               </div>
@@ -101,6 +106,8 @@ export function Hades() {
           );
         })}
       </div>
+
+      <Spacer vertical size="4" />
 
       <SearchInput placeholder="Divine Dash" onChange={handle_change} />
 
@@ -134,6 +141,10 @@ const SearchInput = styled.input`
   width: 100%;
 `;
 
+const LevelInputLabel = styled.div`
+  align-self: flex-end;
+`;
+
 const LevelInput = styled.input`
   width: var(--spacer-8);
 `;
@@ -155,4 +166,18 @@ const BoonSelect = styled.div`
   }
 `;
 
+const Choice = styled.div`
+  font-weight: ${(props) => (props.win ? '700' : '200')};
+`;
+
 const int = (value) => parseInt(value, 10);
+
+function round(value, decimals) {
+  const mult = Math.pow(10, decimals);
+  const expand = Math.round(value * mult);
+  const result = expand / mult;
+  // console.debug({ value, decimals, mult, expand, result });
+  return result;
+}
+
+const percent = (value) => `${round(value * 100, 1)}%`;
