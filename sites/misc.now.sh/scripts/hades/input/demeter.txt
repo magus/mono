@@ -1,0 +1,91 @@
+Frost Strike
+"more damage and chill (4% slow for 8s, stack 10)"
++40%
++52% to +60%
++72% to +80%
++92% to +100%
+16/11/8/5/4/...
+Frost Flourish
+"more damage and chill (4% slow for 8s, stack 10)"
++60%
++72% to +90%
++108% to +120%
++138% to +150%
+24/17/12/8/6/...
+Crystal Beam
+crystal that fires a beam (damage every 0.2s for 5s); does not lodge in enemies
+8
+9.2
+10.4
+11.6
+2/1/...
+Mistral Dash
+shoot a gust ahead that inflicts chill
+15
+22.5
+30
+37.5
+9/6/4/3/...
+Demeter's Aid
+create a winter vortex that chills and damages every 0.25s for 5s (max 15s)
+10
+11
+12
+13
+4/3/2/...
+Icy Flare
+damages foes around you and inflicts chill
+70
+80
+90
+100
+14/10/7/...
+Killing Freeze
+applying chill to all enemies causes them to slow and decay (every 0.5s)
+-10%, 20
+-15%, 30
+-20%, 40
+-25%, 49
+Cannot be pommed
+Arctic Blast
+applying 10 stacks of chill causes a blast, clearing the effect
+80
+90
+100
+110
+Cannot be pommed
+Glacial Glare (C)
+your cast fires for a longer duration and inflicts chill
++2.0s
++2.4s
++2.8s
++3.2s
+1s/...
+Frozen Touch
+... damage and completely chill  your foe
+10
+15
+20
+25
+8/6/4/3/2/1/...
+Snow Burst
+whenever you cast, damage nearby foes and inflict chill
+40
+50
+60
+70
+16/11/8/5/4/...
+Ravenous Will
+while you have no cast gems, take 10% less damage and deal more
++10%
++20%
++30%
++40%
+Cannot be pommed
+Nourished Soul
+"any health effects are more potent restore +30% health"
++30%
++32.5%
++35.0%
++37.5%
+Cannot be pommed

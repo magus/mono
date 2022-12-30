@@ -1,0 +1,98 @@
+Tempest Strike
+"more damage and knock foes away"
++30%
++39% to +45%
++54% to +60%
++69% to +75%
+12/8/6/4/3/...
+Tempest Flourish
+"more damage and knock foes away"
++70%
++91% to 105%
++126% to +140%
++161% to +175%
+28/20/14/10/7/...
+Flood Shot
+"damages foes in an area and knocks them away; lodges in enemies"
+60
+72
+84
+96
+36/25/18/12/9/6/...
+Tidal Dash
+"damages foes in an area and knocks them away"
+35
+42
+49
+56
+21/15/10/7/5/4/...
+Poseidon's Aid
+surge into foes while impervious for 1.2s (max 7.2s)
+250
+300
+350
+400
+100/70/49/34/25/...
+Flood Flare
+damages foes around you and knocks them away
+60
+72
+84
+96
+36/25/18/12/9/6/...
+Razor Shoals
+knock-away effects also cause rupture (take damage every 0.2s while moving)
+10
+15
+20
+25
+6/4/3/2/...
+Wave Pounding
+boons with knock-away effects deal bonus damage to bosses
++20%
++30%
++40%
++50%
+8/6/4/3/2/...
+Typhoon's Fury
+deal more damage when slamming foes into barriers
+200%
+250%
+300%
+350%
+80/56/39/27/20/...
+Breaking Wave
+slamming foes into walls or corners creates a watery blast in the area which stuns
+100
+150
+250
+270
+40/28/20/14/10/...
+Rip Current (Call)
+makes Poseidon's Aid last longer and pull foes in
++1s
++1.25s
++1.5s
++1.75s
+0.2/0.1/...
+Hydraulic Might
+attack and special are stronger in the first 5 seconds of encounters
++50%
++63%
++75%
++89%
+10/7/5/...
+Boiling Point
+god gauge charges faster when taking damage
++40%
++50%
++60%
++70%
+16/11/8/5/4/...
+Ocean's Bounty
+any gems, darkness, or coin are worth more
++50%
++55%
++60%
++65%
+Cannot be pommed

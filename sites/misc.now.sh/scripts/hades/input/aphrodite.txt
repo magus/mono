@@ -1,0 +1,98 @@
+Heartbreak Strike
+more damage and inflict weak (-30% attack for 4s)
++50%
++65% to +75%
++90% to +100%
++115% to +125%
+20/14/10/7/5/...
+Heartbreah Flourish
+more damage and inflict weak (-30% attack for 4s)
++80%
++104% to +120%
++144% to +160%
++184% to +200%
+32/22/16/11/8/...
+Crush Shot
+"wide, short-range blast that inflicts weak; lodges in enemies"
+90
+100
+110
+120
+54/38/26/19/13/9/...
+Passion Dash
+"inflict damage and weak at end of dash"
+20
+24
+28
+32
+16/11/8/5/4/3/2/...
+Aphrodite's Aid
+fire a seeking piercing projectile that inflicts charm
+5s
+5.5s
+6s
+6.5s
+1/...
+Passion Flare
+damages foes around you and inflicts weak
+80
+96
+112
+128
+48/34/24/16/12/8/...
+Sweet Surrender
+weak-afflicted foes are more susceptible to damage
++10%
++15%
++25%
++27%
+4/3/2/1/...
+Broken Resolve
+weak effects are more potent (more damage reduction)
+-10%
+-12.5%
+-15%
+-17.5%
+Cannot be pommed
+Empty Inside
+weak effects have longer duration
++5s
++7.5s
++10s
++12.5s
+2/1.4/1/0.7/0.5/...
+Blown Kiss (C)
+your cast shoots farther and is stronger against undamaged foes
++50%
++75%
++100%
++125%
+Cannot be pommed
+Wave of Despair
+"... damage nearby foes and inflict weak"
+50
+65 to 75
+90 to 100
+115 to 125
+40/28/20/14/10/7/5/...
+Different League
+resist damage from nearby foes' attacks
+-10%
+-12.5%
+-15%
+-17.5%
+4/2/...
+Dying Lament (K)
+when floes are slain, damage nearby foes and inflict weak
+40
+52 to 60
+72 to 80
+91 to 100
+24/17/12/8/6/4/...
+Life Affirmation
+any health increase rewards are worth more
++30%
++36%
++42%
++48%
+Cannot be pommed

@@ -1,0 +1,98 @@
+Drunken Strike
+"inflicts hangover (stack 5, damage every 0.5s for 4s)"
+4
+5
+6
+7
+2/1/...
+Drunken Flourish
+"inflicts hangover (stack 5, damage every 0.5s for 4s)"
+5
+6
+7
+8
+2/1/...
+Trippy Shot
+lobs a projectile that bursts into festive fog; does not lodge in enemies
+100
+120
+140
+160
+60/42/29/21/14/10/...
+Drunken Dash
+"inflicts hangover (stack 5, damage every 0.5s for 4s)"
+2
+3
+4
+5
+1/...
+Dionysus's Aid
+inflict hangover to all foes around you for 1.5s (max 9s)
+15
+16.5
+18
+19.5
+6/4/...
+Trippy Flare
+damages foes around you leaving behind festive fog
+120
+144
+168
+192
+72/50/35/25/17/12/...
+Numbing Sensation
+hangover effects also makes foes move slower for 4s
+-15%
+-22.5%
+-33%
+-37.5%
+5/3/3/2/...
+Peer Pressure
+hangover-afflicted foes contaminate other nearby foes every 4s
+4
+6
+10
+10.8
+2/1/...
+Bad Influence
+deal more damage while 3 foes are hangover-afflicted
++50%
++75%
++100%
++125%
+20/14/10/7/5/...
+High Tolerance (C)
+take less damage while standing in festive fog
+-15%
+-22.5%
+-37.5%
+-40.5%
+4/3/1/...
+Positive Outlook
+take less damage while at 40% health or below
+-10%
+-15%
+-20%
+-25%
+5/3/2/2/2/1/...
+After Party
+if your health is low after an encounter, restore to the threshold
+30%
+40.0%
+50%
+60%
+Cannot be pommed
+Premium Vintage
+"gain health when you pick up nectar receive 1 nectar"
++20 max health
++25 max health
++30 max health
++35 max health
+Cannot be pommed
+Strong Drink
+using fountains restores all your health and gives you bonus damage
++3% per fountain
++4% per fountain
++5% per fountain
++6% per fountain
+Cannot be pommed

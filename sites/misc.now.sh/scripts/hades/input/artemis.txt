@@ -1,0 +1,91 @@
+Deadly Strike
+"more damage +15% chance to crit"
++20%
++26% to +30%
++36% to +40%
++46% to +50%
+8/6/4/3/2/...
+Deadly Flourish
+"more damage +20% chance to crit"
++40%
++52% to +60%
++72% to +80%
++92% to +100%
+16/11/8/5/4/...
+True Shot
+fire an unblockable seeking arrow with 10% crit chance; lodges in enemies
+70
+80
+90
+100
+42/29/21/14/10/7/...
+Hunter Dash
+dash-strike deals more damage
++50%
++60%
++70%
++80%
+10/7/5/...
+Artemis's Aid
+fire 1 unblockable seeking arrow (max 10) with +35% crit
+100
+110
+120
+130
+40/28/20/14/10/...
+Hunter's Flare
+damages foes around you with 10% crit chance
+55
+63
+71
+79
+33/23/16/11/8/6/...
+Hunter's Mark
+after dealing critical damage, a foe near it is marked (higher chance of crit for 2.5s)
++30%
++39% to +45%
++54% to +60%
++69% to +75%
+12/8/6/4/3/...
+Pressure Points
+any damage your deal has a chance to be critical
++2%
++3%
++4%
++5%
+1/...
+Clean Kill
+critical effects deal even more damage
++15%
++22.5%
++30%
++37.5%
+10/7/5/3/...
+Hide Breaker
+critical effects deal even more damage to armor
++200%
++300%
++400%
++500%
+40/28/20/14/10/...
+Support Fire
+after you hit with an attack, cast, or special, fire an unblockable seeking arrow
+10
+12
+14
+16
+Cannot be pommed
+Exit Wounds
+foes take damage when cast gems become dislodged
+100
+120
+140
+160
+40/28/20/14/10/...
+Hunter Instinct
+god gauge charges faster when dealing critical damage
++0.25%
++0.3%
++0.35%
++0.4%
+Cannot be pommed

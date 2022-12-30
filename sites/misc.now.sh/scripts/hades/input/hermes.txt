@@ -1,0 +1,98 @@
+Swift Strike
+your attack is faster
++10%
++20%
++30%
++40%
+Cannot be pommed
+Swift Flourish
+your special is faster
++10%
++20%
++30%
++40%
+Cannot be pommed
+Flurry Cast
+your cast is faster and fully automatic
++20%
++40%
++60%
++80%
+Cannot be pommed
+Greatest Reflex
+dash more times in a row
++1
++2
++3
++4
+   Cannot be pommed
+Second Wind
+after using call, gain dodge chance and move speed for 6s
++30%
++37.5%
++45%
++52.5%
+Cannot be pommed
+Hyper Sprint
+after a dash, gain +100% move speed
+0.5s
+0.6s
+0.7s
+0.8s
+Cannot be pommed
+Greater Haste
+move faster
++20%
++30%
++40%
++50%
+Cannot be pommed
+Rush Delivery
+deal bonus damage based on any bonus move speed
++50%
++75%
++100%
++125%
+Cannot be pommed
+Quick Recovery
+... quickly dash to recover some health lost
+20%
+30%
+40%
+50%
+Cannot be pommed
+Greater Evasion
+more chance to dodge
++10%
++15%
++20%
++25%
+Cannot be pommed
+Quick Reload
+foes drop cast gems stuck in them faster
+5.0s
+3.3s
+2.5s
+2.0s
+Cannot be pommed
+Auto Reload
+you regenerate cast gems faster
+2.75s
+2.5s
+2.26s
+2.0s
+Cannot be pommed
+Quick Favor
+your god gauge slowly charges up automatically
+1% every 2.0 sec
+1% every 1.5 sec
+1% every 1 .0sec
+1% every 0.5 sec
+Cannot be pommed
+Side Hustle
+gain some money each time you enter a chamber
++10
++13
++16
++19
+Cannot be pommed

@@ -1,0 +1,98 @@
+Divine Strike
+more damage and deflects
++40%
++52% to +60%
++72% to +80%
++92% to +100%
+16/11/9/5/4/...
+Divine Flourish
+more damage and deflects
++60%
++78% to +90%
++108% to +120%
++138% to +150%
+24/17/12/8/6
+Phalanx Shot
+"damages foes in an area and deflects; lodges in enemies"
+85
+102
+119
+136
+51/36/25/17/12/9/...
+Divine Dash
+deals damage and deflects
+10
+12
+14
+16
+6/4/3/2/...
+Athena's Aid
+makes you invulnerable and deflects all attacks
+1.5s
+1.65s
+1.8s
+1.95s
+.6/.42/.3/...
+Phalanx Flare
+"damages foes around you and deflects"
+80
+90
+100
+110
+48/34/24/16/12/8/...
+Blinding Flash
+deflect also makes foes exposed for 5s (take more damage from behind)
++50%
++62.5%
++75%
++87.5%
+20/14/10/7/5/...
+Brilliant Riposte
+when you deflect attacks, they deal more damage
++80%
++ 104% to +120%
++160% to +200%
++200% to +216%
+32/22/16/11/8/...
+Holy Shield
+"... damage nearby foes and deflect"
+30
+39 to 45
+54 to 60
+69 to 75
+24/17/12/8/6/4/3/...
+Bronze Skin
+resist damage from foes' attacks
+-5%
+-7.5%
+-10%
+-12.5%
+1.9/1.9/1.8/1.8/1.7/1.7/...
+Sure Footing
+resist damage from traps
+-60%
+-75%
+-90%
+-95%
+Cannot be pommed
+Proud Bearing
+begin each encounter with the god gauge partly full
+20%
+25%
+30%
+40%
+10/7/5/3/2/...
+Deathless Stand
+"death defiance makes you impervious longer replenish 1 charge"
++2s
++3s
++3s
++4s
+Cannot be pommed
+Last Stand
+"death defiance restores more health than usual replenish 1 charge"
++10%
++12%
++14%
++16%
+Cannot be pommed

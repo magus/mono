@@ -1,0 +1,98 @@
+Lightning Strike
+emits chain-lightning (4) when you damage a foe
+10
+12.5
+15
+20
+4/3/2/1/...
+Thunder Flourish
+causes a lightning bolt to strike nearby foes
+30
+37.5
+45
+60
+12/8/6/4/3/...
+Electric Shot
+burst of chain-lightning (5) that bounces between foes; lodges in enemies
+60
+70
+81
+90
+24/17/12/8/6/...
+Thunder Dash
+causes a lightning bolt to strike nearby foes
+10
+15
+20
+25
+8/6/4/3/2/1/...
+Zeus's Aid
+lightning strikes nearby foes repeatedly for 1.5s (max 9s)
+50
+55
+60
+65
+20/14/10/7/5/...
+Electric Flare
+causes a lightning bolt to strike nearby foes
+60
+72
+84
+96
+36/25/18/12/9/6/...
+Static Discharge
+lightning effects also cause jolted (next attack self-inflicts damage)
+60
+78 to 90
+108 to 120
+137 to 150
+36/25/18/12/9/6/...
+Storm Lightning
+chain-lightning effects bounce more times before expiring
++2
++4
++6
++8
+2/...
+High Voltage
+lightning bolt effects deal damage in a larger area
++60%
++72%
++84%
++96%
+24/17/12/8/6/...
+Double Strike
+lightning bolt effects have a chance to strike twice
++25%
++30%
++35%
++40%
+10/7/5/3/...
+Heaven's Vengeance
+"... your foe is struck by lightning"
+80
+104 to 120
+144 to 160
+184 to 200
+64/45/31/22/15/11/8/...
+Lightning Reflexes
+dash just before being hit to counter-attack with a lightning bolt
+20
+30
+40
+50
+10/7/6/...
+Clouded Judgment
+god gauge charges faster when dealing or taking damage
++10%
++12%
++14%
++16%
+4/3/2/1/...
+Billowing Strength
+after using your call, deal more damage for 15s
++20%
++22%
++24%
++26%
+8/6/4/3/2/...

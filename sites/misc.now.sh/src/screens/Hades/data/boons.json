@@ -1,0 +1,994 @@
+[
+  {
+    "god": "zeus",
+    "rarity": [10, 12.5, 15, 20],
+    "name": "Lightning Strike",
+    "key": "lightning strike",
+    "description": "emits chain-lightning (4) when you damage a foe",
+    "pom": [4, 3, 2, 1]
+  },
+  {
+    "god": "zeus",
+    "rarity": [30, 37.5, 45, 60],
+    "name": "Thunder Flourish",
+    "key": "thunder flourish",
+    "description": "causes a lightning bolt to strike nearby foes",
+    "pom": [12, 8, 6, 4, 3]
+  },
+  {
+    "god": "zeus",
+    "rarity": [60, 70, 81, 90],
+    "name": "Electric Shot",
+    "key": "electric shot",
+    "description": "burst of chain-lightning (5) that bounces between foes; lodges in enemies",
+    "pom": [24, 17, 12, 8, 6]
+  },
+  {
+    "god": "zeus",
+    "rarity": [10, 15, 20, 25],
+    "name": "Thunder Dash",
+    "key": "thunder dash",
+    "description": "causes a lightning bolt to strike nearby foes",
+    "pom": [8, 6, 4, 3, 2, 1]
+  },
+  {
+    "god": "zeus",
+    "rarity": [50, 55, 60, 65],
+    "name": "Zeus's Aid",
+    "key": "zeus's aid",
+    "description": "lightning strikes nearby foes repeatedly for 1.5s (max 9s)",
+    "pom": [20, 14, 10, 7, 5]
+  },
+  {
+    "god": "zeus",
+    "rarity": [60, 72, 84, 96],
+    "name": "Electric Flare",
+    "key": "electric flare",
+    "description": "causes a lightning bolt to strike nearby foes",
+    "pom": [36, 25, 18, 12, 9, 6]
+  },
+  {
+    "god": "zeus",
+    "rarity": [60, 84, 114, 143.5],
+    "name": "Static Discharge",
+    "key": "static discharge",
+    "description": "lightning effects also cause jolted (next attack self-inflicts damage)",
+    "pom": [36, 25, 18, 12, 9, 6]
+  },
+  {
+    "god": "zeus",
+    "rarity": [2, 4, 6, 8],
+    "name": "Storm Lightning",
+    "key": "storm lightning",
+    "description": "chain-lightning effects bounce more times before expiring",
+    "pom": [2]
+  },
+  {
+    "god": "zeus",
+    "rarity": [60, 72, 84, 96],
+    "name": "High Voltage",
+    "key": "high voltage",
+    "description": "lightning bolt effects deal damage in a larger area",
+    "pom": [24, 17, 12, 8, 6]
+  },
+  {
+    "god": "zeus",
+    "rarity": [25, 30, 35, 40],
+    "name": "Double Strike",
+    "key": "double strike",
+    "description": "lightning bolt effects have a chance to strike twice",
+    "pom": [10, 7, 5, 3]
+  },
+  {
+    "god": "zeus",
+    "rarity": [80, 112, 152, 192],
+    "name": "Heaven's Vengeance",
+    "key": "heaven's vengeance",
+    "description": "... your foe is struck by lightning",
+    "pom": [64, 45, 31, 22, 15, 11, 8]
+  },
+  {
+    "god": "zeus",
+    "rarity": [20, 30, 40, 50],
+    "name": "Lightning Reflexes",
+    "key": "lightning reflexes",
+    "description": "dash just before being hit to counter-attack with a lightning bolt",
+    "pom": [10, 7, 6]
+  },
+  {
+    "god": "zeus",
+    "rarity": [10, 12, 14, 16],
+    "name": "Clouded Judgment",
+    "key": "clouded judgment",
+    "description": "god gauge charges faster when dealing or taking damage",
+    "pom": [4, 3, 2, 1]
+  },
+  {
+    "god": "zeus",
+    "rarity": [20, 22, 24, 26],
+    "name": "Billowing Strength",
+    "key": "billowing strength",
+    "description": "after using your call, deal more damage for 15s",
+    "pom": [8, 6, 4, 3, 2]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [30, 42, 57, 72],
+    "name": "Tempest Strike",
+    "key": "tempest strike",
+    "description": "more damage and knock foes away",
+    "pom": [12, 8, 6, 4, 3]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [70, 98, 133, 168],
+    "name": "Tempest Flourish",
+    "key": "tempest flourish",
+    "description": "more damage and knock foes away",
+    "pom": [28, 20, 14, 10, 7]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [60, 72, 84, 96],
+    "name": "Flood Shot",
+    "key": "flood shot",
+    "description": "damages foes in an area and knocks them away; lodges in enemies",
+    "pom": [36, 25, 18, 12, 9, 6]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [35, 42, 49, 56],
+    "name": "Tidal Dash",
+    "key": "tidal dash",
+    "description": "damages foes in an area and knocks them away",
+    "pom": [21, 15, 10, 7, 5, 4]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [250, 300, 350, 400],
+    "name": "Poseidon's Aid",
+    "key": "poseidon's aid",
+    "description": "surge into foes while impervious for 1.2s (max 7.2s)",
+    "pom": [100, 70, 49, 34, 25]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [60, 72, 84, 96],
+    "name": "Flood Flare",
+    "key": "flood flare",
+    "description": "damages foes around you and knocks them away",
+    "pom": [36, 25, 18, 12, 9, 6]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [10, 15, 20, 25],
+    "name": "Razor Shoals",
+    "key": "razor shoals",
+    "description": "knock-away effects also cause rupture (take damage every 0.2s while moving)",
+    "pom": [6, 4, 3, 2]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [20, 30, 40, 50],
+    "name": "Wave Pounding",
+    "key": "wave pounding",
+    "description": "boons with knock-away effects deal bonus damage to bosses",
+    "pom": [8, 6, 4, 3, 2]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [200, 250, 300, 350],
+    "name": "Typhoon's Fury",
+    "key": "typhoon's fury",
+    "description": "deal more damage when slamming foes into barriers",
+    "pom": [80, 56, 39, 27, 20]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [100, 150, 250, 270],
+    "name": "Breaking Wave",
+    "key": "breaking wave",
+    "description": "slamming foes into walls or corners creates a watery blast in the area which stuns",
+    "pom": [40, 28, 20, 14, 10]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [1, 1.25, 1.5, 1.75],
+    "name": "Rip Current (Call)",
+    "key": "rip current (call)",
+    "description": "makes Poseidon's Aid last longer and pull foes in",
+    "pom": [0.2, 0.1]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [50, 63, 75, 89],
+    "name": "Hydraulic Might",
+    "key": "hydraulic might",
+    "description": "attack and special are stronger in the first 5 seconds of encounters",
+    "pom": [10, 7, 5]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [40, 50, 60, 70],
+    "name": "Boiling Point",
+    "key": "boiling point",
+    "description": "god gauge charges faster when taking damage",
+    "pom": [16, 11, 8, 5, 4]
+  },
+  {
+    "god": "poseidon",
+    "rarity": [50, 55, 60, 65],
+    "name": "Ocean's Bounty",
+    "key": "ocean's bounty",
+    "description": "any gems, darkness, or coin are worth more",
+    "pom": []
+  },
+  {
+    "god": "athena",
+    "rarity": [40, 56, 76, 96],
+    "name": "Divine Strike",
+    "key": "divine strike",
+    "description": "more damage and deflects",
+    "pom": [16, 11, 9, 5, 4]
+  },
+  {
+    "god": "athena",
+    "rarity": [60, 84, 114, 144],
+    "name": "Divine Flourish",
+    "key": "divine flourish",
+    "description": "more damage and deflects",
+    "pom": [24, 17, 12, 8, 6]
+  },
+  {
+    "god": "athena",
+    "rarity": [85, 102, 119, 136],
+    "name": "Phalanx Shot",
+    "key": "phalanx shot",
+    "description": "damages foes in an area and deflects; lodges in enemies",
+    "pom": [51, 36, 25, 17, 12, 9]
+  },
+  {
+    "god": "athena",
+    "rarity": [10, 12, 14, 16],
+    "name": "Divine Dash",
+    "key": "divine dash",
+    "description": "deals damage and deflects",
+    "pom": [6, 4, 3, 2]
+  },
+  {
+    "god": "athena",
+    "rarity": [1.5, 1.65, 1.8, 1.95],
+    "name": "Athena's Aid",
+    "key": "athena's aid",
+    "description": "makes you invulnerable and deflects all attacks",
+    "pom": [0.6, 0.42, 0.3]
+  },
+  {
+    "god": "athena",
+    "rarity": [80, 90, 100, 110],
+    "name": "Phalanx Flare",
+    "key": "phalanx flare",
+    "description": "damages foes around you and deflects",
+    "pom": [48, 34, 24, 16, 12, 8]
+  },
+  {
+    "god": "athena",
+    "rarity": [50, 62.5, 75, 87.5],
+    "name": "Blinding Flash",
+    "key": "blinding flash",
+    "description": "deflect also makes foes exposed for 5s (take more damage from behind)",
+    "pom": [20, 14, 10, 7, 5]
+  },
+  {
+    "god": "athena",
+    "rarity": [80, 112, 180, 208],
+    "name": "Brilliant Riposte",
+    "key": "brilliant riposte",
+    "description": "when you deflect attacks, they deal more damage",
+    "pom": [32, 22, 16, 11, 8]
+  },
+  {
+    "god": "athena",
+    "rarity": [30, 42, 57, 72],
+    "name": "Holy Shield",
+    "key": "holy shield",
+    "description": "... damage nearby foes and deflect",
+    "pom": [24, 17, 12, 8, 6, 4, 3]
+  },
+  {
+    "god": "athena",
+    "rarity": [5, 7.5, 10, 12.5],
+    "name": "Bronze Skin",
+    "key": "bronze skin",
+    "description": "resist damage from foes' attacks",
+    "pom": [1.9, 1.9, 1.8, 1.8, 1.7, 1.7]
+  },
+  {
+    "god": "athena",
+    "rarity": [60, 75, 90, 95],
+    "name": "Sure Footing",
+    "key": "sure footing",
+    "description": "resist damage from traps",
+    "pom": []
+  },
+  {
+    "god": "athena",
+    "rarity": [20, 25, 30, 40],
+    "name": "Proud Bearing",
+    "key": "proud bearing",
+    "description": "begin each encounter with the god gauge partly full",
+    "pom": [10, 7, 5, 3, 2]
+  },
+  {
+    "god": "athena",
+    "rarity": [2, 3, 3, 4],
+    "name": "Deathless Stand",
+    "key": "deathless stand",
+    "description": "death defiance makes you impervious longer replenish 1 charge",
+    "pom": []
+  },
+  {
+    "god": "athena",
+    "rarity": [10, 12, 14, 16],
+    "name": "Last Stand",
+    "key": "last stand",
+    "description": "death defiance restores more health than usual replenish 1 charge",
+    "pom": []
+  },
+  {
+    "god": "ares",
+    "rarity": [50, 75, 100, 125],
+    "name": "Curse of Agony",
+    "key": "curse of agony",
+    "description": "inflicts doom (1.1s)",
+    "pom": [30, 21, 15, 10, 7, 5, 4, 2]
+  },
+  {
+    "god": "ares",
+    "rarity": [60, 80, 100, 120],
+    "name": "Curse of Pain",
+    "key": "curse of pain",
+    "description": "inflicts doom (1.1s)",
+    "pom": [40, 28, 19, 14, 10, 7, 6]
+  },
+  {
+    "god": "ares",
+    "rarity": [20, 22, 24, 26],
+    "name": "Slicing Shot",
+    "key": "slicing shot",
+    "description": "sends a blade rift (damage every 0.1s for 4s); does not lodge in enemies",
+    "pom": [4, 3, 2]
+  },
+  {
+    "god": "ares",
+    "rarity": [10, 12, 14, 16],
+    "name": "Blade Dash",
+    "key": "blade dash",
+    "description": "create a blade rift at start (damage every 0.1s for 0.7s)",
+    "pom": [6, 4, 3, 2]
+  },
+  {
+    "god": "ares",
+    "rarity": [30, 38, 45, 53],
+    "name": "Ares' Aid",
+    "key": "ares' aid",
+    "description": "turn into an invulnerable rift blade for 2.5s (max 15s)",
+    "pom": [6, 4, 3, 2]
+  },
+  {
+    "god": "ares",
+    "rarity": [30, 36, 42, 48],
+    "name": "Slicing Flare",
+    "key": "slicing flare",
+    "description": "sends a blade rift ahead for a brief time",
+    "pom": [6, 4, 3, 2]
+  },
+  {
+    "god": "ares",
+    "rarity": [10, 12, 14, 16],
+    "name": "Dire Misfortune",
+    "key": "dire misfortune",
+    "description": "doom effects deal more damage when applied multiple times",
+    "pom": []
+  },
+  {
+    "god": "ares",
+    "rarity": [60, 65, 70, 75],
+    "name": "Impending Doom",
+    "key": "impending doom",
+    "description": "doom effects deal more damage, after +0.5s",
+    "pom": [20, 15, 10, 5]
+  },
+  {
+    "god": "ares",
+    "rarity": [20, 22, 24, 26],
+    "name": "Black Metal",
+    "key": "black metal",
+    "description": "blade rift deals damage in a wider area",
+    "pom": [8, 6, 4, 3, 2]
+  },
+  {
+    "god": "ares",
+    "rarity": [0.2, 0.3, 0.5, 0.54],
+    "name": "Engulfing Vortex",
+    "key": "engulfing vortex",
+    "description": "blade rift lasts longer and pulls foes in",
+    "pom": []
+  },
+  {
+    "god": "ares",
+    "rarity": [100, 120, 140, 160],
+    "name": "Curse of Vengeance",
+    "key": "curse of vengeance",
+    "description": "... inflict doom on surrounding foes",
+    "pom": [80, 56, 39, 27, 19, 13, 10]
+  },
+  {
+    "god": "ares",
+    "rarity": [10, 13, 16, 19],
+    "name": "Urge to Kill",
+    "key": "urge to kill",
+    "description": "attack and cast deal more damage",
+    "pom": [4, 2, 1]
+  },
+  {
+    "god": "ares",
+    "rarity": [100, 150, 200, 250],
+    "name": "Battle Rage (K)",
+    "key": "battle rage (k)",
+    "description": "after slaying a foe, your next attack or special deals more damage",
+    "pom": [30, 21, 15, 10]
+  },
+  {
+    "god": "ares",
+    "rarity": [15, 22.5, 30, 37.5],
+    "name": "Blood Frenzy",
+    "key": "blood frenzy",
+    "description": "after using death defiance, deal more damage in that encounter",
+    "pom": []
+  },
+  {
+    "god": "artemis",
+    "rarity": [20, 28, 38, 48],
+    "name": "Deadly Strike",
+    "key": "deadly strike",
+    "description": "more damage +15% chance to crit",
+    "pom": [8, 6, 4, 3, 2]
+  },
+  {
+    "god": "artemis",
+    "rarity": [40, 56, 76, 96],
+    "name": "Deadly Flourish",
+    "key": "deadly flourish",
+    "description": "more damage +20% chance to crit",
+    "pom": [16, 11, 8, 5, 4]
+  },
+  {
+    "god": "artemis",
+    "rarity": [70, 80, 90, 100],
+    "name": "True Shot",
+    "key": "true shot",
+    "description": "fire an unblockable seeking arrow with 10% crit chance; lodges in enemies",
+    "pom": [42, 29, 21, 14, 10, 7]
+  },
+  {
+    "god": "artemis",
+    "rarity": [50, 60, 70, 80],
+    "name": "Hunter Dash",
+    "key": "hunter dash",
+    "description": "dash-strike deals more damage",
+    "pom": [10, 7, 5]
+  },
+  {
+    "god": "artemis",
+    "rarity": [100, 110, 120, 130],
+    "name": "Artemis's Aid",
+    "key": "artemis's aid",
+    "description": "fire 1 unblockable seeking arrow (max 10) with +35% crit",
+    "pom": [40, 28, 20, 14, 10]
+  },
+  {
+    "god": "artemis",
+    "rarity": [55, 63, 71, 79],
+    "name": "Hunter's Flare",
+    "key": "hunter's flare",
+    "description": "damages foes around you with 10% crit chance",
+    "pom": [33, 23, 16, 11, 8, 6]
+  },
+  {
+    "god": "artemis",
+    "rarity": [30, 42, 57, 72],
+    "name": "Hunter's Mark",
+    "key": "hunter's mark",
+    "description": "after dealing critical damage, a foe near it is marked (higher chance of crit for 2.5s)",
+    "pom": [12, 8, 6, 4, 3]
+  },
+  {
+    "god": "artemis",
+    "rarity": [2, 3, 4, 5],
+    "name": "Pressure Points",
+    "key": "pressure points",
+    "description": "any damage your deal has a chance to be critical",
+    "pom": [1]
+  },
+  {
+    "god": "artemis",
+    "rarity": [15, 22.5, 30, 37.5],
+    "name": "Clean Kill",
+    "key": "clean kill",
+    "description": "critical effects deal even more damage",
+    "pom": [10, 7, 5, 3]
+  },
+  {
+    "god": "artemis",
+    "rarity": [200, 300, 400, 500],
+    "name": "Hide Breaker",
+    "key": "hide breaker",
+    "description": "critical effects deal even more damage to armor",
+    "pom": [40, 28, 20, 14, 10]
+  },
+  {
+    "god": "artemis",
+    "rarity": [10, 12, 14, 16],
+    "name": "Support Fire",
+    "key": "support fire",
+    "description": "after you hit with an attack, cast, or special, fire an unblockable seeking arrow",
+    "pom": []
+  },
+  {
+    "god": "artemis",
+    "rarity": [100, 120, 140, 160],
+    "name": "Exit Wounds",
+    "key": "exit wounds",
+    "description": "foes take damage when cast gems become dislodged",
+    "pom": [40, 28, 20, 14, 10]
+  },
+  {
+    "god": "artemis",
+    "rarity": [0.25, 0.3, 0.35, 0.4],
+    "name": "Hunter Instinct",
+    "key": "hunter instinct",
+    "description": "god gauge charges faster when dealing critical damage",
+    "pom": []
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [50, 70, 95, 120],
+    "name": "Heartbreak Strike",
+    "key": "heartbreak strike",
+    "description": "more damage and inflict weak (-30% attack for 4s)",
+    "pom": [20, 14, 10, 7, 5]
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [80, 112, 152, 192],
+    "name": "Heartbreah Flourish",
+    "key": "heartbreah flourish",
+    "description": "more damage and inflict weak (-30% attack for 4s)",
+    "pom": [32, 22, 16, 11, 8]
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [90, 100, 110, 120],
+    "name": "Crush Shot",
+    "key": "crush shot",
+    "description": "wide, short-range blast that inflicts weak; lodges in enemies",
+    "pom": [54, 38, 26, 19, 13, 9]
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [20, 24, 28, 32],
+    "name": "Passion Dash",
+    "key": "passion dash",
+    "description": "inflict damage and weak at end of dash",
+    "pom": [16, 11, 8, 5, 4, 3, 2]
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [5, 5.5, 6, 6.5],
+    "name": "Aphrodite's Aid",
+    "key": "aphrodite's aid",
+    "description": "fire a seeking piercing projectile that inflicts charm",
+    "pom": [1]
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [80, 96, 112, 128],
+    "name": "Passion Flare",
+    "key": "passion flare",
+    "description": "damages foes around you and inflicts weak",
+    "pom": [48, 34, 24, 16, 12, 8]
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [10, 15, 25, 27],
+    "name": "Sweet Surrender",
+    "key": "sweet surrender",
+    "description": "weak-afflicted foes are more susceptible to damage",
+    "pom": [4, 3, 2, 1]
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [10, 12.5, 15, 17.5],
+    "name": "Broken Resolve",
+    "key": "broken resolve",
+    "description": "weak effects are more potent (more damage reduction)",
+    "pom": []
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [5, 7.5, 10, 12.5],
+    "name": "Empty Inside",
+    "key": "empty inside",
+    "description": "weak effects have longer duration",
+    "pom": [2, 1.4, 1, 0.7, 0.5]
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [50, 75, 100, 125],
+    "name": "Blown Kiss (C)",
+    "key": "blown kiss (c)",
+    "description": "your cast shoots farther and is stronger against undamaged foes",
+    "pom": []
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [50, 70, 95, 120],
+    "name": "Wave of Despair",
+    "key": "wave of despair",
+    "description": "... damage nearby foes and inflict weak",
+    "pom": [40, 28, 20, 14, 10, 7, 5]
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [10, 12.5, 15, 17.5],
+    "name": "Different League",
+    "key": "different league",
+    "description": "resist damage from nearby foes' attacks",
+    "pom": [4, 2]
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [40, 56, 76, 95.5],
+    "name": "Dying Lament (K)",
+    "key": "dying lament (k)",
+    "description": "when floes are slain, damage nearby foes and inflict weak",
+    "pom": [24, 17, 12, 8, 6, 4]
+  },
+  {
+    "god": "aphrodite",
+    "rarity": [30, 36, 42, 48],
+    "name": "Life Affirmation",
+    "key": "life affirmation",
+    "description": "any health increase rewards are worth more",
+    "pom": []
+  },
+  {
+    "god": "dionysus",
+    "rarity": [4, 5, 6, 7],
+    "name": "Drunken Strike",
+    "key": "drunken strike",
+    "description": "inflicts hangover (stack 5, damage every 0.5s for 4s)",
+    "pom": [2, 1]
+  },
+  {
+    "god": "dionysus",
+    "rarity": [5, 6, 7, 8],
+    "name": "Drunken Flourish",
+    "key": "drunken flourish",
+    "description": "inflicts hangover (stack 5, damage every 0.5s for 4s)",
+    "pom": [2, 1]
+  },
+  {
+    "god": "dionysus",
+    "rarity": [100, 120, 140, 160],
+    "name": "Trippy Shot",
+    "key": "trippy shot",
+    "description": "lobs a projectile that bursts into festive fog; does not lodge in enemies",
+    "pom": [60, 42, 29, 21, 14, 10]
+  },
+  {
+    "god": "dionysus",
+    "rarity": [2, 3, 4, 5],
+    "name": "Drunken Dash",
+    "key": "drunken dash",
+    "description": "inflicts hangover (stack 5, damage every 0.5s for 4s)",
+    "pom": [1]
+  },
+  {
+    "god": "dionysus",
+    "rarity": [15, 16.5, 18, 19.5],
+    "name": "Dionysus's Aid",
+    "key": "dionysus's aid",
+    "description": "inflict hangover to all foes around you for 1.5s (max 9s)",
+    "pom": [6, 4]
+  },
+  {
+    "god": "dionysus",
+    "rarity": [120, 144, 168, 192],
+    "name": "Trippy Flare",
+    "key": "trippy flare",
+    "description": "damages foes around you leaving behind festive fog",
+    "pom": [72, 50, 35, 25, 17, 12]
+  },
+  {
+    "god": "dionysus",
+    "rarity": [15, 22.5, 33, 37.5],
+    "name": "Numbing Sensation",
+    "key": "numbing sensation",
+    "description": "hangover effects also makes foes move slower for 4s",
+    "pom": [5, 3, 3, 2]
+  },
+  {
+    "god": "dionysus",
+    "rarity": [4, 6, 10, 10.8],
+    "name": "Peer Pressure",
+    "key": "peer pressure",
+    "description": "hangover-afflicted foes contaminate other nearby foes every 4s",
+    "pom": [2, 1]
+  },
+  {
+    "god": "dionysus",
+    "rarity": [50, 75, 100, 125],
+    "name": "Bad Influence",
+    "key": "bad influence",
+    "description": "deal more damage while 3 foes are hangover-afflicted",
+    "pom": [20, 14, 10, 7, 5]
+  },
+  {
+    "god": "dionysus",
+    "rarity": [15, 22.5, 37.5, 40.5],
+    "name": "High Tolerance (C)",
+    "key": "high tolerance (c)",
+    "description": "take less damage while standing in festive fog",
+    "pom": [4, 3, 1]
+  },
+  {
+    "god": "dionysus",
+    "rarity": [10, 15, 20, 25],
+    "name": "Positive Outlook",
+    "key": "positive outlook",
+    "description": "take less damage while at 40% health or below",
+    "pom": [5, 3, 2, 2, 2, 1]
+  },
+  {
+    "god": "dionysus",
+    "rarity": [30, 40, 50, 60],
+    "name": "After Party",
+    "key": "after party",
+    "description": "if your health is low after an encounter, restore to the threshold",
+    "pom": []
+  },
+  {
+    "god": "dionysus",
+    "rarity": [20, 25, 30, 35],
+    "name": "Premium Vintage",
+    "key": "premium vintage",
+    "description": "gain health when you pick up nectar receive 1 nectar",
+    "pom": []
+  },
+  {
+    "god": "dionysus",
+    "rarity": [3, 4, 5, 6],
+    "name": "Strong Drink",
+    "key": "strong drink",
+    "description": "using fountains restores all your health and gives you bonus damage",
+    "pom": []
+  },
+  {
+    "god": "demeter",
+    "rarity": [40, 56, 76, 96],
+    "name": "Frost Strike",
+    "key": "frost strike",
+    "description": "more damage and chill (4% slow for 8s, stack 10)",
+    "pom": [16, 11, 8, 5, 4]
+  },
+  {
+    "god": "demeter",
+    "rarity": [60, 81, 114, 144],
+    "name": "Frost Flourish",
+    "key": "frost flourish",
+    "description": "more damage and chill (4% slow for 8s, stack 10)",
+    "pom": [24, 17, 12, 8, 6]
+  },
+  {
+    "god": "demeter",
+    "rarity": [8, 9.2, 10.4, 11.6],
+    "name": "Crystal Beam",
+    "key": "crystal beam",
+    "description": "crystal that fires a beam (damage every 0.2s for 5s); does not lodge in enemies",
+    "pom": [2, 1]
+  },
+  {
+    "god": "demeter",
+    "rarity": [15, 22.5, 30, 37.5],
+    "name": "Mistral Dash",
+    "key": "mistral dash",
+    "description": "shoot a gust ahead that inflicts chill",
+    "pom": [9, 6, 4, 3]
+  },
+  {
+    "god": "demeter",
+    "rarity": [10, 11, 12, 13],
+    "name": "Demeter's Aid",
+    "key": "demeter's aid",
+    "description": "create a winter vortex that chills and damages every 0.25s for 5s (max 15s)",
+    "pom": [4, 3, 2]
+  },
+  {
+    "god": "demeter",
+    "rarity": [70, 80, 90, 100],
+    "name": "Icy Flare",
+    "key": "icy flare",
+    "description": "damages foes around you and inflicts chill",
+    "pom": [14, 10, 7]
+  },
+  {
+    "god": "demeter",
+    "rarity": [10, 15, 20, 25],
+    "name": "Killing Freeze",
+    "key": "killing freeze",
+    "description": "applying chill to all enemies causes them to slow and decay (every 0.5s)",
+    "pom": []
+  },
+  {
+    "god": "demeter",
+    "rarity": [80, 90, 100, 110],
+    "name": "Arctic Blast",
+    "key": "arctic blast",
+    "description": "applying 10 stacks of chill causes a blast, clearing the effect",
+    "pom": []
+  },
+  {
+    "god": "demeter",
+    "rarity": [2, 2.4, 2.8, 3.2],
+    "name": "Glacial Glare (C)",
+    "key": "glacial glare (c)",
+    "description": "your cast fires for a longer duration and inflicts chill",
+    "pom": [1]
+  },
+  {
+    "god": "demeter",
+    "rarity": [10, 15, 20, 25],
+    "name": "Frozen Touch",
+    "key": "frozen touch",
+    "description": "... damage and completely chill  your foe",
+    "pom": [8, 6, 4, 3, 2, 1]
+  },
+  {
+    "god": "demeter",
+    "rarity": [40, 50, 60, 70],
+    "name": "Snow Burst",
+    "key": "snow burst",
+    "description": "whenever you cast, damage nearby foes and inflict chill",
+    "pom": [16, 11, 8, 5, 4]
+  },
+  {
+    "god": "demeter",
+    "rarity": [10, 20, 30, 40],
+    "name": "Ravenous Will",
+    "key": "ravenous will",
+    "description": "while you have no cast gems, take 10% less damage and deal more",
+    "pom": []
+  },
+  {
+    "god": "demeter",
+    "rarity": [30, 32.5, 35, 37.5],
+    "name": "Nourished Soul",
+    "key": "nourished soul",
+    "description": "any health effects are more potent restore +30% health",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [10, 20, 30, 40],
+    "name": "Swift Strike",
+    "key": "swift strike",
+    "description": "your attack is faster",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [10, 20, 30, 40],
+    "name": "Swift Flourish",
+    "key": "swift flourish",
+    "description": "your special is faster",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [20, 40, 60, 80],
+    "name": "Flurry Cast",
+    "key": "flurry cast",
+    "description": "your cast is faster and fully automatic",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [1, 2, 3, 4],
+    "name": "Greatest Reflex",
+    "key": "greatest reflex",
+    "description": "dash more times in a row",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [30, 37.5, 45, 52.5],
+    "name": "Second Wind",
+    "key": "second wind",
+    "description": "after using call, gain dodge chance and move speed for 6s",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [0.5, 0.6, 0.7, 0.8],
+    "name": "Hyper Sprint",
+    "key": "hyper sprint",
+    "description": "after a dash, gain +100% move speed",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [20, 30, 40, 50],
+    "name": "Greater Haste",
+    "key": "greater haste",
+    "description": "move faster",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [50, 75, 100, 125],
+    "name": "Rush Delivery",
+    "key": "rush delivery",
+    "description": "deal bonus damage based on any bonus move speed",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [20, 30, 40, 50],
+    "name": "Quick Recovery",
+    "key": "quick recovery",
+    "description": "... quickly dash to recover some health lost",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [10, 15, 20, 25],
+    "name": "Greater Evasion",
+    "key": "greater evasion",
+    "description": "more chance to dodge",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [5, 3.3, 2.5, 2],
+    "name": "Quick Reload",
+    "key": "quick reload",
+    "description": "foes drop cast gems stuck in them faster",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [2.75, 2.5, 2.26, 2],
+    "name": "Auto Reload",
+    "key": "auto reload",
+    "description": "you regenerate cast gems faster",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [1, 1, 1, 1],
+    "name": "Quick Favor",
+    "key": "quick favor",
+    "description": "your god gauge slowly charges up automatically",
+    "pom": []
+  },
+  {
+    "god": "hermes",
+    "rarity": [10, 13, 16, 19],
+    "name": "Side Hustle",
+    "key": "side hustle",
+    "description": "gain some money each time you enter a chamber",
+    "pom": []
+  }
+]
