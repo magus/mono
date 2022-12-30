@@ -8,7 +8,7 @@ import url from 'url';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const input_dir = path.resolve(__dirname, 'input');
-const all_boons_path = path.resolve(__dirname, 'boons.json');
+const all_boons_path = path.resolve(__dirname, '../../src/screens/Hades/data/boons.json');
 
 // hardcode god list when reading from `data/[god].txt`
 const GOD_LIST = ['zeus', 'poseidon', 'athena', 'ares', 'artemis', 'aphrodite', 'dionysus', 'demeter', 'hermes'];

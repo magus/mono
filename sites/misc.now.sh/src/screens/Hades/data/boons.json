@@ -562,8 +562,8 @@
   {
     "god": "aphrodite",
     "rarity": [80, 112, 152, 192],
-    "name": "Heartbreah Flourish",
-    "key": "heartbreah flourish",
+    "name": "Heartbreak Flourish",
+    "key": "heartbreak flourish",
     "description": "more damage and inflict weak (-30% attack for 4s)",
     "pom": [32, 22, 16, 11, 8]
   },

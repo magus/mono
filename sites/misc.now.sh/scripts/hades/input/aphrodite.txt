@@ -5,7 +5,7 @@ more damage and inflict weak (-30% attack for 4s)
 +90% to +100%
 +115% to +125%
 20/14/10/7/5/...
-Heartbreah Flourish
+Heartbreak Flourish
 more damage and inflict weak (-30% attack for 4s)
 +80%
 +104% to +120%
