@@ -72,21 +72,27 @@ export function pom_porridge(current_list) {
       relative_score_list.push(score);
       boon_score_list.push({ current_boon, boon, score });
 
-      console.debug({ current_boon, boon, base_value, value, next_value });
+      // console.debug({ current_boon, boon, base_value, value, next_value });
     }
   }
 
   const score = chance_score(4, relative_score_list);
-  console.debug('pom_porridge', { score, boon_score_list });
+  // console.debug('pom_porridge', { score, boon_score_list });
 
   return score;
 }
 
 function boon_pom(boon, level) {
+  if (!boon.pom.length) {
+    return 0.0;
+  }
+
+  const trailing_pom = boon.pom[boon.pom.length - 1];
+
   let pom = 0;
 
   for (let i = 0; i < level - 1; i++) {
-    pom += boon.pom[i] || 0;
+    pom += boon.pom[i] || trailing_pom;
   }
 
   return pom;
