@@ -11,7 +11,8 @@
     "dev": "next dev",
     "prod": "FORCE=true yarn build && yarn start",
     "start": "NODE_ENV=production next start",
-    "test:lint": "eslint ."
+    "test:lint": "eslint .",
+    "test:unit": "jest"
   },
   "dependencies": {
     "@magusn/react": "0.7.0",

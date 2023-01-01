@@ -42,11 +42,11 @@ export function ambrosia_delight(current_list) {
     relative_score_list.push(score);
     boon_score_list.push({ current_boon, boon, score });
 
-    console.debug({ current_boon, boon, value, next_value });
+    // console.debug({ current_boon, boon, value, next_value });
   }
 
   const score = chance_score(2, relative_score_list);
-  console.debug('ambrosia_delight', { score, boon_score_list });
+  // console.debug('ambrosia_delight', { score, boon_score_list });
 
   return score;
 }
@@ -114,6 +114,6 @@ function chance_score(max_picks, score_list) {
   const picks = Math.min(max_picks, score_list.length);
   const average_pick = picks * average;
 
-  console.debug({ max_picks, score_list, picks, total, average, average_pick });
+  // console.debug({ max_picks, score_list, picks, total, average, average_pick });
   return average_pick;
 }
