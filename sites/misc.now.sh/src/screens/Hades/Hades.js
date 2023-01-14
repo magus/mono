@@ -7,7 +7,7 @@ import BOON_LIST from './data/boons.json';
 import * as RARITY from './data/rarity';
 import * as GODS from './data/gods';
 import * as list from '../../modules/list';
-import { boon_pom } from './boon_pom';
+import * as core from './core';
 
 const BOON_MAP = list.to_map((b) => b.key, BOON_LIST);
 
@@ -68,7 +68,7 @@ export function Hades() {
             set_current_boon_map((m) => {
               const next_map = new Map(m);
               const next_boon = next_map.get(boon.key);
-              next_boon.level = int(event.target.value);
+              next_boon.level = Math.max(int(event.target.value), 1);
               next_map.set(boon.key, next_boon);
               return next_map;
             });
@@ -87,8 +87,13 @@ export function Hades() {
           const boon_data = BOON_MAP[boon.key];
 
           const base_value = boon_data.rarity[boon.rarity];
-          const pom_value = boon_pom(boon_data, boon.level);
+          const pom_value = core.pom_total(boon_data, boon.level);
           const total_value = base_value + pom_value;
+
+          const next_pom_inc = core.pom_increment(boon_data, boon.level);
+          const relative_pom_value = next_pom_inc / total_value;
+
+          // console.debug({ total_value, base_value, pom_value, next_pom_inc, relative_pom_value });
 
           return (
             <BoonSelect key={boon.key} god={boon_data.god}>
@@ -100,6 +105,7 @@ export function Hades() {
                   <span> </span>
                   <span className="value_parts">
                     ({base_value} + {pom_value})
+                    <span className="relative_pom_value"> (pom +{percent(relative_pom_value)})</span>
                   </span>
                 </div>
 

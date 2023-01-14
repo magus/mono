@@ -1,7 +1,7 @@
 import boons from './data/boons';
 import * as RARITY from './data/rarity';
 import * as list from '../../modules/list';
-import { boon_pom } from './boon_pom';
+import * as core from './core';
 
 const boon_map = list.to_map((b) => b.key, boons);
 
@@ -34,7 +34,7 @@ export function ambrosia_delight(current_list) {
     }
 
     const boon = boon_map[current_boon.key];
-    const pom = boon_pom(boon, current_boon.level);
+    const pom = core.pom_total(boon, current_boon.level);
 
     const value = boon.rarity[current_boon.rarity] + pom;
     const next_value = boon.rarity[current_boon.rarity + 1] + pom;
@@ -62,8 +62,8 @@ export function pom_porridge(current_list) {
     const boon = boon_map[current_boon.key];
     const base_value = boon.rarity[current_boon.rarity];
 
-    const pom = boon_pom(boon, current_boon.level);
-    const next_pom = boon_pom(boon, current_boon.level + 1);
+    const pom = core.pom_total(boon, current_boon.level);
+    const next_pom = core.pom_total(boon, current_boon.level + 1);
 
     if (next_pom !== 0) {
       const value = base_value + pom;
