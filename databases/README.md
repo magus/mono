@@ -28,6 +28,20 @@ in the Hasura console locally
 hasura migrate squash --name "dcsseeds_scrapePlayers" --from 1671780901595 --admin-secret "$HASURA_ADMIN_SECRET"
 ```
 
+### Delete applied migrations to allow squash
+
+Sometimes there are migrations you need to clear to allow squashing
+
+```sh
+1671788530242  dcsseeds_scrapePlayers  Present        Present
+1673686333667  -                       Not Present    Present
+1673687146431  -                       Not Present    Present
+1673687156312  dcsseeds_scrapePlayers  Present        Present
+
+hasura migrate delete --admin-secret "$HASURA_ADMIN_SECRET" --version 1673686333667
+hasura migrate delete --admin-secret "$HASURA_ADMIN_SECRET" --version 1673687146431
+hasura migrate squash --name "dcsseeds_scrapePlayers" --from 1671788530242 --admin-secret "$HASURA_ADMIN_SECRET"
+```
 
 ### Force apply a migration
 
@@ -42,3 +56,5 @@ Useful when status shows `Not Present` but the migration is already present
 ```sh
 hasura migrate apply --version 1671786547207 --skip-execution --admin-secret "$HASURA_ADMIN_SECRET"
 ```
+
+
