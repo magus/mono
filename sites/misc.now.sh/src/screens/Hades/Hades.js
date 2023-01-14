@@ -7,6 +7,7 @@ import BOON_LIST from './data/boons.json';
 import * as RARITY from './data/rarity';
 import * as GODS from './data/gods';
 import * as list from '../../modules/list';
+import { boon_pom } from './boon_pom';
 
 const BOON_MAP = list.to_map((b) => b.key, BOON_LIST);
 
@@ -85,11 +86,25 @@ export function Hades() {
 
           const boon_data = BOON_MAP[boon.key];
 
+          const base_value = boon_data.rarity[boon.rarity];
+          const pom_value = boon_pom(boon_data, boon.level);
+          const total_value = base_value + pom_value;
+
           return (
             <BoonSelect key={boon.key} god={boon_data.god}>
               <div>{boon_data.name}</div>
 
               <div className="end">
+                <div className="value">
+                  <b>{total_value}</b>
+                  <span> </span>
+                  <span className="value_parts">
+                    ({base_value} + {pom_value})
+                  </span>
+                </div>
+
+                <Spacer size="4" />
+
                 <select value={boon.rarity} onChange={handle_rarity}>
                   {RARITY.LIST.map((r) => {
                     return (
@@ -99,10 +114,14 @@ export function Hades() {
                     );
                   })}
                 </select>
+
                 <Spacer size="4" />
+
                 <LevelInputLabel>Lv.</LevelInputLabel>
                 <LevelInput pattern="[0-9]*" value={boon.level} onChange={handle_level} type="number" />
+
                 <Spacer size="4" />
+
                 <button onClick={handle_delete}>❌</button>
               </div>
             </BoonSelect>
@@ -133,8 +152,6 @@ export function Hades() {
               return next_map;
             });
           }
-
-          console.debug({ boon });
 
           return (
             <div key={boon.key}>
@@ -181,9 +198,17 @@ const BoonSelect = styled.div`
   justify-content: space-between;
   color: rgb(${(props) => god_rgb(props.god)});
 
+  .value {
+  }
+  .value_parts {
+    font-size: var(--font-small);
+    font-style: italic;
+  }
+
   .end {
     display: flex;
     flex-direction: row;
+    align-items: center;
   }
 `;
 

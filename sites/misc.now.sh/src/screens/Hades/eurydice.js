@@ -1,6 +1,7 @@
 import boons from './data/boons';
 import * as RARITY from './data/rarity';
 import * as list from '../../modules/list';
+import { boon_pom } from './boon_pom';
 
 const boon_map = list.to_map((b) => b.key, boons);
 
@@ -80,22 +81,6 @@ export function pom_porridge(current_list) {
   // console.debug('pom_porridge', { score, boon_score_list });
 
   return score;
-}
-
-function boon_pom(boon, level) {
-  if (!boon.pom.length) {
-    return 0.0;
-  }
-
-  const trailing_pom = boon.pom[boon.pom.length - 1];
-
-  let pom = 0;
-
-  for (let i = 0; i < level - 1; i++) {
-    pom += boon.pom[i] || trailing_pom;
-  }
-
-  return pom;
 }
 
 function chance_score(max_picks, score_list) {
