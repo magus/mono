@@ -46,7 +46,7 @@ export function Hades() {
   console.debug({ search, boon_search_list, current_boon_map, current_list, ambrosia_delight, pom_porridge });
 
   return (
-    <React.Fragment>
+    <Container>
       <Choice win={ambrosia_delight > pom_porridge}>
         Ambrosia Delight +{percent(round(ambrosia_delight, 3))} damage
       </Choice>
@@ -54,86 +54,88 @@ export function Hades() {
 
       <Spacer vertical size="4" />
 
-      <div>
-        {current_list.map((boon) => {
-          function handle_delete() {
-            set_current_boon_map((m) => {
-              const next_map = new Map(m);
-              next_map.delete(boon.key);
-              return next_map;
-            });
-          }
+      <ScrollContainer>
+        <div className="selected-boons">
+          {current_list.map((boon) => {
+            function handle_delete() {
+              set_current_boon_map((m) => {
+                const next_map = new Map(m);
+                next_map.delete(boon.key);
+                return next_map;
+              });
+            }
 
-          function handle_level(event) {
-            set_current_boon_map((m) => {
-              const next_map = new Map(m);
-              const next_boon = next_map.get(boon.key);
-              next_boon.level = Math.max(int(event.target.value), 1);
-              next_map.set(boon.key, next_boon);
-              return next_map;
-            });
-          }
+            function handle_level(event) {
+              set_current_boon_map((m) => {
+                const next_map = new Map(m);
+                const next_boon = next_map.get(boon.key);
+                next_boon.level = Math.max(int(event.target.value), 1);
+                next_map.set(boon.key, next_boon);
+                return next_map;
+              });
+            }
 
-          function handle_rarity(event) {
-            set_current_boon_map((m) => {
-              const next_map = new Map(m);
-              const next_boon = next_map.get(boon.key);
-              next_boon.rarity = int(event.target.value);
-              next_map.set(boon.key, next_boon);
-              return next_map;
-            });
-          }
+            function handle_rarity(event) {
+              set_current_boon_map((m) => {
+                const next_map = new Map(m);
+                const next_boon = next_map.get(boon.key);
+                next_boon.rarity = int(event.target.value);
+                next_map.set(boon.key, next_boon);
+                return next_map;
+              });
+            }
 
-          const boon_data = BOON_MAP[boon.key];
+            const boon_data = BOON_MAP[boon.key];
 
-          const base_value = boon_data.rarity[boon.rarity];
-          const pom_value = core.pom_total(boon_data, boon.level);
-          const total_value = base_value + pom_value;
+            const base_value = boon_data.rarity[boon.rarity];
+            const pom_value = core.pom_total(boon_data, boon.level);
+            const total_value = base_value + pom_value;
 
-          const next_pom_inc = core.pom_increment(boon_data, boon.level);
-          const relative_pom_value = next_pom_inc / total_value;
+            const next_pom_inc = core.pom_increment(boon_data, boon.level);
+            const relative_pom_value = next_pom_inc / total_value;
 
-          // console.debug({ total_value, base_value, pom_value, next_pom_inc, relative_pom_value });
+            // console.debug({ total_value, base_value, pom_value, next_pom_inc, relative_pom_value });
 
-          return (
-            <BoonSelect key={boon.key} god={boon_data.god}>
-              <div>{boon_data.name}</div>
+            return (
+              <BoonSelect key={boon.key} god={boon_data.god}>
+                <div>{boon_data.name}</div>
 
-              <div className="end">
-                <div className="value">
-                  <b>{total_value}</b>
-                  <span> </span>
-                  <span className="value_parts">
-                    ({base_value} + {pom_value})
-                    <span className="relative_pom_value"> (pom +{percent(relative_pom_value)})</span>
-                  </span>
+                <div className="end">
+                  <div className="value">
+                    <b>{total_value}</b>
+                    <span> </span>
+                    <span className="value_parts">
+                      ({base_value} + {pom_value})
+                      <span className="relative_pom_value"> (pom +{percent(relative_pom_value)})</span>
+                    </span>
+                  </div>
+
+                  <Spacer size="4" />
+
+                  <select value={boon.rarity} onChange={handle_rarity}>
+                    {RARITY.LIST.map((r) => {
+                      return (
+                        <option key={r} value={RARITY.N[r]}>
+                          {r}
+                        </option>
+                      );
+                    })}
+                  </select>
+
+                  <Spacer size="4" />
+
+                  <LevelInputLabel>Lv.</LevelInputLabel>
+                  <LevelInput pattern="[0-9]*" value={boon.level} onChange={handle_level} type="number" />
+
+                  <Spacer size="4" />
+
+                  <button onClick={handle_delete}>❌</button>
                 </div>
-
-                <Spacer size="4" />
-
-                <select value={boon.rarity} onChange={handle_rarity}>
-                  {RARITY.LIST.map((r) => {
-                    return (
-                      <option key={r} value={RARITY.N[r]}>
-                        {r}
-                      </option>
-                    );
-                  })}
-                </select>
-
-                <Spacer size="4" />
-
-                <LevelInputLabel>Lv.</LevelInputLabel>
-                <LevelInput pattern="[0-9]*" value={boon.level} onChange={handle_level} type="number" />
-
-                <Spacer size="4" />
-
-                <button onClick={handle_delete}>❌</button>
-              </div>
-            </BoonSelect>
-          );
-        })}
-      </div>
+              </BoonSelect>
+            );
+          })}
+        </div>
+      </ScrollContainer>
 
       <Spacer vertical size="4" />
 
@@ -168,9 +170,19 @@ export function Hades() {
           );
         })}
       </div>
-    </React.Fragment>
+    </Container>
   );
 }
+
+const Container = styled.div``;
+
+const ScrollContainer = styled.div`
+  overflow-x: auto;
+
+  .selected-boons {
+    min-width: 640px;
+  }
+`;
 
 const SearchInput = styled.input`
   cursor: text;
