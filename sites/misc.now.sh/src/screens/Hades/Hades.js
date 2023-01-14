@@ -11,6 +11,8 @@ import * as list from '../../modules/list';
 const BOON_MAP = list.to_map((b) => b.key, BOON_LIST);
 
 export function Hades() {
+  const input_ref = React.useRef(null);
+
   const [current_boon_map, set_current_boon_map] = React.useState(new Map());
   const [search, set_search] = React.useState('');
 
@@ -110,11 +112,17 @@ export function Hades() {
 
       <Spacer vertical size="4" />
 
-      <SearchInput placeholder="Divine Dash" onChange={handle_change} />
+      <SearchInput placeholder="Divine Dash" onChange={handle_change} ref={input_ref} />
 
       <div>
         {boon_search_list.map((boon) => {
           function handle_click() {
+            // clear input field
+            if (input_ref.current) {
+              input_ref.current.value = '';
+              set_search('');
+            }
+
             set_current_boon_map((m) => {
               const next_map = new Map(m);
               next_map.set(boon.key, {
