@@ -6,8 +6,10 @@ import { parser } from './cli/parser.js';
 import { handler } from './cli/handler.js';
 
 async function main() {
+  const locals = {};
+
   try {
-    const argv = parser(locals);
+    const argv = await parser(locals);
     await handler(argv);
   } catch (err) {
     // clean message without stack trace
@@ -26,8 +28,6 @@ async function main() {
     }
   }
 }
-
-const locals = {};
 
 // call main last after all declaractions
 main();

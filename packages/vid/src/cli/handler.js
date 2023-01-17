@@ -4,15 +4,22 @@ import Inquirer from 'inquirer';
 import * as Ora from 'ora';
 import Jimp from 'jimp';
 
+import { parse_filename } from '../common/parse_filename.js';
 import * as chalk from '../common/chalk.js';
 import * as CLI from '../common/CLI.js';
 import { VidError } from '../common/VidError.js';
+
+import { download } from './download.js';
 
 export async function handler(argv) {
   // gather metadata about input source video
 
   if (argv.verbose) {
     console.debug(argv);
+  }
+
+  if (argv.input_video_file.url) {
+    return await download(argv);
   }
 
   const metadata = {};
@@ -49,7 +56,7 @@ export async function handler(argv) {
     process.exit(0);
   }
 
-  const { filename, extension } = path.basename(argv.input_video_file.fullPath).match(RE.filename).groups;
+  const file = parse_filename(argv.input_video_file.fullPath);
   const inputPath = path.dirname(argv.input_video_file.fullPath);
 
   // gather opt parts to append to output filename
@@ -149,7 +156,7 @@ export async function handler(argv) {
     cmdParts.push(filterComplex.join(' '));
   }
 
-  const outputFilename = [filename, Date.now(), optParts.join('--'), argv.ext].filter(Boolean).join('.');
+  const outputFilename = [file.name, Date.now(), optParts.join('--'), argv.ext].filter(Boolean).join('.');
   const outputPath = quotify(path.join(inputPath, outputFilename));
 
   cmdParts.push(outputPath);
@@ -162,8 +169,7 @@ export async function handler(argv) {
       cmdParts,
       cmd,
       inputPath,
-      filename,
-      extension,
+      file,
       optParts,
       outputPath,
       audioFilters,
@@ -219,10 +225,6 @@ function ffprobe(argv, stream) {
 
   return result;
 }
-
-const RE = {
-  filename: /(?<filename>.*?)\.(?<extension>[^.]+)$/,
-};
 
 const int = (n) => parseInt(n, 10);
 

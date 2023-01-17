@@ -6,20 +6,41 @@ import { hideBin } from 'yargs/helpers';
 import * as chalk from '../common/chalk.js';
 import { VidError } from '../common/VidError.js';
 
-export function parser(locals) {
+export async function parser(locals) {
   return yargs(hideBin(process.argv))
     .command('$0 <input_video_file>', 'cli helper for ffmpeg')
     .positional('input_video_file', {
       describe: 'path to video file to convert',
       type: 'string',
     })
-    .coerce('input_video_file', (input) => {
+
+    .check((argv) => {
+      // capture cli argv for use in top-level vid.js catch
+      locals.cli_argv = argv;
+
+      return true;
+    })
+    .fail((message, error) => {
+      // console.debug('fail option', { message, error });
+      throw error;
+    })
+    .coerce('input_video_file', async (input) => {
       const result = { input };
-      // arg exists relative to process cwd
-      if (fs.existsSync(input)) {
-        result.fullPath = input;
-      } else {
-        result.fullPath = path.join(process.cwd(), input);
+
+      // detect web urls
+      try {
+        result.url = new URL(input);
+      } catch (err) {
+        // invalid url
+
+        // try file system path
+        if (fs.existsSync(input)) {
+          // arg exists without modification
+          result.fullPath = input;
+        } else {
+          // arg exists relative to process cwd
+          result.fullPath = path.join(process.cwd(), input);
+        }
       }
 
       return result;
@@ -87,12 +108,13 @@ export function parser(locals) {
 
       return input;
     })
-    .check((argv) => {
-      // capture cli argv for use in catch
-      locals.cli_argv = argv;
+    .check(async (argv) => {
+      if (argv.input_video_file.url) {
+        // do not validate urls here, just proceed
+        return true;
+      }
 
       // verify file exists before proceeding
-
       if (!fs.existsSync(argv.input_video_file.fullPath)) {
         const file = chalk.bracket(chalk.chalk.dim.gray(argv.input_video_file.input));
         throw new VidError(`${file} does not exist.`);
@@ -129,5 +151,6 @@ export function parser(locals) {
       describe: 'Include more information in outputs',
       type: 'boolean',
     })
+    .showHelpOnFail(false)
     .help().argv;
 }
