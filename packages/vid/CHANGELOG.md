@@ -1,5 +1,11 @@
 # @magusn/vid
 
+## 0.4.0
+
+### Minor Changes
+
+- 6e370f3: feat: twitter video downloads
+
 ## 0.3.1
 
 ### Patch Changes

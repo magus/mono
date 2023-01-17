@@ -2,7 +2,7 @@
   "name": "@magusn/mono",
   "alias": "mono",
   "description": "workspace to catch root monorepo changes",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": "magus",
   "private": true,
   "license": "MIT",

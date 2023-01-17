@@ -1,5 +1,15 @@
 # magic.iamnoah.com
 
+## 0.7.0
+
+### Minor Changes
+
+- 60e313e: database: nullable level and loc for errors
+
+### Patch Changes
+
+- 2df42c5: magic: eslint babel resolver
+
 ## 0.6.1
 
 ### Patch Changes

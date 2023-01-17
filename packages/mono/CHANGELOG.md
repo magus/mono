@@ -1,5 +1,11 @@
 # @magusn/mono
 
+## 0.4.2
+
+### Patch Changes
+
+- 2829361: browserlist update
+
 ## 0.4.1
 
 ### Patch Changes

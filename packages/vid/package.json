@@ -2,7 +2,7 @@
   "name": "@magusn/vid",
   "alias": "vid",
   "description": "cli helper for ffmpeg",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "author": "magus",
   "license": "MIT",
   "type": "module",

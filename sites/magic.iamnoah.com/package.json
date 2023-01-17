@@ -1,7 +1,7 @@
 {
   "name": "magic.iamnoah.com",
   "alias": "magic",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "gitHead": "f702c490cf4ceb072d8a231b28a41956db76e526",
   "private": true,
   "scripts": {
