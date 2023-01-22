@@ -31,31 +31,33 @@ async function download_tweet(argv) {
 
   const prefixText = ' 🐦';
 
-  const video_url_str = await ora.oraPromise(fetch_tweet_video_url(argv), {
+  const video_url_list = await ora.oraPromise(fetch_tweet_video_url_list(argv), {
     prefixText,
     text: ' Fetching tweet ... ',
     successText: () => `Successfully fetched tweet ${chalk.bracket(argv.input_video_file.url)}.`,
     failText: () => `Failed to fetch ${chalk.bracket(argv.input_video_file.url)}.`,
   });
 
-  const video_url = new URL(video_url_str);
-  // extract just the filename portion of url
-  const file = parse_filename(video_url.pathname);
-  const output_path = file.full;
+  for (const video of video_url_list) {
+    const video_url = new URL(video.url);
+    // extract just the filename portion of url
+    const file = parse_filename(video_url.pathname);
+    const output_path = file.full;
 
-  await ora.oraPromise(download_video_url(video_url_str, output_path), {
-    prefixText,
-    text: ' Downloading video from tweet ... ',
-    successText: () => `Successfully saved video from tweet ${chalk.bracket(output_path)}.`,
-    failText: () => `Failed to download video from tweet ${chalk.bracket(video_url_str)}.`,
-  });
+    await ora.oraPromise(download_video_url(video.url, output_path), {
+      prefixText,
+      text: ' Downloading video from tweet ... ',
+      successText: () => `Successfully saved video from tweet ${chalk.bracket(output_path)}.`,
+      failText: () => `Failed to download video from tweet ${chalk.bracket(video.url)}.`,
+    });
+  }
 
   CLI.execSync('open .');
 
   return true;
 }
 
-async function fetch_tweet_video_url(argv) {
+async function fetch_tweet_video_url_list(argv) {
   const url = argv.input_video_file.url;
   const url_match = url.href.match(RE.Tweet);
   const tweet_id = url_match.groups.tweet_id;
@@ -78,13 +80,13 @@ async function fetch_tweet_video_url(argv) {
       console.debug(pretty({ tweet }));
     }
 
-    const video = tweet_video(tweet);
+    const video_list = tweet_video_list(tweet);
 
     if (argv.verbose) {
-      console.debug(pretty({ video }));
+      console.debug(pretty({ video_list }));
     }
 
-    return video.url;
+    return video_list;
   } catch (err) {
     if (argv.verbose) {
       console.debug(pretty({ timeline_json }));
@@ -94,12 +96,14 @@ async function fetch_tweet_video_url(argv) {
   }
 }
 
-function tweet_video(tweet) {
+function tweet_video_list(tweet) {
   const media_list = tweet?.legacy?.extended_entities?.media;
 
   if (!Array.isArray(media_list)) {
     throw new VidError('Tweet has no media');
   }
+
+  const video_list = [];
 
   for (const media of media_list) {
     const variant_list = media?.video_info?.variants;
@@ -108,20 +112,26 @@ function tweet_video(tweet) {
       continue;
     }
 
-    let [max_variant, ...other_variant_list] = variant_list;
-    let max_bitrate = max_variant.bitrate;
+    let max_variant = null;
+    let max_bitrate = 0;
 
-    for (const variant of other_variant_list) {
+    for (const variant of variant_list) {
       if (variant.bitrate > max_bitrate) {
         max_bitrate = variant.bitrate;
         max_variant = variant;
       }
     }
 
-    return max_variant;
+    if (max_variant) {
+      video_list.push(max_variant);
+    }
   }
 
-  throw new VidError('Tweet has no video');
+  if (!video_list.length) {
+    throw new VidError('Tweet has no video');
+  }
+
+  return video_list;
 }
 /**
 # get guest token
