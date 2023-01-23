@@ -13,7 +13,6 @@ export async function parser(locals) {
       describe: 'path to video file to convert',
       type: 'string',
     })
-
     .check((argv) => {
       // capture cli argv for use in top-level vid.js catch
       locals.cli_argv = argv;
