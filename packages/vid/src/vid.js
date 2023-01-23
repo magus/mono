@@ -14,7 +14,7 @@ async function main() {
   } catch (err) {
     // clean message without stack trace
     if (err instanceof VidError) {
-      console.log('\n', err.message);
+      console.log('\n', chalk.vid_error(err.name, err.message));
     } else {
       console.log('\n', chalk.vid_error('UnhandledError', err.message));
     }
