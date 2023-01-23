@@ -4,9 +4,11 @@ import styled from 'styled-components';
 
 export function Video() {
   const input_ref = React.useRef();
+  const timeout_ref = React.useRef();
 
   const [result, set_result] = React.useState(null);
   const [disabled, set_disabled] = React.useState(false);
+  const [loading_timeout, set_loading_timeout] = React.useState(false);
 
   function handle_focus() {
     input_ref.current.select();
@@ -38,15 +40,25 @@ export function Video() {
     set_disabled(true);
     set_result(null);
 
-    const url = new URL(window.location.href);
-    url.pathname = '/api/video';
-    url.searchParams.set('url', video_url);
+    // set loading flag only if we reach a threshold
+    // prevent flashing loading state for quick responses
+    clearTimeout(timeout_ref.current);
+    timeout_ref.current = setTimeout(() => set_loading_timeout(true), 500);
 
-    const resp = await fetch(url);
-    const json = await resp.json();
+    try {
+      const url = new URL(window.location.href);
+      url.pathname = '/api/video';
+      url.searchParams.set('url', video_url);
 
-    set_result(json);
-    set_disabled(false);
+      const resp = await fetch(url);
+      const json = await resp.json();
+
+      set_result(json);
+    } finally {
+      clearTimeout(timeout_ref.current);
+      set_disabled(false);
+      set_loading_timeout(false);
+    }
   }
 
   return (
@@ -77,7 +89,7 @@ export function Video() {
       <Spacer vertical size="2" />
 
       <Results>
-        {disabled ? (
+        {disabled && loading_timeout ? (
           <Loading>⏳ Loading …</Loading>
         ) : (
           result?.data?.map((file) => {
