@@ -22,7 +22,8 @@ vid https://twitter.com/magusnn/status/1458443583640334337  # output video downl
 ## Development
 
 ```sh
-cd package/vid
+cd packages/vid
+yarn unlink
 yarn link
 yarn link @magusn/vid
 ```
