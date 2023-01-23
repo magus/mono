@@ -1,5 +1,17 @@
 # @magusn/vid
 
+## 0.5.0
+
+### Minor Changes
+
+- f1e4768: twitter: support multiple video tweets
+- e9786d3: setup main module export for shared fetch_video_list and parse_filename
+
+### Patch Changes
+
+- 2ebba39: fix: remove cli font colors from VidError message
+- 91932d3: fix: downgrade node-fetch for nextjs compatability
+
 ## 0.4.0
 
 ### Minor Changes

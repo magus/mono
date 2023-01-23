@@ -1,5 +1,19 @@
 # misc.vercel.app
 
+## 1.0.0
+
+### Major Changes
+
+- d5a8985: feat: video download from urls, e.g. tweets
+
+### Patch Changes
+
+- Updated dependencies [2ebba39]
+- Updated dependencies [f1e4768]
+- Updated dependencies [91932d3]
+- Updated dependencies [e9786d3]
+  - @magusn/vid@0.5.0
+
 ## 0.2.0
 
 ### Minor Changes
