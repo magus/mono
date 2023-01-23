@@ -56,7 +56,7 @@ export async function handler(argv) {
     process.exit(0);
   }
 
-  const file = parse_filename(argv.input_video_file.fullPath);
+  const file = parse_filename(path.basename(argv.input_video_file.fullPath));
   const inputPath = path.dirname(argv.input_video_file.fullPath);
 
   // gather opt parts to append to output filename

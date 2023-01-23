@@ -1,15 +1,13 @@
-import path from 'node:path';
-
-export function parse_filename(filepath) {
-  const match = path.basename(filepath).match(RE.filename);
+export function parse_filename(input) {
+  const match = input.match(RE.filename);
 
   if (match) {
     const groups = match.groups;
     const full = `${groups.name}.${groups.extension}`;
-    return { ...groups, full };
+    return { ...groups, full, input };
   }
 }
 
 const RE = {
-  filename: /(?<name>.*?)\.(?<extension>[^.]+)$/i,
+  filename: /(?<name>[^\\^/]*?)\.(?<extension>[^.]+)$/i,
 };

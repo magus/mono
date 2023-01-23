@@ -6,7 +6,12 @@
   "author": "magus",
   "license": "MIT",
   "type": "module",
-  "main": "src/vid.js",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
   "bin": {
     "vid": "./src/vid.js"
   },
