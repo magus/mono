@@ -64,8 +64,11 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --main-color: 255, 203, 5;
     --main-color-light: 254, 243, 199;
+    --main-color-button-font: 76, 60, 1;
+
     --dark-blue: 30, 64, 175;
     --gray: 161, 161, 170;
+    --red: 220, 38, 38;
     --white: 255, 255, 255;
     --black: 0, 0, 0;
 
@@ -85,6 +88,8 @@ const GlobalStyle = createGlobalStyle`
     --font-normal: 16px;
     --font-large: 20px;
     --font-jumbo: 64px;
+
+    --font-bold: 700;
 
     --background-color: var(--white);
     --font-color: var(--black);
@@ -108,6 +113,7 @@ const GlobalStyle = createGlobalStyle`
   html,
   body,
   #__next {
+    height: 100%;
     overflow-x: hidden;
   }
 
