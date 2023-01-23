@@ -1,5 +1,17 @@
 # misc.vercel.app
 
+## 1.0.1
+
+### Patch Changes
+
+- c5ed029: fix: loading timeout for fast responses
+- 8c3ff75: fix: input styling and colors
+- 613b344: fix: basic <a> for download and link
+- Updated dependencies [a4d21e5]
+- Updated dependencies [948ea3a]
+- Updated dependencies [4fbc0ab]
+  - @magusn/vid@0.6.0
+
 ## 1.0.0
 
 ### Major Changes

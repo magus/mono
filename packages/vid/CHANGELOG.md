@@ -1,5 +1,16 @@
 # @magusn/vid
 
+## 0.6.0
+
+### Minor Changes
+
+- 4fbc0ab: feat: allow mp3 output for --no-video
+
+### Patch Changes
+
+- a4d21e5: fix: type safety when throwing errors
+- 948ea3a: docs: correct command to setup dev vid
+
 ## 0.5.0
 
 ### Minor Changes
