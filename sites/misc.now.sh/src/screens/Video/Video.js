@@ -44,7 +44,6 @@ export function Video() {
 
     const resp = await fetch(url);
     const json = await resp.json();
-    console.debug({ json });
 
     set_result(json);
     set_disabled(false);
@@ -79,14 +78,9 @@ export function Video() {
 
       <Results>
         {result?.data.map((file) => {
-          function handle_click(event) {
-            event.preventDefault();
-            force_download(file.href, file.full);
-          }
-
           return (
             <a key={file.href} download={file.full} href={file.href} rel="noreferrer" target="_blank">
-              <VideoButton onClick={handle_click}>{file.full}</VideoButton>
+              <VideoButton>{file.full}</VideoButton>
             </a>
           );
         })}
@@ -95,6 +89,8 @@ export function Video() {
   );
 }
 
+// unused for now, maybe eventually on page download
+// eslint-disable-next-line
 async function force_download(url, filename) {
   try {
     const resp = await fetch(url, {
