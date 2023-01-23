@@ -77,13 +77,17 @@ export function Video() {
       <Spacer vertical size="2" />
 
       <Results>
-        {result?.data.map((file) => {
-          return (
-            <a key={file.href} download={file.full} href={file.href} rel="noreferrer" target="_blank">
-              <VideoButton>{file.full}</VideoButton>
-            </a>
-          );
-        })}
+        {disabled ? (
+          <Loading>⏳ Loading …</Loading>
+        ) : (
+          result?.data?.map((file) => {
+            return (
+              <a key={file.href} download={file.full} href={file.href} rel="noreferrer" target="_blank">
+                <VideoButton>{file.full}</VideoButton>
+              </a>
+            );
+          })
+        )}
       </Results>
     </Container>
   );
@@ -113,6 +117,11 @@ async function force_download(url, filename) {
     console.error(err);
   }
 }
+
+const Loading = styled.div`
+  font-size: var(--font-xLarge);
+  font-weight: var(--font-bold);
+`;
 
 const VideoButton = styled(Button)`
   color: rgb(var(--main-color-button-font));
@@ -169,38 +178,40 @@ const SearchIcon = styled.span`
   font-size: var(--font-large);
 `;
 
-const Input = styled.input`
+const Input = styled.input.attrs({
+  placeholderTextColor: 'pink',
+})`
   width: 100%;
   height: 100%;
-  padding: var(--spacer-1) var(--spacer-6);
+  padding: var(--spacer-1) var(--spacer-2) var(--spacer-1) var(--spacer-6);
   border-radius: var(--spacer-3);
 
   font-size: var(--font-normal);
   color: rgb(var(--font-color));
   white-space: pre;
 
-  background-color: rgb(var(--background-color));
-  border: 1px solid rgba(var(--font-color), 0.28);
+  background-color: rgb(var(--gray));
+  border: 1px solid transparent;
   box-shadow: none;
 
   :focus {
     outline: none;
+    background-color: rgb(var(--background-color));
   }
 
   :disabled {
-    background-color: rgba(var(--gray), 0.2);
+    background-color: rgb(var(--gray));
   }
 
   :hover,
   :focus {
-    border: 1px solid transparent;
     box-shadow: 0 1px 6px rgba(var(--font-color), 0.28);
   }
 
   @media (prefers-color-scheme: dark) {
     :hover,
     :focus {
-      border: 1px solid rgb(var(--gray));
+      border-color: rgb(var(--gray800));
       box-shadow: none;
     }
   }

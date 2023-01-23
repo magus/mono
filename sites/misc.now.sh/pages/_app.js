@@ -66,8 +66,10 @@ const GlobalStyle = createGlobalStyle`
     --main-color-light: 254, 243, 199;
     --main-color-button-font: 76, 60, 1;
 
+    --gray200: 229 231 235;
+    --gray800: 38 38 38;
+
     --dark-blue: 30, 64, 175;
-    --gray: 161, 161, 170;
     --red: 220, 38, 38;
     --white: 255, 255, 255;
     --black: 0, 0, 0;
@@ -87,18 +89,22 @@ const GlobalStyle = createGlobalStyle`
     --font-small: 14px;
     --font-normal: 16px;
     --font-large: 20px;
+    --font-xLarge: 32px;
     --font-jumbo: 64px;
 
     --font-bold: 700;
 
+    /* light */
     --background-color: var(--white);
     --font-color: var(--black);
+    --gray: var(--gray200);
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
       --background-color: var(--black);
       --font-color: var(--white);
+      --gray: var(--gray800);
     }
   }
 
