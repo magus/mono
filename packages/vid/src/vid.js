@@ -19,7 +19,7 @@ async function main() {
       console.log('\n', chalk.vid_error('UnhandledError', err.message));
     }
 
-    if (!locals.cli_argv.verbose) {
+    if (!locals?.cli_argv?.verbose) {
       console.log('\n', 'Add `-v` to see stack trace for this failure.');
       process.exit(1);
     } else {

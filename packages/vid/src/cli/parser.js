@@ -21,8 +21,13 @@ export async function parser(locals) {
       return true;
     })
     .fail((message, error) => {
-      // console.debug('fail option', { message, error });
-      throw error;
+      if (error) {
+        throw error;
+      } else if (message) {
+        throw new VidError(message);
+      } else {
+        throw new VidError('Unrecognized failure');
+      }
     })
     .coerce('input_video_file', async (input) => {
       const result = { input };
