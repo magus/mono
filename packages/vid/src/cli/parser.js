@@ -63,7 +63,7 @@ export async function parser(locals) {
       type: 'number',
     })
     .option('ext', {
-      choices: ['mp4'],
+      choices: ['mp4', 'mp3'],
       demandOption: false,
       default: 'mp4',
       describe: 'extension of output video file',

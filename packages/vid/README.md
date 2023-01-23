@@ -15,7 +15,7 @@ vid ~/Desktop/recording.mov                                 # write recording.mp
 vid -s 4.3 ~/Downloads/youtube-crop.mp4 --an --pf           # speed up 4.3x, remove audio, preserve frames
 vid ~/Downloads/youtube-crop.mp4 --crop                     # dynamic region cropping via still frame
 vid ~/Downloads/youtube-crop.mp4 --get fps --get size       # output fps and size video metadata
-
+vid ~/Downloads/dL6n1w-IvsDxiwU1.mp4 --vn --ext mp3         # convert video to mp3
 vid https://twitter.com/magusnn/status/1458443583640334337  # output video downloaded from tweet
 ```
 
