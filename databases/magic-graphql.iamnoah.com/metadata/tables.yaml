@@ -1,6 +1,16 @@
 - table:
     name: dcsseeds_scrapePlayers
     schema: public
+  array_relationships:
+    - name: items
+      using:
+        manual_configuration:
+          column_mapping:
+            id: playerId
+          insertion_order: null
+          remote_table:
+            name: dcsseeds_scrapePlayers_item
+            schema: public
   select_permissions:
     - role: anonymous
       permission:
@@ -101,6 +111,17 @@
 - table:
     name: dcsseeds_scrapePlayers_seedVersion
     schema: public
+  array_relationships:
+    - name: items
+      using:
+        manual_configuration:
+          column_mapping:
+            seed: seed
+            version: version
+          insertion_order: null
+          remote_table:
+            name: dcsseeds_scrapePlayers_item
+            schema: public
   select_permissions:
     - role: anonymous
       permission:
