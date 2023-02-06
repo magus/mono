@@ -17,6 +17,12 @@ cd databases/$GRAPHQL_HOSTNAME
 source .env.local
 ```
 
+### View all migrations status
+
+```sh
+hasura migrate status --admin-secret "$HASURA_ADMIN_SECRET"
+```
+
 ### Migration squashing
 
 > https://hasura.io/docs/latest/migrations-metadata-seeds/manage-migrations/#squash-migrations
