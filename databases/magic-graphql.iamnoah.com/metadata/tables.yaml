@@ -1,6 +1,10 @@
 - table:
     name: dcsseeds_scrapePlayers
     schema: public
+  object_relationships:
+    - name: server_ref
+      using:
+        foreign_key_constraint_on: server
   array_relationships:
     - name: items
       using:
@@ -135,6 +139,19 @@
           - seed
           - version
         filter: {}
+- table:
+    name: dcsseeds_scrapePlayers_server
+    schema: public
+  array_relationships:
+    - name: players
+      using:
+        manual_configuration:
+          column_mapping:
+            name: server
+          insertion_order: null
+          remote_table:
+            name: dcsseeds_scrapePlayers
+            schema: public
 - table:
     name: loginToken
     schema: public
