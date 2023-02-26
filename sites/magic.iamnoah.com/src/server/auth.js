@@ -297,6 +297,7 @@ const setRefreshToken = gql`
         loginTokenId: $loginTokenId
         value: $value
         expires: $expires
+        lastActive: $lastActive
         ip: $ip
         userAgent: $userAgent
         userAgentRaw: $userAgentRaw
