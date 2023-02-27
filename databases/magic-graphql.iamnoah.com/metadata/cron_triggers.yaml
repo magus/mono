@@ -8,3 +8,9 @@
     retry_interval_seconds: 10
     timeout_seconds: 30
     tolerance_seconds: 21600
+- name: dcsseeds_scrapePlayers_unrand_cache
+  webhook: https://dcss.vercel.app/api/cache_unrand_query?window_size=25
+  schedule: '*/1 * * * *'
+  include_in_metadata: true
+  payload: {}
+  comment: ""

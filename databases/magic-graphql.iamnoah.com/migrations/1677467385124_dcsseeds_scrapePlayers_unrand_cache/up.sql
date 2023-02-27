@@ -1,0 +1,22 @@
+
+CREATE TABLE "public"."dcsseeds_scrapePlayers_unrand_cache" ("unrand_key" text NOT NULL, "result_list" jsonb NOT NULL, PRIMARY KEY ("unrand_key") , UNIQUE ("unrand_key"));
+
+alter table "public"."dcsseeds_scrapePlayers_unrand_cache" add column "updated_at" timestamptz
+ not null default now();
+
+CREATE OR REPLACE FUNCTION "public"."set_current_timestamp_updated_at"()
+RETURNS TRIGGER AS $$
+DECLARE
+  _new record;
+BEGIN
+  _new := NEW;
+  _new."updated_at" = NOW();
+  RETURN _new;
+END;
+$$ LANGUAGE plpgsql;
+CREATE TRIGGER "set_public_dcsseeds_scrapePlayers_unrand_cache_updated_at"
+BEFORE UPDATE ON "public"."dcsseeds_scrapePlayers_unrand_cache"
+FOR EACH ROW
+EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
+COMMENT ON TRIGGER "set_public_dcsseeds_scrapePlayers_unrand_cache_updated_at" ON "public"."dcsseeds_scrapePlayers_unrand_cache" 
+IS 'trigger to set value of column "updated_at" to current timestamp on row update';

@@ -153,6 +153,9 @@
             name: dcsseeds_scrapePlayers
             schema: public
 - table:
+    name: dcsseeds_scrapePlayers_unrand_cache
+    schema: public
+- table:
     name: loginToken
     schema: public
   object_relationships:
