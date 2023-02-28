@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "dokku": {
+      "predeploy": "echo 'app.json::scripts.dokku.predeploy'",
+      "postdeploy": "./health-check.sh"
+    }
+  },
+  "cron": [
+    {
+      "command": "./health-check.sh",
+      "schedule": "*/1 * * * *"
+    }
+  ]
+}

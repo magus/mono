@@ -1,0 +1,11 @@
+# https://linux.die.net/man/8/logrotate
+
+compress
+
+/var/log/cronlog {
+  rotate 3
+  weekly
+  size 5M
+  postrotate
+  endscript
+}

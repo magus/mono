@@ -176,9 +176,13 @@ The authentication mechanisms rely on a centralized database to store the login 
     HASURA_GRAPHQL_ENABLED_APIS="graphql,metadata,pgdump"
 
   dokku proxy:ports-set hasura http:80:8080
-  docker pull hasura/graphql-engine
-  docker tag hasura/graphql-engine dokku/hasura
-  dokku tags:deploy hasura
+
+  # docker pull hasura/graphql-engine
+  # docker tag hasura/graphql-engine dokku/hasura
+  # dokku tags:deploy hasura
+  # `dokku tags` deprecated as of dokku 0.24 and removed in 0.26
+  # https://dokku.com/blog/2021/dokku-0.24.0/
+  dokku git:from-image hasura hasura/graphql-engine
 
   # install letsencrypt plugin
   sudo dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
@@ -204,6 +208,28 @@ The authentication mechanisms rely on a centralized database to store the login 
 - You should now be able to visit the Hasura admin console by navigating to the domain you setup above
 
   > e.g. https://magic-graphql.iamnoah.com/
+
+- Now let's set up health checks to restart the instance if needed
+
+  ```sh
+  # configuring health check cron job
+  # drop cronlog logrotate config for weekly rotation
+  curl https://raw.githubusercontent.com/magus/mono/master/sites/magic.iamnoah.com/deploy/cronlog > /etc/logrotate.d/cronlog
+
+  # discover app dir /home/dokku/hasura
+  dokku apps:report hasura
+  cd /home/dokku/hasura
+  # copy health-check.sh into droplet hasura home dir
+  curl https://raw.githubusercontent.com/magus/mono/master/sites/magic.iamnoah.com/deploy/health-check.sh > health-check.sh
+
+  # add crontab entry
+  crontab -e
+
+      */1 * * * * /home/dokku/hasura/health-check.sh 5 "https://magic-graphql.iamnoah.com/v1/graphql" '{"code":"not-found","error":"resource does not exist","path":"$"}' >> /var/log/cronlog 2>&1
+
+  # confirm cron is working
+  tail -F /var/log/cronlog
+  ```
 
 - Now that you have confirmed everything is setup properly you can disable the admin console. Don't worry you can still access it locally but making it unavailable publically is a best practice for production.
 
