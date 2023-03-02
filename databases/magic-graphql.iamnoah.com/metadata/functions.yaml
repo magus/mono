@@ -1,3 +1,6 @@
 - function:
+    name: dcsseeds_scrapePlayers_item_search_name
+    schema: public
+- function:
     name: dcsseeds_scrapePlayers_items_version_seed
     schema: public
