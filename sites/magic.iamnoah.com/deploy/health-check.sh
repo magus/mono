@@ -14,7 +14,7 @@ HEALTH_VALUE="$3"
 TZ=${TZ:-"America/Los_Angeles"}
 
 log() {
-  printf '[%s] %s\n' "$(date "+%Y-%m-%dT%H:%M:%S")" "$@"
+  printf '[%s][%s] %s\n' "$(date "+%Y-%m-%dT%H:%M:%S")" "$0" "$@"
 }
 
 post_error() {
@@ -49,10 +49,10 @@ for (( i = 0; i < 5; i++))
 do
   result=$(curl -s "$HEALTH_URL")
 
-  log "CHECK #$i  result=$result"
+  # log "CHECK #$i  result=$result"
 
   if [ "$result" == "$HEALTH_VALUE" ]; then
-    log "✅ HEALTHY"
+    # log "✅ HEALTHY"
     exit 0
   fi
 

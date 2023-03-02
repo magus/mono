@@ -221,11 +221,16 @@ The authentication mechanisms rely on a centralized database to store the login 
   cd /home/dokku/hasura
   # copy health-check.sh into droplet hasura home dir
   curl https://raw.githubusercontent.com/magus/mono/master/sites/magic.iamnoah.com/deploy/health-check.sh > health-check.sh
+  chmod +x ./health-check.sh
+  # copy restart.sh into droplet hasura home dir
+  curl https://raw.githubusercontent.com/magus/mono/master/sites/magic.iamnoah.com/deploy/restart.sh > restart.sh
+  chmod +x ./restart.sh
 
   # add crontab entry
   crontab -e
 
       */1 * * * * /home/dokku/hasura/health-check.sh 5 "https://magic-graphql.iamnoah.com/v1/graphql" '{"code":"not-found","error":"resource does not exist","path":"$"}' >> /var/log/cronlog 2>&1
+      42 */4 * * * /home/dokku/hasura/restart.sh >> /var/log/cronlog 2>&1
 
   # confirm cron is working
   tail -F /var/log/cronlog
