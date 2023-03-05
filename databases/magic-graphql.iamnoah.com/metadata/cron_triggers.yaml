@@ -1,5 +1,5 @@
 - name: dcsseeds_scrapePlayers
-  webhook: https://dcss.vercel.app/api/job/scrapePlayers
+  webhook: https://dcss.vercel.app/api/scrapePlayers
   schedule: '*/5 * * * *'
   include_in_metadata: true
   payload: {}
@@ -8,6 +8,7 @@
     retry_interval_seconds: 10
     timeout_seconds: 30
     tolerance_seconds: 21600
+  comment: ""
 - name: dcsseeds_scrapePlayers_unrand_cache
   webhook: https://dcss.vercel.app/api/cache_unrand_query?window_size=30
   schedule: '*/1 * * * *'
