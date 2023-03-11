@@ -47,6 +47,24 @@
           - order
         filter: {}
 - table:
+    name: dcsseeds_scrapePlayers_branch_level
+    schema: public
+  select_permissions:
+    - role: anonymous
+      permission:
+        columns:
+          - level
+          - name
+          - order
+        filter: {}
+    - role: user
+      permission:
+        columns:
+          - level
+          - name
+          - order
+        filter: {}
+- table:
     name: dcsseeds_scrapePlayers_errors
     schema: public
 - table:
@@ -61,6 +79,16 @@
           insertion_order: null
           remote_table:
             name: dcsseeds_scrapePlayers_branch
+            schema: public
+    - name: branch_level
+      using:
+        manual_configuration:
+          column_mapping:
+            branchName: name
+            level: level
+          insertion_order: null
+          remote_table:
+            name: dcsseeds_scrapePlayers_branch_level
             schema: public
     - name: player
       using:
