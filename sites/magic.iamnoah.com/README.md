@@ -229,7 +229,7 @@ The authentication mechanisms rely on a centralized database to store the login 
   # add crontab entry
   crontab -e
 
-      */1 * * * * /home/dokku/hasura/health-check.sh 5 "https://magic-graphql.iamnoah.com/v1/graphql" '{"code":"not-found","error":"resource does not exist","path":"$"}' >> /var/log/cronlog 2>&1
+      # */5 * * * * /home/dokku/hasura/health-check.sh 5 "https://magic-graphql.iamnoah.com/v1/graphql" '{"code":"not-found","error":"resource does not exist","path":"$"}' >> /var/log/cronlog 2>&1
       42 */4 * * * /home/dokku/hasura/restart.sh >> /var/log/cronlog 2>&1
 
   # confirm cron is working
