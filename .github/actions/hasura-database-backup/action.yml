@@ -18,8 +18,21 @@ inputs:
 
 
   # secrets defined in github settings
+  # used for curls for schema + metadata
   HASURA_ADMIN_SECRET:
     required: true
+
+  # used for ssh pg_dump
+  MAGIC_AUTH_DATABASE_URL:
+    required: true
+  MAGIC_AUTH_SSH_HOST:
+    required: true
+  MAGIC_AUTH_SSH_USER:
+    required: true
+  MAGIC_AUTH_SSH_PRIVATE_KEY:
+    required: true
+
+  # sync files to s3 bucket
   AWS_ACCESS_KEY_ID:
     required: true
   AWS_SECRET_ACCESS_KEY:
@@ -28,7 +41,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Backup database to sql files
+    - name: backup database to sql files
       run: ${{ github.action_path }}/backup.sh
       shell: bash
       env:
@@ -36,7 +49,34 @@ runs:
         HASURA_HOST: ${{ inputs.HASURA_HOST }}
         HASURA_ADMIN_SECRET: ${{ inputs.HASURA_ADMIN_SECRET }}
 
-    - name: Sync to S3 bucket
+    - name: execute pg_dump for data.sql over ssh
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: ${{ inputs.MAGIC_AUTH_SSH_HOST }}
+        username: ${{ inputs.MAGIC_AUTH_SSH_USER }}
+        key: ${{ inputs.MAGIC_AUTH_SSH_PRIVATE_KEY }}
+        script: |
+          dokku run hasura pg_dump ${{ inputs.MAGIC_AUTH_DATABASE_URL}} --no-owner --no-acl --data-only --schema public > data.sql
+          ls -lsah
+
+    - name: download data.sql over scp
+      uses: nicklasfrahm/scp-action@main
+      with:
+        direction: download
+        insecure_ignore_fingerprint: true
+        host: ${{ inputs.MAGIC_AUTH_SSH_HOST }}
+        username: ${{ inputs.MAGIC_AUTH_SSH_USER }}
+        key: ${{ inputs.MAGIC_AUTH_SSH_PRIVATE_KEY }}
+        source: data.sql
+        target: data.sql
+
+    - name: move local copy of data.sql after scp into aws bucket dir
+      shell: bash
+      run: |
+        ls -lsah
+        mv data.sql ${{ inputs.AWS_S3_BUCKET_DIR }}
+
+    - name: sync to S3 bucket
       uses: jakejarvis/s3-sync-action@v0.5.1
       with:
         args: --delete
