@@ -1,0 +1,37 @@
+name: workflow-test
+
+on:
+  # allow manual trigger via github workflow ui
+  workflow_dispatch:
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: execute pg_dump for data.sql over ssh
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.MAGIC_AUTH_SSH_HOST }}
+          username: ${{ secrets.MAGIC_AUTH_SSH_USER }}
+          key: ${{ secrets.MAGIC_AUTH_SSH_PRIVATE_KEY }}
+          script: |
+            dokku run hasura pg_dump ${{ secrets.MAGIC_AUTH_DATABASE_URL}} --no-owner --no-acl --data-only --schema public > data.sql
+            ls -lsah
+
+      - name: download data.sql over scp
+        uses: nicklasfrahm/scp-action@main
+        with:
+          direction: download
+          insecure_ignore_fingerprint: true
+          host: ${{ secrets.MAGIC_AUTH_SSH_HOST }}
+          username: ${{ secrets.MAGIC_AUTH_SSH_USER }}
+          key: ${{ secrets.MAGIC_AUTH_SSH_PRIVATE_KEY }}
+          source: data.sql
+          target: data.sql
+
+      - name: check for local copy of data.sql after scp
+        run: |
+          ls -lsah
+
