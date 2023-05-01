@@ -189,7 +189,7 @@ The authentication mechanisms rely on a centralized database to store the login 
   # configure letsencrypt with email
   dokku config:set --no-restart hasura DOKKU_LETSENCRYPT_EMAIL=letsencrypt@iamnoah.com
   # setup letsencrypt with hasura
-  dokku letsencrypt hasura
+  dokku letsencrypt:enable hasura
   # setup automatic certificate renewal (daily)
   dokku letsencrypt:cron-job --add
 
