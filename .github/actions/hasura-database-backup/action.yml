@@ -70,10 +70,14 @@ runs:
         source: data.sql
         target: data.sql
 
-    - name: move local copy of data.sql after scp into aws bucket dir
+    - name: confirm data.sql and move into aws bucket dir
       shell: bash
       run: |
         ls -lsah
+        if [ ! -s data.sql ]; then
+          printf "\n\nEMPTY data.sql INDICATES pg_dump FAILURE ABOVE"
+          (exit 1)
+        fi
         mv data.sql ${{ inputs.AWS_S3_BUCKET_DIR }}
 
     - name: sync to S3 bucket
