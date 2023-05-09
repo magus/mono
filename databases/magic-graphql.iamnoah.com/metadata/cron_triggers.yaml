@@ -10,7 +10,7 @@
     tolerance_seconds: 21600
   comment: ""
 - name: dcsseeds_scrapePlayers_unrand_cache
-  webhook: https://dcss.vercel.app/api/cache_unrand_query?window_size=30
+  webhook: https://dcss.vercel.app/api/cache_unrand_query?window_size=5
   schedule: '*/1 * * * *'
   include_in_metadata: true
   payload: {}
