@@ -33,6 +33,7 @@ export async function handler(argv) {
 
   metadata.video = {};
   metadata.video.bitrate = int(video_probe.bit_rate);
+  metadata.video.duration = float(video_probe.duration);
 
   metadata.audio = {};
   metadata.audio.bitrate = int(audio_probe.bit_rate);
@@ -109,7 +110,7 @@ export async function handler(argv) {
 
   // output image to crop / resize
   if (argv.crop) {
-    const rect = await handleUserCrop({ argv, inputPath });
+    const rect = await handleUserCrop({ argv, metadata, inputPath });
 
     if (argv.verbose) {
       console.debug('crop', { rect });
@@ -227,6 +228,7 @@ function ffprobe(argv, stream) {
 }
 
 const int = (n) => parseInt(n, 10);
+const float = (n) => parseFloat(n);
 
 async function confirmGate(message) {
   const name = 'proceed';
@@ -240,22 +242,33 @@ async function confirmGate(message) {
   }
 }
 
-async function handleUserCrop({ argv, inputPath }) {
+async function handleUserCrop({ argv, metadata, inputPath }) {
   console.log('In order to crop we will open a still frame from the video for you to edit');
   console.log('Delete the area you want to select for your crop region');
+
   await confirmGate('Okay, got it.');
 
   const cropImageFilename = ['magusn-vid-crop', Date.now(), 'png'].join('.');
   const cropImageOutputPath = path.join(inputPath, cropImageFilename);
+
+  // get crop seconds, default to halfway point of video
+  const unsafeCropSeconds = argv['crop-frame-seconds'] || metadata.video.duration / 2;
+
+  // ensure crop seconds are within video duration
+  const cropSeconds = clamp(unsafeCropSeconds, 0, metadata.video.duration);
+
   // write out tmp cropping image
-  const cropSeconds = argv['crop-frame-seconds'] || 0;
   const stillCropFrame = [
     'ffmpeg -hide_banner -loglevel error',
     `-ss ${cropSeconds} -i ${quotify(argv.input_video_file.fullPath)} -frames:v 1`,
     quotify(cropImageOutputPath),
   ].join(' ');
+
+  // console.debug({ stillCropFrame, cropSeconds, unsafeCropSeconds, metadata });
+
   CLI.execSync(stillCropFrame);
   CLI.execSync(`open ${cropImageOutputPath}`);
+
   await confirmGate('Are you done?');
 
   const cropImage = await Jimp.read(cropImageOutputPath);
@@ -310,4 +323,8 @@ async function handleUserCrop({ argv, inputPath }) {
   fs.rmSync(cropImageOutputPath);
 
   return cropBounds;
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
