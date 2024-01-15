@@ -1,5 +1,12 @@
 # misc.vercel.app
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [a2b950e]
+  - @magusn/vid@0.6.1
+
 ## 1.0.1
 
 ### Patch Changes

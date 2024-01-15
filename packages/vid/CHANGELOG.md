@@ -1,5 +1,11 @@
 # @magusn/vid
 
+## 0.6.1
+
+### Patch Changes
+
+- a2b950e: default crop to middle and clamp to duration
+
 ## 0.6.0
 
 ### Minor Changes

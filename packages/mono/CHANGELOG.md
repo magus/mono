@@ -1,5 +1,15 @@
 # @magusn/mono
 
+## 1.0.0
+
+### Major Changes
+
+- 6f7b42b: node v18
+
+### Patch Changes
+
+- 62811ed: hasura-database-backup: confirm data.sql exists in action
+
 ## 0.4.2
 
 ### Patch Changes

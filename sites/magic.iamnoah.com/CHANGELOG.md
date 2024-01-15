@@ -1,5 +1,14 @@
 # magic.iamnoah.com
 
+## 0.8.0
+
+### Minor Changes
+
+- e836e64: db: dcsseeds_scrapePlayers_item_search_name function
+- 2246336: db: restart.sh every 4 hours and cleanup verbose logging
+- 5f8ab90: docs: dokku health check and git:from-image
+- 3ca65e0: set refresh token lastActive previously missing
+
 ## 0.7.0
 
 ### Minor Changes
