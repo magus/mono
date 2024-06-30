@@ -1,0 +1,29 @@
+name: retrolink-hasura.iamnoah.com.yml
+
+on:
+  # run every day at 03:37 PST (10:37 UTC)
+  schedule:
+    - cron: '37 10 * * *'
+  # allow manual trigger via github workflow ui
+  workflow_dispatch:
+
+env:
+  AWS_S3_BUCKET_NAME: retrolink-hasura.iamnoah.com
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/hasura-database-backup
+        with:
+          AWS_S3_BUCKET_NAME: ${{ env.AWS_S3_BUCKET_NAME }}
+          HASURA_HOST: https://retrolink-hasura.iamnoah.com
+          HASURA_ADMIN_SECRET: ${{ secrets.RETROLINK_HASURA_ADMIN_SECRET }}
+          MAGIC_AUTH_DATABASE_URL: ${{ secrets.RETROLINK_HASURA_DATABASE_URL }}
+          MAGIC_AUTH_SSH_HOST: ${{ secrets.RETROLINK_HASURA_SSH_HOST }}
+          MAGIC_AUTH_SSH_USER: ${{ secrets.RETROLINK_HASURA_SSH_USER }}
+          MAGIC_AUTH_SSH_PRIVATE_KEY: ${{ secrets.RETROLINK_HASURA_SSH_PRIVATE_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
