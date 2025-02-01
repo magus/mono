@@ -11,6 +11,7 @@ module.exports = {
   },
   rules: {
     'no-console': 'error',
+    'no-inner-declarations': 'off',
     'import/no-unresolved': 'error',
   },
 };
