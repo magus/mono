@@ -1,5 +1,12 @@
 # misc.vercel.app
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies [35aef7f]
+  - @magusn/react@0.8.0
+
 ## 1.0.2
 
 ### Patch Changes

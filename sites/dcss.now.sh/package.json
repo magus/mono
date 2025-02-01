@@ -1,7 +1,7 @@
 {
   "name": "dcss.now.sh",
   "alias": "dcss",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "gitHead": "aec834edeb765842a69d4957b69167a71134dc1a",
   "private": true,
   "scripts": {

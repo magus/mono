@@ -1,5 +1,11 @@
 # @magusn/react
 
+## 0.8.0
+
+### Minor Changes
+
+- 35aef7f: framer-motion6.5.1
+
 ## 0.7.0
 
 ### Minor Changes

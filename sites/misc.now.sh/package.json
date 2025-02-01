@@ -1,7 +1,7 @@
 {
   "name": "misc.vercel.app",
   "alias": "misc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "scripts": {
     "build": "NODE_ENV=production next build",
@@ -15,7 +15,7 @@
     "test:unit": "jest"
   },
   "dependencies": {
-    "@magusn/react": "0.7.0",
+    "@magusn/react": "0.8.0",
     "@magusn/vid": "0.6.1",
     "framer-motion": "6.5.1",
     "next": "12.0.8",

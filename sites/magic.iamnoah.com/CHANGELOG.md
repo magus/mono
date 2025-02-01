@@ -1,5 +1,16 @@
 # magic.iamnoah.com
 
+## 0.9.0
+
+### Minor Changes
+
+- 35aef7f: framer-motion6.5.1
+
+### Patch Changes
+
+- Updated dependencies [35aef7f]
+  - @magusn/react@0.8.0
+
 ## 0.8.0
 
 ### Minor Changes
