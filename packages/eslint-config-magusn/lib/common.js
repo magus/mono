@@ -10,7 +10,7 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
-    'no-console': 1,
-    'import/no-unresolved': 2,
+    'no-console': 'error',
+    'import/no-unresolved': 'error',
   },
 };
