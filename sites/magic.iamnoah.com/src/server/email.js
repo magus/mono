@@ -7,23 +7,24 @@ import config from './config';
 
 sgMail.setApiKey(config.SENDGRID_API_KEY);
 
-export default {
-  send: async function send(to, options) {
-    if (!options) throw new Error('email.send requires subject and content');
+async function send(to, options) {
+  if (!options) throw new Error('email.send requires subject and content');
 
-    const { subject, text, html } = options;
+  const { subject, text, html } = options;
 
-    const emailConfig = {
-      from: {
-        email: config.EMAIL_FROM,
-        name: config.EMAIL_FROMNAME,
-      },
-      to,
-      subject,
-      text,
-      html,
-    };
+  const emailConfig = {
+    from: {
+      email: config.EMAIL_FROM,
+      name: config.EMAIL_FROMNAME,
+    },
+    to,
+    subject,
+    text,
+    html,
+  };
 
-    return await sgMail.send(emailConfig);
-  },
-};
+  return await sgMail.send(emailConfig);
+}
+
+const module = { send };
+export default module;

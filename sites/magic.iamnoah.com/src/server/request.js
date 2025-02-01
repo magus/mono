@@ -11,7 +11,7 @@ function getDeviceDescription(device) {
   }
 }
 
-const DOMAIN_REGEX = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/gim;
+const DOMAIN_REGEX = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:/\n?]+)/gim;
 
 function getDomain(req) {
   const values = [req.hostname, req.headers.host, req.headers.origin];

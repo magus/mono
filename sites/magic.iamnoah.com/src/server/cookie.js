@@ -3,11 +3,13 @@ import { serialize } from 'cookie';
 import config from './config';
 import request from './request';
 
-export default {
+const module = {
   clear: clearCookies,
   set: setCookie,
   get: getCookie,
 };
+
+export default module;
 
 const COOKIE_NAME = '__magic__rtk';
 
@@ -48,7 +50,7 @@ function generateCookie(name, value, extraOptions = {}) {
   //      and allow the cookie to be shared on all iamnoah.com requests
   if (!__DEV__ && config.ALLOWED_COOKIE_DOMAINS && extraOptions.domain) {
     for (const allowedDomain of config.ALLOWED_COOKIE_DOMAINS) {
-      if (!!~extraOptions.domain.indexOf(allowedDomain)) {
+      if (~extraOptions.domain.indexOf(allowedDomain)) {
         options.domain = allowedDomain;
       }
     }

@@ -1,6 +1,4 @@
-import * as Sentry from '@sentry/nextjs';
-
-module.exports = function configureSentry(overrides) {
+export default function configureSentry(overrides) {
   const SENTRY_DSN = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
 
   // https://docs.sentry.io/clients/javascript/config/
@@ -44,4 +42,4 @@ module.exports = function configureSentry(overrides) {
   Object.assign(sentryOptions, overrides);
 
   return sentryOptions;
-};
+}

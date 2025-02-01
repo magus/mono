@@ -252,7 +252,7 @@ function getJwtField(jwtToken, field) {
 
 const getAuthCookie = cookie.get;
 
-export default {
+const module = {
   clearCookies: cookie.clear,
   getAuthCookie,
 
@@ -267,6 +267,8 @@ export default {
 
   getJwtTokenUserId: (req) => getJwtField(getAuthCookie(req), JwtFields.HasuraUserId),
 };
+
+export default module;
 
 // {
 //   "data": {

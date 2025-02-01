@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { Spacer } from '@magusn/react';
+import { Spacer, Button } from '@magusn/react';
 
 import Page from 'src/components/Page';
-import { Button } from '@magusn/react';
 import { MagicAuth } from '@magusn/react/magic-auth';
 
 LoginPage.title = 'Login';
