@@ -12,6 +12,17 @@ module.exports = {
   rules: {
     'no-console': 'error',
     'no-inner-declarations': 'off',
+    'no-unused-vars': [
+      'error',
+      {
+        vars: 'all',
+        args: 'after-used',
+        caughtErrors: 'all',
+        ignoreRestSiblings: true,
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
     'import/no-unresolved': 'error',
   },
 };
