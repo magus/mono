@@ -19,7 +19,7 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@magusn/eslint-config-magusn": "0.5.0",
+    "@magusn/eslint-config-magusn": "0.5.1",
     "babel-plugin-styled-components": "^1.13.3",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "eslint": "8.7.0",

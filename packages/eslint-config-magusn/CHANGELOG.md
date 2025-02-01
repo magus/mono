@@ -1,5 +1,13 @@
 # @magusn/eslint-config-magusn
 
+## 0.5.1
+
+### Patch Changes
+
+- e252d39: no-unused-vars
+- 2212933: use rule string severity
+- 97d4a21: disable no-inner-declarations
+
 ## 0.5.0
 
 ### Minor Changes
