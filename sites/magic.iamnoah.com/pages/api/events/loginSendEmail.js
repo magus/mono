@@ -81,7 +81,8 @@ export default async function loginSendEmail(req, res) {
       expiresIn,
     });
 
-    await serverEmail.send(email, {
+    await serverEmail.send({
+      email,
       subject: `Magic login confirmation (${phrase})`,
       html: emailHtml,
     });

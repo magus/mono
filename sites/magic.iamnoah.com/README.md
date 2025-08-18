@@ -63,7 +63,7 @@ For example, if you are using Vercel for your deployments you can [store it as a
    openssl rand -base64 64
    ```
 
-1. `SENDGRID_API_KEY`
+1. `SMTP2GO_API_KEY`
 
    Used to send emails to the login email address to authenticate login requests and sessions.
 

@@ -12,7 +12,7 @@ const {
   LOGIN_TOKEN_EXPIRES,
   ALLOWED_COOKIE_DOMAINS,
 
-  SENDGRID_API_KEY,
+  SMTP2GO_API_KEY,
   EMAIL_FROM,
   EMAIL_FROMNAME,
 } = process.env;
@@ -39,8 +39,8 @@ exports.LOGIN_TOKEN_EXPIRES = LOGIN_TOKEN_EXPIRES || 10; // expire login token a
 // https://github.com/hasura/graphql-engine/pull/2327
 exports.ALLOWED_COOKIE_DOMAINS = ALLOWED_COOKIE_DOMAINS || ['iamnoah.com', 'localhost'];
 
-exports.SENDGRID_API_KEY = SENDGRID_API_KEY;
-// verified sender on sendgrid
+exports.SMTP2GO_API_KEY = SMTP2GO_API_KEY;
+// verified sender on email sender provider
 exports.EMAIL_FROM = EMAIL_FROM || 'magic@iamnoah.com';
 exports.EMAIL_FROMNAME = EMAIL_FROMNAME || 'Magic';
 
@@ -50,4 +50,4 @@ if (process.browser) throw new Error('Do not import config in client code');
 // some environmental variables required from .env or vercel sercrets
 // e.g. now env ls (vercel env ls)
 if (!HASURA_ADMIN_SECRET) throw new Error('HASURA_ADMIN_SECRET is not defined');
-if (!SENDGRID_API_KEY) throw new Error('SENDGRID_API_KEY is not defined');
+if (!SMTP2GO_API_KEY) throw new Error('SMTP2GO_API_KEY is not defined');
