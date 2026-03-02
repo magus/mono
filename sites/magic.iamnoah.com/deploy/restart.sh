@@ -11,6 +11,9 @@ log() {
   printf '[%s][%s] %s\n' "$(date "+%Y-%m-%dT%H:%M:%S")" "$0" "$@"
 }
 
+log "Pruning docker volumes"
+docker system prune -a --volumes
+
 log "Restarting instance"
 
 # ensure PATH has dokku
