@@ -1,9 +1,10 @@
 name: retrolink-hasura.iamnoah.com.yml
 
 on:
-  # run every day at 03:37 PST (10:37 UTC)
-  schedule:
-    - cron: '37 10 * * *'
+  # Temporarily disabled: retrolink-hasura.iamnoah.com is offline.
+  # Previous schedule (kept here for easy re-enable):
+  # schedule:
+  #   - cron: '37 10 * * *' # run every day at 03:37 PST (10:37 UTC)
   # allow manual trigger via github workflow ui
   workflow_dispatch:
 
