@@ -1,5 +1,38 @@
 # magic.iamnoah.com
 
+## 0.9.2
+
+### Patch Changes
+
+- e4a15b9: vercelignore .env files
+
+  - Check + update github secrets for `mono/.github/workflows/magic.iamnoah.com.yml`
+  - Rotate `https://magic-graphql.iamnoah.com` secrets (dokku)
+
+    - `dcsseeds`
+    - `mono/sites/magic.iamnoah.com`
+    - For both sites above
+      - explicitly vercelignore `.env*`
+      - set sensitive secret with current values
+      - redeploy vercel with sensitive secret
+      - confirm `.env` is not present in vercel deployment files
+      - rotate secret in service (railway / dokku)
+      - confirm hasura login with new secret works
+      - update vercel with new secret
+
+  - dokku
+
+    tailscale ssh into the digital ocean droplet and update hasura
+
+    initial `config:set` failed due to timeout at 100% CPU but manual stop + start worked
+
+    ```bash
+    ssh root@magic-auth
+    dokku config:set hasura HASURA_GRAPHQL_ADMIN_SECRET="NEW_SECRET"
+    dokku ps:stop hasura
+    dokku ps:start hasura
+    ```
+
 ## 0.9.1
 
 ### Patch Changes
