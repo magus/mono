@@ -66,6 +66,10 @@ mono release
 
 Finally to publish changes, particularly to public modules such as `@magusn/react` or `@magusn/eslint-config-magusn` you should follow up with `mono changeset publish` which will tag and publish the releases to npm. This is required for deploys since they require pulling public dependencies from public NPM repository.
 
+`mono changeset version` updates versions and `CHANGELOG.md` entries for all selected workspaces, including private `sites/*`.
+
+`mono changeset publish` only publishes and tags public npm packages. Private sites such as `magic.iamnoah.com` may continue to get version and changelog bumps without receiving matching git release tags from this step.
+
 NOTE: `changeset publish` assumes that last commit is the release commit. You should not commit any changes between
 calling `version` and `publish`. The commands are separate to allow you to validate the release changes are correct.
 
